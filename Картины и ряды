@@ -1,0 +1,27 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int paintings = 52;
+            int picturesInARow = 3;
+
+            int numberOfRows = (paintings / picturesInARow) * 3;
+
+            int extraPictures = paintings - numberOfRows;
+
+            Console.WriteLine($"Всего рядов { numberOfRows}, остаток {extraPictures}");
+
+
+            
+
+            
+        }
+    }
+}
