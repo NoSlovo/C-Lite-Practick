@@ -1,0 +1,30 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int init;
+            char cr;
+            double boole;
+            byte b;
+            sbyte sb;
+            string str;
+            short sh;
+            ushort ush;
+            long lg;
+            ulong ulg;
+            float fl;
+          
+
+            
+
+            
+        }
+    }
+}
