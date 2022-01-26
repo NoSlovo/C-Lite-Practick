@@ -10,8 +10,8 @@ namespace Csharp_Lite
         static void Main(string[] args)
         {
             string userInput;
-            bool activeWhile = true;
-            while (activeWhile)
+            bool toggle = true;
+            while (toggle)
             {
                 userInput = Console.ReadLine();
                 if(userInput == "exit")
