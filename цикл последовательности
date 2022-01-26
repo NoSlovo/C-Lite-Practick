@@ -9,12 +9,11 @@ namespace Csharp_Lite
     {
         static void Main(string[] args)
         {
-           for(int i = 0; i<= 100; i++)
+            int step;
+            int end = 98;
+            for (step = 7;step <= end ;step+=7)
             {
-             if( i % 7 == 0)
-                {
-                    Console.WriteLine(i);
-                }
+                Console.WriteLine(step);
             }
         }
     }
