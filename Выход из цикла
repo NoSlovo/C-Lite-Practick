@@ -16,7 +16,7 @@ namespace Csharp_Lite
                 userInput = Console.ReadLine();
                 if(userInput == "exit")
                 {
-                    activeWhile = false;
+                    toggle = false;
                     Console.WriteLine("Конец цикла");
                 }
             }
