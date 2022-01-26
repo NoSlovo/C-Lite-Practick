@@ -11,7 +11,7 @@ namespace Csharp_Lite
         {
             string userInput;
             bool activeWhile = true;
-            while (activeSwitch)
+            while (activeWhile)
             {
                 userInput = Console.ReadLine();
                 if(userInput == "exit")
