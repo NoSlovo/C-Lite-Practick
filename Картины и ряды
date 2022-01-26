@@ -9,19 +9,14 @@ namespace Csharp_Lite
     {
         static void Main(string[] args)
         {
-            int paintings = 52;
-            int picturesInARow = 3;
+            int cards = 52;
+            int cardsRow = 3;
 
-            int numberOfRows = (paintings / picturesInARow) * 3;
+            int allRows = cards  / cardsRow;
 
-            int extraPictures = paintings - numberOfRows;
+            int remainder = cards - (allRows * cardsRow);
 
-            Console.WriteLine($"Всего рядов { numberOfRows}, остаток {extraPictures}");
-
-
-            
-
-            
+            Console.WriteLine($"Всего рядов {allRows}, остаток {remainder}");
         }
     }
 }
