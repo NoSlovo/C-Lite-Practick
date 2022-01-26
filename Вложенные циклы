@@ -9,27 +9,23 @@ namespace Csharp_Lite
     {
         static void Main(string[] args)
         {
+            string topLine = "";
+            string lowLine = "";
             Console.WriteLine("Введите символ");
             char symbol = Convert.ToChar(Console.ReadLine());
-            Console.WriteLine("Введите Имя");
-            string name = Console.ReadLine();
-            string result = "";
-            for (int i = 0; i <= 2;i++)
+            Console.WriteLine("Введите имя");
+            string userName = Console.ReadLine();
+            int addSymbols = 2;
+            int longString = userName.Length + addSymbols;
+
+            for(int i = 0; i < longString; i++)
             {
-               for(int j = 0; j <= name.Length + 1 ; j++)
-                {
-                    if (i == 1 && 0 == j) {
-                        result += symbol + name + symbol;
-                        break;
-                    }
-                    else
-                    {
-                        result += symbol;
-                    }
-                }
-                result += "\n";
+                topLine += symbol;
+                lowLine += symbol;
             }
-            Console.WriteLine(result);
+
+            Console.WriteLine($"{topLine}\n{symbol}{userName}{symbol}\n{lowLine}");
+
         }
     }
 }
