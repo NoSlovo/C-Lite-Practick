@@ -10,14 +10,13 @@ namespace Csharp_Lite
         static void Main(string[] args)
         {
             int cursTenge = 33, cursRub = 10, cursDollar = 73;
-            
+
             int balancRub = 1000;
             int balancDollar = 1000;
             int balansTenge = 1000;
 
             bool isWork = true;
-            while (isWork)
-            {
+            while (isWork){
                 Console.WriteLine("Что вы хотите обменять ? ");
                 Console.WriteLine("1 - Обменять доллары на рубли");
                 Console.WriteLine("2 - Обмнеть доллары на тенге");
@@ -26,58 +25,111 @@ namespace Csharp_Lite
                 Console.WriteLine("5 - Обменять рубли на доллары");
                 Console.WriteLine("6 - Обменять рубли на тенге");
                 Console.WriteLine("7 - Выключить приложение");
-                int userInput = Convert.ToInt32(Console.ReadLine());
-                switch (userInput) {
+                string userInput = Console.ReadLine();
+                switch (userInput){
                     default:
-                    case 1:
+
+                    case "1":
                         Console.WriteLine("Обмен доллары на рубли");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         int dollarToRuble = Convert.ToInt32(Console.ReadLine());
-                        balancRub += dollarToRuble * cursDollar;
-                        balancDollar -= dollarToRuble ;
-                        Console.Clear();
+                        if (balancDollar >= dollarToRuble){
+                            balancRub += dollarToRuble * cursDollar;
+                            balancDollar -= dollarToRuble;
+                            Console.Clear();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Операция отменена");
+                        }
                         break;
-                    case 2:
+
+                    case "2":
                         Console.WriteLine("Обмен  доллары на тенге");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         int dollarToTenge = Convert.ToInt32(Console.ReadLine());
-                        balansTenge += dollarToTenge * cursDollar;
-                        balancDollar -= dollarToTenge ;
-                        Console.Clear();
+                        if (balancDollar >= dollarToTenge){
+
+                            balansTenge += dollarToTenge * cursDollar;
+                            balancDollar -= dollarToTenge;
+                            Console.Clear();
+                        } 
+                        else {
+                            Console.WriteLine("Операция отменена");
+                        }
+
                         break;
-                    case 3:
+
+                    case "3":
                         Console.WriteLine("Обменять тенге на рубли");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         int tengeToRuble = Convert.ToInt32(Console.ReadLine());
-                        balansTenge -= tengeToRuble ;
-                        balancRub += tengeToRuble * cursRub;
-                        Console.Clear();
+                        if (balancDollar >= tengeToRuble)
+                        {
+
+                            balansTenge -= tengeToRuble;
+                            balancRub += tengeToRuble * cursRub;
+                            Console.Clear();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Операция отменена");
+                        }
                         break;
-                    case 4:
+
+                    case "4":
                         Console.WriteLine("Обменять тенге на доллары");
                         Console.WriteLine("Сколько вы хотите обменять ?");
-                        int tengeToDollar =Convert.ToInt32(Console.ReadLine());
-                        balansTenge -= tengeToDollar ;
-                        balancDollar += tengeToDollar * cursDollar;
-                        Console.Clear();
+                        int tengeToDollar = Convert.ToInt32(Console.ReadLine());
+                        if (balancDollar >= tengeToDollar)
+                        {
+
+                            balansTenge -= tengeToDollar;
+                            balancDollar += tengeToDollar * cursDollar;
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Операция отменена");
+                        }
                         break;
-                    case 5:
+
+                    case "5":
                         Console.WriteLine("Обменять рубли на доллары");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         int rubleToDollar = Convert.ToInt32(Console.ReadLine());
-                        balancRub -= rubleToDollar * cursDollar;
-                        balancDollar += rubleToDollar * cursDollar;
-                        Console.Clear();
+                        if (balancRub >= rubleToDollar)
+                        {
+
+                            balancRub -= rubleToDollar * cursDollar;
+                            balancDollar += rubleToDollar * cursDollar;
+                            Console.Clear();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Операция отменена");
+                        }
                         break;
-                    case 6:
+
+                    case "6":
                         Console.WriteLine("Обменять рубли на тенге");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         int rubleToTenge = Convert.ToInt32(Console.ReadLine());
-                        balancRub -= rubleToTenge;
-                        balansTenge += rubleToTenge * cursTenge;
-                        Console.Clear();
+
+                        if (balancRub >= rubleToTenge)
+                        {
+
+                            balancRub -= rubleToTenge;
+                            balansTenge += rubleToTenge * cursTenge;
+                            Console.Clear();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Операция отменена");
+                        }
                         break;
-                    case 7:
+
+                    case "7":
                         isWork = false;
                         Console.WriteLine("Приложение выключено");
                         break;
