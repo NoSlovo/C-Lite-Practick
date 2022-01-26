@@ -1,0 +1,21 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // while выполняется пока условие истинно, по описанию задачи он подходил идеально
+            int number = 7;
+            while (number < 100)
+            {
+                Console.WriteLine(number);
+                number += 7;
+            } 
+        }
+    }
+}
