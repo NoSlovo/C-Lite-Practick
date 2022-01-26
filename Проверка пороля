@@ -1,0 +1,32 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int count = 3;
+            string password = "Panel";
+            while (count > 0)
+            {
+                Console.WriteLine("Введите пароль");
+                string userInput = Console.ReadLine();
+                if (password == userInput)
+                {
+                    Console.WriteLine("Молодец! секретные фото голого капитана америки получены");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Пороль не верен");
+                    count -= 1;
+                    Console.WriteLine($"Попыток осталось {count}");
+                }
+            } 
+        }
+    }
+}
