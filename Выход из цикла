@@ -1,0 +1,25 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput;
+            bool activeSwitch = true;
+            while (activeSwitch)
+            {
+                userInput = Console.ReadLine();
+                if(userInput == "exit")
+                {
+                    activeSwitch = false;
+                    Console.WriteLine("Конец цикла");
+                }
+            }
+        }
+    }
+}
