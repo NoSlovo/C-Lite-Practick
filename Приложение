@@ -1,0 +1,84 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {       
+            bool isWork = true;
+            while (isWork)
+            {
+                Console.WriteLine("Меню");
+                Console.WriteLine("Отдайте команду:");
+                Console.WriteLine("1 - Авторизация");
+                Console.WriteLine("2 - Изменение окна");
+                Console.WriteLine("3 - Сменить цвет окна ");
+                Console.WriteLine("4 - выход");
+
+
+                int  inputUser = Convert.ToInt32(Console.ReadLine());
+                switch (inputUser)
+                {
+                    case 1:
+                        Console.WriteLine("Ведите Логин");
+                        string login = Console.ReadLine();
+                        Console.WriteLine("Введите пороль");
+                        string password = Console.ReadLine();
+                        if (login == "admin" && password == "admin")
+                        {
+                            Console.WriteLine("Авторизация успешна");
+                        }
+                        else
+                        {
+                            Console.WriteLine("ошибка логина и пороля");
+                        }
+                        break;
+                    case 2:
+                        Console.WriteLine("Введите размер окна консоли");
+                        Console.WriteLine("Ширина");
+                        int width = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Высота");
+                        int height = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WindowHeight = height;
+                        Console.WindowWidth = width;
+                        break;
+                    case 3:
+                        Console.Write("Меню цветов консоли");
+                        Console.WriteLine("Доступные цвета:");
+                        Console.WriteLine("1 - Крассный");
+                        Console.WriteLine("2 - Зеленный");
+                        Console.WriteLine("3 - Жёлтый");
+                        int colorNumber = Convert.ToInt32(Console.ReadLine());
+
+                        switch (colorNumber)
+                        {
+                            case 1:
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.Clear();
+                                break;
+                            case 2:
+                                Console.BackgroundColor = ConsoleColor.Green;
+                                Console.Clear();
+                                break;
+                                
+                            case 3:
+                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                Console.Clear();
+                                break;
+                        }
+                        break;
+                    case 4:
+                        isWork = false;
+                        Console.WriteLine("Выход выполнен успешно");
+                        break;
+                }
+            }    
+        }
+    }
+}
+
