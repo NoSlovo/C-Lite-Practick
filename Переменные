@@ -14,7 +14,7 @@ namespace Csharp_Lite
             double longDrobNumber;
             byte pozitiveByte;
             sbyte diapozonByte;
-            bool trueAndFallse;
+            bool canActive;
             string stringNumber;
             short znak;
             ushort noZnak;
