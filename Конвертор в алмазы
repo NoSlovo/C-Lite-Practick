@@ -1,0 +1,37 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int userCountAlmaz;
+            int priceAlmaz = 30;
+            Console.WriteLine("Сколько у вас золота?");
+            int userGold = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Желаете ли вы приобрести кристалы по цене 30 золотых за штуку?");
+            Console.WriteLine("1-Да");
+            Console.WriteLine("2-Нет");
+            int userInput = Convert.ToInt32(Console.ReadLine());
+            switch (userInput)
+            {
+                case 1:
+                    Console.WriteLine("Сколько кристалов вы хотите получить?");
+                    userCountAlmaz = Convert.ToInt32(Console.ReadLine());
+                    int sumAlmaz = userCountAlmaz * priceAlmaz;
+                    int balanceUser = userGold - sumAlmaz;
+                    int almazCount = (userCountAlmaz * priceAlmaz) / priceAlmaz;
+                    Console.WriteLine($"У вас {almazCount} кристала, остаток золота {balanceUser}");
+                    break;
+
+                case 2:
+                    Console.WriteLine("Были рады вас видеть!");
+                    break;
+            }
+        }
+    }
+}
