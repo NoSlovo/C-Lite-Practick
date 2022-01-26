@@ -78,7 +78,7 @@ namespace Csharp_Lite
                         Console.Clear();
                         break;
                     case 7:
-                        toggle = false;
+                        isWork = false;
                         Console.WriteLine("Приложение выключено");
                         break;
                 }
