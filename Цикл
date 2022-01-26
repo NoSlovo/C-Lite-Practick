@@ -1,0 +1,19 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userMessage = Console.ReadLine();
+            for(int i = 0; i <= 10; i++)
+            {
+                Console.WriteLine(userMessage);
+            }
+        }
+    }
+}
