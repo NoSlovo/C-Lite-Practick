@@ -1,0 +1,89 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int cursTenge = 33, cursRub = 10, cursDollar = 73;
+            
+            int balancRub = 1000;
+            int balancDollar = 1000;
+            int balansTenge = 1000;
+
+            bool toggle = true;
+            while (toggle)
+            {
+                Console.WriteLine("Что вы хотите обменять ? ");
+                Console.WriteLine("1 - Обменять доллары на рубли");
+                Console.WriteLine("2 - Обмнеть доллары на тенге");
+                Console.WriteLine("3 - Обменять тенге на рубли");
+                Console.WriteLine("4 - обменять тенге на доллары");
+                Console.WriteLine("5 - Обменять рубли на доллары");
+                Console.WriteLine("6 - Обменять рубли на тенге");
+                Console.WriteLine("7 - Выключить приложение");
+                int userInput = Convert.ToInt32(Console.ReadLine());
+                switch (userInput) {
+                    default:
+                    case 1:
+                        Console.WriteLine("Обмен доллары на рубли");
+                        Console.WriteLine("Сколько вы хотите обменять ?");
+                        int dollarToRuble = Convert.ToInt32(Console.ReadLine());
+                        balancRub += dollarToRuble * cursDollar;
+                        balancDollar -= dollarToRuble ;
+                        Console.Clear();
+                        break;
+                    case 2:
+                        Console.WriteLine("Обмен  доллары на тенге");
+                        Console.WriteLine("Сколько вы хотите обменять ?");
+                        int dollarToTenge = Convert.ToInt32(Console.ReadLine());
+                        balansTenge += dollarToTenge * cursDollar;
+                        balancDollar -= dollarToTenge ;
+                        Console.Clear();
+                        break;
+                    case 3:
+                        Console.WriteLine("Обменять тенге на рубли");
+                        Console.WriteLine("Сколько вы хотите обменять ?");
+                        int tengeToRuble = Convert.ToInt32(Console.ReadLine());
+                        balansTenge -= tengeToRuble ;
+                        balancRub += tengeToRuble * cursRub;
+                        Console.Clear();
+                        break;
+                    case 4:
+                        Console.WriteLine("Обменять тенге на доллары");
+                        Console.WriteLine("Сколько вы хотите обменять ?");
+                        int tengeToDollar =Convert.ToInt32(Console.ReadLine());
+                        balansTenge -= tengeToDollar ;
+                        balancDollar += tengeToDollar * cursDollar;
+                        Console.Clear();
+                        break;
+                    case 5:
+                        Console.WriteLine("Обменять рубли на доллары");
+                        Console.WriteLine("Сколько вы хотите обменять ?");
+                        int rubleToDollar = Convert.ToInt32(Console.ReadLine());
+                        balancRub -= rubleToDollar * cursDollar;
+                        balancDollar += rubleToDollar * cursDollar;
+                        Console.Clear();
+                        break;
+                    case 6:
+                        Console.WriteLine("Обменять рубли на тенге");
+                        Console.WriteLine("Сколько вы хотите обменять ?");
+                        int rubleToTenge = Convert.ToInt32(Console.ReadLine());
+                        balancRub -= rubleToTenge;
+                        balansTenge += rubleToTenge * cursTenge;
+                        Console.Clear();
+                        break;
+                    case 7:
+                        toggle = false;
+                        Console.WriteLine("Приложение выключено");
+                        break;
+                }
+                Console.WriteLine($"В данный момент у вас на балансе: Доллары:{balancDollar}, Рубли:{balancRub}, Тенге:{balansTenge}");
+            }
+        }
+    }
+}
