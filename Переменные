@@ -9,22 +9,16 @@ namespace Csharp_Lite
     {
         static void Main(string[] args)
         {
-            int init;
-            char cr;
-            double boole;
-            byte b;
-            sbyte sb;
-            string str;
-            short sh;
-            ushort ush;
-            long lg;
-            ulong ulg;
-            float fl;
-          
-
-            
-
-            
+            int number;
+            float drobNumber;
+            double longDrobNumber;
+            byte pozitiveByte;
+            sbyte diapozonByte;
+            bool trueAndFallse;
+            string stringNumber;
+            short znak;
+            ushort noZnak;
+            long bigNumber;
         }
     }
 }
