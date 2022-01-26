@@ -17,6 +17,7 @@ namespace Csharp_Lite
             Console.WriteLine("1-Да");
             Console.WriteLine("2-Нет");
             int userInput = Convert.ToInt32(Console.ReadLine());
+            
             switch (userInput)
             {
                 case 1:
