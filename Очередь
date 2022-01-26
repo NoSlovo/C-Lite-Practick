@@ -1,0 +1,22 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Сколько людей перед вами?");
+            int userInput = Convert.ToInt32(Console.ReadLine());
+            int hour = 60;
+            int timeReceipt = 10;
+            int countHour = (userInput * timeReceipt) / hour;
+            int hourMinets = userInput * timeReceipt;
+            int minutes = hourMinets - countHour * hour; 
+            Console.WriteLine($"Пимерное время ожидания {countHour}-час {minutes} - минут");
+        }
+    }
+}
