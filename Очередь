@@ -11,12 +11,13 @@ namespace Csharp_Lite
         {
             Console.WriteLine("Сколько людей перед вами?");
             int userInput = Convert.ToInt32(Console.ReadLine());
-            int hour = 60;
+            int minutesInHour = 60;
             int timeReceipt = 10;
-            int countHour = (userInput * timeReceipt) / hour;
-            int hourMinets = userInput * timeReceipt;
-            int minutes = hourMinets - countHour * hour; 
+            int countHour = (userInput * timeReceipt) / minutesInHour;
+            int allMinutes = userInput * timeReceipt;
+            int minutes = allMinutes - countHour * minutesInHour;
             Console.WriteLine($"Пимерное время ожидания {countHour}-час {minutes} - минут");
         }
     }
 }
+
