@@ -10,13 +10,13 @@ namespace Csharp_Lite
         static void Main(string[] args)
         {
             string userInput;
-            bool activeSwitch = true;
+            bool activeWhile = true;
             while (activeSwitch)
             {
                 userInput = Console.ReadLine();
                 if(userInput == "exit")
                 {
-                    activeSwitch = false;
+                    activeWhile = false;
                     Console.WriteLine("Конец цикла");
                 }
             }
