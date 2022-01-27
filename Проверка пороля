@@ -10,7 +10,8 @@ namespace Csharp_Lite
         static void Main(string[] args)
         {
             string password = "Panel";
-            for(int i = 2;i >= 0;i--)
+            int attempts = 3;
+            for (int i = 0; i < attempts; i++)
             {
                 Console.WriteLine("Введите пароль");
                 string userInput = Console.ReadLine();
@@ -21,7 +22,7 @@ namespace Csharp_Lite
                 }
                 else
                 {
-                    Console.WriteLine($"Попыток осталось {i}");
+                    Console.WriteLine($"Попыток осталось {attempts - (i + 1)}"); // + 1 просто для более наглядного вывода попыпот 
                     Console.WriteLine("Пороль не верен");
                 }
             }
