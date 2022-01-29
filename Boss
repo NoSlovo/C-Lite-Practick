@@ -1,0 +1,74 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int hpBoss = 1000;
+            int hpHero = 1000;
+
+            while(hpBoss > 0 && hpHero > 0)
+            {
+                Console.WriteLine("Выберете заклинание");
+                string userInput = Console.ReadLine();
+                int spellGrad = 40;
+                int spellFireBolle = 100;
+                int spellPuls = 200;
+
+                if(hpBoss == 0 && hpHero == 0)
+                {
+                    Console.WriteLine("Ничья!");
+                }  
+                    switch (userInput)
+                    {
+                        case "1":
+                            hpBoss -= spellGrad;
+                            break;
+                        case "2":
+                            hpBoss -= spellFireBolle;
+                            break;
+                        case "3":
+                            hpBoss -= spellPuls;
+                            break;
+                    }
+                
+                if (userInput.Length == 2)
+                {
+                    switch (userInput)
+                    {
+                        
+                        case "12":
+                            Console.WriteLine("Обноружено слияние умение");
+                            int meteorite = spellFireBolle + spellFireBolle;
+                            hpBoss -= meteorite;
+                            break;
+
+                        case "13":
+                            int firePuls = spellFireBolle + spellPuls;
+                            hpBoss -= firePuls;
+                            break;
+
+                        case "21":
+                            break;
+
+                        case "23":
+                            break;
+
+                        case "31":
+                            break;
+
+                        case "32":
+                            break;
+                               
+                    }
+                }
+                Console.WriteLine($"Босс:{hpBoss} Герой:{hpHero}");
+            }
+        }
+    }
+}
