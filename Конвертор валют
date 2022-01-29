@@ -9,14 +9,14 @@ namespace Csharp_Lite
     {
         static void Main(string[] args)
         {
-            int cursTenge = 33, cursRub = 10, cursDollar = 73;
+            int tenge = 33, rub = 10, usa = 73;
 
-            int balancRub = 1000;
-            int balancDollar = 1000;
-            int balansTenge = 1000;
-
+            int balanceRub = 1000;
+            int balanceDollar = 1000;
+            int balanceTenge = 1000;
             bool isWork = true;
-            while (isWork){
+            while (isWork)
+            {
                 Console.WriteLine("Что вы хотите обменять ? ");
                 Console.WriteLine("1 - Обменять доллары на рубли");
                 Console.WriteLine("2 - Обмнеть доллары на тенге");
@@ -26,16 +26,18 @@ namespace Csharp_Lite
                 Console.WriteLine("6 - Обменять рубли на тенге");
                 Console.WriteLine("7 - Выключить приложение");
                 string userInput = Console.ReadLine();
-                switch (userInput){
-                    default:
+                switch (userInput)
+                {
+                    
 
                     case "1":
                         Console.WriteLine("Обмен доллары на рубли");
                         Console.WriteLine("Сколько вы хотите обменять ?");
-                        int dollarToRuble = Convert.ToInt32(Console.ReadLine());
-                        if (balancDollar >= dollarToRuble){
-                            balancRub += dollarToRuble * cursDollar;
-                            balancDollar -= dollarToRuble;
+                        int exhangeDollarForRuble = Convert.ToInt32(Console.ReadLine());
+                        if (balanceDollar >= exhangeDollarForRuble)
+                        {
+                            balanceRub += exhangeDollarForRuble * usa;
+                            balanceDollar -= exhangeDollarForRuble;
                             Console.Clear();
                         }
                         else
@@ -47,14 +49,16 @@ namespace Csharp_Lite
                     case "2":
                         Console.WriteLine("Обмен  доллары на тенге");
                         Console.WriteLine("Сколько вы хотите обменять ?");
-                        int dollarToTenge = Convert.ToInt32(Console.ReadLine());
-                        if (balancDollar >= dollarToTenge){
+                        int exchangeDollarForTenge = Convert.ToInt32(Console.ReadLine());
+                        if (balanceDollar >= exchangeDollarForTenge)
+                        {
 
-                            balansTenge += dollarToTenge * cursDollar;
-                            balancDollar -= dollarToTenge;
+                            balanceTenge += exchangeDollarForTenge * usa;
+                            balanceDollar -= exchangeDollarForTenge;
                             Console.Clear();
-                        } 
-                        else {
+                        }
+                        else
+                        {
                             Console.WriteLine("Операция отменена");
                         }
 
@@ -63,78 +67,89 @@ namespace Csharp_Lite
                     case "3":
                         Console.WriteLine("Обменять тенге на рубли");
                         Console.WriteLine("Сколько вы хотите обменять ?");
-                        int tengeToRuble = Convert.ToInt32(Console.ReadLine());
-                        if (balancDollar >= tengeToRuble)
+                        int exchangeTengeForRuble = Convert.ToInt32(Console.ReadLine());
+                        if (balanceDollar >= exchangeTengeForRuble)
                         {
 
-                            balansTenge -= tengeToRuble;
-                            balancRub += tengeToRuble * cursRub;
+                            balanceTenge -= exchangeTengeForRuble;
+                            balanceRub += exchangeTengeForRuble * rub;
                             Console.Clear();
                         }
                         else
                         {
                             Console.WriteLine("Операция отменена");
                         }
+
                         break;
 
                     case "4":
                         Console.WriteLine("Обменять тенге на доллары");
                         Console.WriteLine("Сколько вы хотите обменять ?");
-                        int tengeToDollar = Convert.ToInt32(Console.ReadLine());
-                        if (balancDollar >= tengeToDollar)
+                        int exchangeTengeForDollar = Convert.ToInt32(Console.ReadLine());
+                        if (balanceDollar >= exchangeTengeForDollar)
                         {
 
-                            balansTenge -= tengeToDollar;
-                            balancDollar += tengeToDollar * cursDollar;
+                            balanceTenge -= exchangeTengeForDollar;
+                            balanceDollar += exchangeTengeForDollar * usa;
 
                         }
                         else
                         {
                             Console.WriteLine("Операция отменена");
                         }
+
                         break;
 
                     case "5":
                         Console.WriteLine("Обменять рубли на доллары");
                         Console.WriteLine("Сколько вы хотите обменять ?");
-                        int rubleToDollar = Convert.ToInt32(Console.ReadLine());
-                        if (balancRub >= rubleToDollar)
+                        int exchangeRubForDollars = Convert.ToInt32(Console.ReadLine());
+                        if (balanceRub >= exchangeRubForDollars)
                         {
 
-                            balancRub -= rubleToDollar * cursDollar;
-                            balancDollar += rubleToDollar * cursDollar;
+                            balanceRub -= exchangeRubForDollars * usa;
+                            balanceDollar += exchangeRubForDollars * usa;
                             Console.Clear();
                         }
                         else
                         {
                             Console.WriteLine("Операция отменена");
                         }
+
                         break;
 
                     case "6":
                         Console.WriteLine("Обменять рубли на тенге");
                         Console.WriteLine("Сколько вы хотите обменять ?");
-                        int rubleToTenge = Convert.ToInt32(Console.ReadLine());
+                        int exhangeRubleForTenge = Convert.ToInt32(Console.ReadLine());
 
-                        if (balancRub >= rubleToTenge)
+                        if (balanceRub >= exhangeRubleForTenge)
                         {
 
-                            balancRub -= rubleToTenge;
-                            balansTenge += rubleToTenge * cursTenge;
+                            balanceRub -= exhangeRubleForTenge;
+                            balanceTenge += exhangeRubleForTenge * tenge;
                             Console.Clear();
                         }
                         else
                         {
                             Console.WriteLine("Операция отменена");
                         }
+
                         break;
 
                     case "7":
                         isWork = false;
                         Console.WriteLine("Приложение выключено");
+
+                        break;
+
+                    default:
+                    
+                        Console.WriteLine("Выберете один пункт меню");
+                        
                         break;
                 }
-                Console.WriteLine($"В данный момент у вас на балансе: Доллары:{balancDollar}, Рубли:{balancRub}, Тенге:{balansTenge}");
+                Console.WriteLine($"В данный момент у вас на балансе: Доллары:{balanceDollar}, Рубли:{balanceRub}, Тенге:{balanceTenge}");
             }
         }
     }
