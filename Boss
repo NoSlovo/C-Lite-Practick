@@ -9,65 +9,155 @@ namespace Csharp_Lite
     {
         static void Main(string[] args)
         {
-            int hpBoss = 1000;
-            int hpHero = 1000;
+            Random rad = new Random();
 
-            while(hpBoss > 0 && hpHero > 0)
+            int hpBoss = 1000;
+            int damageBoss = rad.Next(10,1001);
+            int hpHero = 1000;
+            
+
+            while (hpBoss > 0 && hpHero > 0)
             {
+                Console.WriteLine($"Босс:{hpBoss} Герой:{hpHero}");
                 Console.WriteLine("Выберете заклинание");
+                Console.WriteLine("1 - Град");
+                Console.WriteLine("2 - Огненый шар");
+                Console.WriteLine("3 - Пульс");
+                Console.WriteLine("Подсказка:");
+                Console.WriteLine("Вы можите комбинировать умения для получения большего урона либо усилений");
+                Console.WriteLine("Удачной игры!");
                 string userInput = Console.ReadLine();
                 int spellGrad = 40;
                 int spellFireBolle = 100;
                 int spellPuls = 200;
+                int spellLimit = 0;
 
-                if(hpBoss == 0 && hpHero == 0)
+                switch (userInput)
                 {
-                    Console.WriteLine("Ничья!");
-                }  
-                    switch (userInput)
-                    {
-                        case "1":
-                            hpBoss -= spellGrad;
-                            break;
-                        case "2":
+                    case "1":
+                        Console.Clear();
+                        hpBoss -= spellGrad;
+                        
+
+                        break;
+
+                    case "2":
+                        Console.Clear();
+                        if (hpBoss <= 900)
+                        {
                             hpBoss -= spellFireBolle;
-                            break;
-                        case "3":
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Условие не выполнено");
+                        }
+
+                        hpHero -= damageBoss;
+                        
+
+                        break;
+
+                    case "3":
+                        Console.Clear();
+                        if (hpHero <= 950)
+                        {
                             hpBoss -= spellPuls;
-                            break;
-                    }
-                
+                        }
+                        else
+                        {
+                            Console.WriteLine("Условие не выполнено");
+                        }
+
+                        hpHero -= damageBoss;
+                        
+
+                        break;
+                }
+
                 if (userInput.Length == 2)
                 {
                     switch (userInput)
                     {
-                        
+
                         case "12":
-                            Console.WriteLine("Обноружено слияние умение");
-                            int meteorite = spellFireBolle + spellFireBolle;
+                            Console.Clear();
+                            Console.WriteLine("Обноружено слияние умений : Метеорит");
+                            int meteorite = (spellFireBolle + spellGrad) * 2 ;
                             hpBoss -= meteorite;
+                            
+
                             break;
 
                         case "13":
+                            Console.Clear();
+                            Console.WriteLine("Обноружено слияние умений : Огненый Пульс");
                             int firePuls = spellFireBolle + spellPuls;
+                            hpHero += 200;
                             hpBoss -= firePuls;
+                            
+
                             break;
 
                         case "21":
+
+                            Console.Clear();
+                            Console.WriteLine("Обноружено слияние умений : Жестокое Солнце");
+                            int cruelSun = (spellFireBolle + spellGrad) * 3;
+                            hpBoss -= cruelSun;
+                           
+
+
                             break;
 
                         case "23":
+                            Console.Clear();
+                            Console.WriteLine("Обноружено слияние умений : Огненое Кольцо");
+                            if (hpHero <= 500 && spellLimit <= 1)
+                            {
+                                Console.WriteLine("Урон босса не прощел");
+                                int fireRing = (spellFireBolle + spellPuls);
+                                damageBoss = 0;
+                                
+                            }
+                            else
+                            {
+                                
+                                Console.WriteLine("Условия не выполнено");
+                            }
+
+                            hpHero -= damageBoss;
+                            
                             break;
 
                         case "31":
+                            Console.Clear();
+                            Console.WriteLine("Обноружено слияние умений : Кольцо Земли");
+                            int earthRing = 50;
+                            hpHero += earthRing;
+                            damageBoss = 0;
                             break;
 
                         case "32":
+                            Console.Clear();
+                            Console.WriteLine("Обноружено слияние умений : Огненая Волна");
+                            int waveFire = 200;
+                            hpBoss -= waveFire;
                             break;
-                               
+
                     }
-                }
-                Console.WriteLine($"Босс:{hpBoss} Герой:{hpHero}");
+                }                
+            }
+            if (hpBoss == 0 && hpHero == 0)
+            {
+                Console.WriteLine("Ничья!");
+            }
+            else if (hpHero <= 0)
+            {
+                Console.WriteLine("Победа сил тьмы");
+            }else if (hpBoss <=0)
+            {
+                Console.WriteLine("Победа сил света");
             }
         }
     }
