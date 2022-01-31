@@ -1,0 +1,35 @@
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Csharp_Lite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] array = {{1,2,3,4},{1,2,3,4},{1,2,3,4,}};
+
+
+            int сolumn = 0;
+            int line = 0;
+            for (int i = 0; i < array.GetLength(0);i++)
+            {
+                if(i == 1){
+                    for (int j = 0; j < array.GetLength(1); j++)
+                    {
+                        line += array[1,j];
+
+                    }
+                }
+                сolumn += array[i, 0];
+            }
+
+            Console.WriteLine("Столбец: " + сolumn);
+            Console.WriteLine("Строка: " + line);
+
+
+        }
+    }
+}
