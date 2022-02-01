@@ -32,7 +32,6 @@ namespace Csharp_Lite
             }
             Console.WriteLine("Сумма столбца : " + сolumn);
             Console.WriteLine("Сумма  cтроки: " + line);
-
         }
     }
 }
