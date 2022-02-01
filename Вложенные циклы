@@ -9,22 +9,29 @@ namespace Csharp_Lite
     {
         static void Main(string[] args)
         {
-            string topLine = "";
-            string lowLine = "";
-            Console.WriteLine("Введите символ");
-            char symbol = Convert.ToChar(Console.ReadLine());
-            Console.WriteLine("Введите имя");
-            string userName = Console.ReadLine();
-            int addSymbols = 2;
-            int longString = userName.Length + addSymbols;
+            int[,] array = {{1,2,3,4},{1,2,3,4},{1,2,3,4,}};
 
-            for(int i = 0; i < longString; i++)
+            int сolumn = 0;
+            int line = 0;
+
+           for(int i = 0; i < array.GetLength(0); i++)
             {
-                topLine += symbol;
-                lowLine += symbol;
-            }
+                сolumn += array[i, 0];
 
-            Console.WriteLine($"{topLine}\n{symbol}{userName}{symbol}\n{lowLine}");
+                for(int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (i == 1)
+                    {
+                        line += array[i, j];
+                    }  
+                    
+                        Console.Write(array[i,j]);
+                        
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("Сумма столбца : " + сolumn);
+            Console.WriteLine("Сумма  cтроки: " + line);
 
         }
     }
