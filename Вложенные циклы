@@ -15,24 +15,26 @@ namespace Csharp_Lite
             int сolumn = 0;
             int line = 0;
 
-            for (int k = 0; k < array.GetLength(0); k++)
+            for(int i = 0; i < array.GetLength(0); i++)
             {
-                for (int c = 0; c < array.GetLength(1); c++)
+                сolumn += array[i, 0];
+                
+            }
+
+            for(int j = 0; j < array.GetLength(1); j++)
+            {
+                line += array[1, j];
+                
+            }
+
+            for (int k = 0;k < array.GetLength(0); k++)
+            {
+                for (int c = 0; c < array.GetLength(1);c++)
                 {
                     Console.Write(array[k, c]);
                 }
                 Console.WriteLine();
-            }
-
-            for (int i = 0; i < array.GetLength(0); i++)
-            {
-                for (int j = 0; j < array.GetLength(1) && i == 1; j++)
-                {     
-                        line += array[i, j];// если убрать проверку то он будет складывать его 3 раза, по этому пришлось такой кастыль придумать в цикл записать условие;
-                    
-                }
-                сolumn += array[i, 0];
-            }
+            } 
             Console.WriteLine("Сумма столбца : " + сolumn);
             Console.WriteLine("Сумма  cтроки: " + line);
         }
