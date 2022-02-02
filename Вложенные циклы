@@ -12,30 +12,30 @@ namespace Csharp_Lite
         {
             int[,] array = { { 1, 2, 3, 4 }, { 1, 2, 3, 4 }, { 1, 2, 3, 4, } };
 
-            int сolumn = 0;
+            int сolumn = 1;
             int line = 0;
 
-            for(int i = 0; i < array.GetLength(0); i++)
+            for (int i = 0; i < array.GetLength(0); i++)
             {
-                сolumn += array[i, 0];
+                сolumn *= array[i, 0];
                 
             }
 
-            for(int j = 0; j < array.GetLength(1); j++)
+            for (int j = 0; j < array.GetLength(1); j++)
             {
                 line += array[1, j];
-                
+
             }
 
-            for (int k = 0;k < array.GetLength(0); k++)
+            for (int k = 0; k < array.GetLength(0); k++)
             {
-                for (int c = 0; c < array.GetLength(1);c++)
+                for (int c = 0; c < array.GetLength(1); c++)
                 {
                     Console.Write(array[k, c]);
                 }
                 Console.WriteLine();
-            } 
-            Console.WriteLine("Сумма столбца : " + сolumn);
+            }
+            Console.WriteLine("произведение столбца : " + сolumn);
             Console.WriteLine("Сумма  cтроки: " + line);
         }
     }
