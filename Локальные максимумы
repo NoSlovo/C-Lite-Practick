@@ -25,7 +25,7 @@ namespace GameConsoles1
             {
                 Console.WriteLine("Начальный максимум : " + array[0]);
             }
-            
+
             for (int i = 1; i < array.Length - 1; i++)
             {
                 if (array[i] > array[i + 1] && array[i] > array[i - 1])
@@ -35,7 +35,7 @@ namespace GameConsoles1
             }
             if (array[array.Length - 1] > array[array.Length - 2])
             {
-                Console.WriteLine("Конечный максимум : " + array[29]);
+                Console.WriteLine("Конечный максимум : " + array[array.Length - 1]);
             }
         }
     }
