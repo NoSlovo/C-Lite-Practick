@@ -39,12 +39,11 @@ namespace GameConsoles1
                     int[] tempArray = new int[array.Length + 1];
                     tempArray[array.Length] = Convert.ToInt32(userInput);
 
-                    for (int i = -1; i < array.Length; i++)
+                    for (int i = 0; i < array.Length; i++)
                     {
-                        if (i > 0)
-                        {
+                        
                             tempArray[i] = array[i];
-                        }
+                        
                     }
 
                     array = tempArray;
