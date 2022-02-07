@@ -10,35 +10,33 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            int[] array =new int [30];
+            int[] array = new int[30];
             Random random = new Random();
-
 
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = random.Next(0,30);
-             
+                array[i] = random.Next(0, 30);
                 Console.Write(array[i] + "|");
             }
+
+            Console.WriteLine();
 
             if (array[0] > array[1])
             {
                 Console.WriteLine("Начальный максимум : " + array[0]);
             }
-            if (array[29] > array[28])
+            
+            for (int i = 1; i < array.Length - 1; i++)
             {
-                Console.WriteLine("Конечный максимум : " + array[29]);
-            }
-
-            for (int i = 1; i  <  array.Length && i < array.Length - 2; i++)
-            {
-                if (array[i] > array[i+1] && array[i] > array[i - 1])
+                if (array[i] > array[i + 1] && array[i] > array[i - 1])
                 {
                     Console.WriteLine("Локальный максиму : " + array[i]);
                 }
             }
-
-            
-        }   
+            if (array[array.Length - 1] > array[array.Length - 2])
+            {
+                Console.WriteLine("Конечный максимум : " + array[29]);
+            }
+        }
     }
 }
