@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            int[] array = new int[0];
+            string userInput;
+            bool isWork = true;
+
+            while (isWork)
+            {
+                userInput = Console.ReadLine();
+
+                if (userInput == "sum")
+                {
+                    int sum = 0;
+                    for (int j = 0; j < array.Length; j++)
+                    {
+                        sum += array[j];
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine(sum);
+                }
+
+                else if (userInput == "exit")
+                {
+                    isWork = false;
+                }
+
+                else
+                {
+                    int[] tempArray = new int[array.Length + 1];
+                    tempArray[array.Length] = Convert.ToInt32(userInput);
+
+                    for (int i = -1; i < array.Length; i++)
+                    {
+                        if (i > 0)
+                        {
+                            tempArray[i] = array[i];
+                        }
+                    }
+
+                    array = tempArray;
+                    Console.WriteLine();
+                }
+            }
+        }
+    }
+}
