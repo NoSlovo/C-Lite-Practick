@@ -29,7 +29,8 @@ namespace GameConsoles1
                         string name = Console.ReadLine();
                         Console.WriteLine("Введите должность:");
                         string namePosition = Console.ReadLine();
-                        AddName(ref nameArray, ref positions, name, namePosition);
+                        AddElements(ref nameArray, name);
+                        AddElements(ref positions, namePosition);
                         break;
 
                     case "2":
@@ -52,21 +53,19 @@ namespace GameConsoles1
             }
         }
 
-        static void AddName(ref string[] array, ref string[] position, string addName, string addPositon)
-        {
-            string[] newNameArray = new string[array.Length + 1];
-            string[] newPositionArray = new string[position.Length + 1];
+        static void AddElements(ref string[] array, string addElement)
+        { 
+            string[] newArray = new string[array.Length + 1];
+            
 
-            for (int i = 0; i < array.Length && i < position.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                newNameArray[i] = array[i];
-                newPositionArray[i] = position[i];
+                newArray[i] = array[i];
+                
             }
 
-            array = newNameArray;
-            array[array.Length - 1] = addName;
-            position = newPositionArray;
-            position[position.Length - 1] = addPositon;
+            array = newArray;
+            array[array.Length - 1] = addElement;
         }
 
         static void SearchName(string[] nameArray, string nameSearch)
@@ -105,6 +104,7 @@ namespace GameConsoles1
             }
 
             nameArray = newNameArray;
+ 
             arrayPosition = newPositionArray;
             Console.WriteLine("Удалено!");
         }
