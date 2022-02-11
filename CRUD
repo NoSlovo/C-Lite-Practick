@@ -8,11 +8,13 @@ namespace GameConsoles1
 {
     internal class Program
     {
+
         static void Main()
         {
             string[] nameArray = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович" };
             string[] positions = { "Программист", "Левел Дизайнер", "Сценарист", };
             bool isWork = true;
+
             while (isWork)
             {
                 Console.WriteLine("Меню программы: ");
@@ -30,8 +32,8 @@ namespace GameConsoles1
                         string name = Console.ReadLine();
                         Console.WriteLine("Введите должность:");
                         string namePosition = Console.ReadLine();
-                        AddElements(ref nameArray, name);
-                        AddElements(ref positions, namePosition);
+                        AddElement(ref nameArray, name);
+                        AddElement(ref positions, namePosition);
                         break;
 
                     case "2":
@@ -51,20 +53,16 @@ namespace GameConsoles1
                         isWork = false;
                         break;
                 }
-
             }
         }
 
-        static void AddElements(ref string[] array, string addElement)
+        static void AddElement(ref string[] array, string addElement)
         { 
             string[] newArray = new string[array.Length + 1];
-            
-
             for (int i = 0; i < array.Length; i++)
             {
                 newArray[i] = array[i];                
             }
-
             array = newArray;
             array[array.Length - 1] = addElement;
         }
@@ -92,7 +90,6 @@ namespace GameConsoles1
         static void DeletePosition(ref string[] array,  int idPosition)
         {
             string[] newArray = new string[array.Length - 1];
-            
             for (int i = 0; i < array.Length; i++)
             {
                 if (i + 1 != idPosition)
