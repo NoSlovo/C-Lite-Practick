@@ -18,7 +18,7 @@ namespace GameConsoles1
             while (isWork)
             {
                 Console.WriteLine("Меню программы: ");
-                Console.WriteLine("0 - Вывести все досье\n1 - Добавить досье\n2 - Поиск по фамилии\n3 - удалить досье \n4- выход");
+                Console.WriteLine("0 - Вывести все досье\n1 - Добавить ФИО\n2 - Добивать досье\n3 - Поиск Досье\n4 - удалить досье\n 5-выход");
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -28,47 +28,44 @@ namespace GameConsoles1
                         break;
 
                     case "1":
-                        Console.WriteLine("Введите ФИО:");
-                        string name = Console.ReadLine();
-                        Console.WriteLine("Введите должность:");
-                        string namePosition = Console.ReadLine();
-                        AddElement(ref nameArray, name);
-                        AddElement(ref positions, namePosition);
+                        AddElement(ref nameArray);
                         break;
 
                     case "2":
-                        Console.WriteLine("Введите фамилию");
-                        string nameSearch = Console.ReadLine();
-                        SearchName(nameArray, nameSearch);
+                        AddElement(ref positions);
                         break;
 
                     case "3":
-                        Console.WriteLine("Введите номер сотрудника для удаления досье");
-                        int numberPostion = Convert.ToInt32(Console.ReadLine());
-                        DeletePosition(ref nameArray,numberPostion);
-                        DeletePosition(ref positions, numberPostion);
+                        SearchName(nameArray);
                         break;
 
                     case "4":
+                        DeletePosition(ref nameArray, ref positions);
+                        break;
+                    
+                    case "5":
                         isWork = false;
                         break;
                 }
             }
         }
 
-        static void AddElement(ref string[] array, string addElement)
-        { 
+        static void AddElement(ref string[] array)
+        {
+            Console.WriteLine("Введите данные");
+            string addElement = Console.ReadLine();
             string[] newArray = new string[array.Length + 1];
             for (int i = 0; i < array.Length; i++)
             {
-                newArray[i] = array[i];                
+                newArray[i] = array[i];
             }
             array = newArray;
             array[array.Length - 1] = addElement;
         }
 
-        static void SearchName(string[] nameArray, string nameSearch)
+        static void SearchName(string[] nameArray)
         {
+            string nameSearch = Console.ReadLine();
             for (int i = 0; i < nameArray.Length; i++)
             {
                 if (nameArray[i].StartsWith(nameSearch))
@@ -87,21 +84,23 @@ namespace GameConsoles1
             }
         }
 
-        static void DeletePosition(ref string[] array,  int idPosition)
+        static void DeletePosition(ref string[] array, ref string[] position)
         {
+            Console.WriteLine("Введите номер сотрудника для удаления досье");
+            int idPosition = Convert.ToInt32(Console.ReadLine());
             string[] newArray = new string[array.Length - 1];
+            string[] newPosition = new string[position.Length - 1];
             for (int i = 0; i < array.Length; i++)
             {
                 if (i + 1 != idPosition)
                 {
                     newArray[i] = array[i];
-                   
+                    newPosition[i] = position[i];
                 }
             }
-           array = newArray;
+            array = newArray;
+            position = newPosition;
             Console.WriteLine("Удалено!");
         }
-
     }
-
 }
