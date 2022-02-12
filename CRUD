@@ -8,11 +8,10 @@ namespace GameConsoles1
 {
     internal class Program
     {
-
         static void Main()
         {
-            string[] nameArray = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович"};
-            string[] positions = { "Программист", "Левел Дизайнер", "Сценарист"};
+            string[] nameArray = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович", "Прокофьев Виктор Палыч" };
+            string[] positions = { "Программист", "Левел Дизайнер", "Сценарист","Стажер"};
             bool isWork = true;
 
             while (isWork)
@@ -43,9 +42,7 @@ namespace GameConsoles1
                         isWork = false;
                         break;
                 }
-
             }
-
         }
 
         static void AddDossier(ref string[] array, ref string[] arrayPosition)
@@ -54,53 +51,98 @@ namespace GameConsoles1
             string addElement = Console.ReadLine();
             Console.WriteLine("Введитие должность");
             string addPosition = Console.ReadLine();
-            
-            Array.Resize<string>(ref array, array.Length + 1);
-            Array.Resize<string>(ref arrayPosition, arrayPosition.Length + 1);
-            arrayPosition[arrayPosition.Length - 1] = addPosition;
-            array[array.Length - 1] = addElement;
+            addName(ref array, addElement);
+            AddPosition(ref arrayPosition, addPosition);
         }
 
         static void SearchName(string[] arrayNames)
         {
+            Console.WriteLine("Введите фамилию");
             string userInput = Console.ReadLine();
-            string result = "";
-            for (int i = 0; i < arrayNames.Length;i++)
+            foreach (string name  in arrayNames)
             {
-                if (arrayNames[i].StartsWith(userInput))
+                if (name.StartsWith(userInput))
                 {
-                    result = arrayNames[i];
+                    Console.WriteLine(name);
                 }
             }
-            Console.WriteLine(result);
+
+
         }
 
         static void DisplayDossier( string[] arrayNames,  string[] position)
         {
             for (int i = 0; i < arrayNames.Length || i < position.Length; i++)
             {
-                Console.Write($" {i + 1}-{arrayNames[i]} {position[i]} \t");
+                Console.Write($" {i + 1}-{arrayNames[i]} {position[i]} \n");
             }
         }
 
         static void DeletePosition(ref string[] array, ref string[] position)
         {
-            Console.WriteLine("Введите номер сотрудника для удаления досье");
-            int idPosition = Convert.ToInt32(Console.ReadLine());
-            string[] newArray = new string[array.Length - 1];
-            string[] newPosition = new string[position.Length - 1];
-            for (int i = 0; i < array.Length; i++)
+            Console.WriteLine("Введите номер досье на удаление");
+            int userInput = Convert.ToInt32(Console.ReadLine());
+            DeleteName(ref  array, userInput);
+            DeletePosition(ref position, userInput);
+        }
+
+        static void DeleteName(ref string[] array, int numName)
+        {
+            if (array.Length >= numName)
             {
-                if (i + 1 != idPosition)
+                string[] newNameArray = new string[array.Length - 1];
+
+                for (int i = 0; i < array.Length; i++)
                 {
-                    newArray[i] = array[i];
-                    newPosition[i] = position[i];
+                    if (i + 1 != numName)
+                    {
+                        newNameArray[i] = array[i];
+                    }
                 }
+                array = newNameArray;
+            }
+        }
+        
+        static void DeletePosition(ref string[] position, int numPosition)
+        {
+            if (numPosition <= position.Length)
+            {
+                string[] newArrayPostion = new string[position.Length - 1];
+
+                for (int i = 0; i < position.Length; i++)
+                {
+                    if (i + 1 != numPosition)
+                    {
+                        newArrayPostion[i] = position[i];
+                    }
+                }
+                position = newArrayPostion;
+            }
+        }
+
+        static void addName( ref string[] nameArray, string addName)
+        {
+            string[] newNameArray = new string[nameArray.Length + 1];
+
+            for (int i = 0; i < nameArray.Length; i++)
+            {
+                newNameArray[i] = nameArray[i];
             }
 
-            array = newArray;
-            position = newPosition;
-            Console.WriteLine("Удалено!");
+            nameArray = newNameArray;
+            nameArray[nameArray.Length - 1] = addName;
         }
-    }
+
+        static void AddPosition( ref string[] namePosition, string addPosition)
+        {
+            string[] newPostion = new string[namePosition.Length + 1];
+
+            for (int i = 0; i < namePosition.Length;i++)
+            {
+                newPostion[i] = namePosition[i];
+            }
+            namePosition = newPostion;
+            namePosition[namePosition.Length - 1] = addPosition;
+        }
+     }
 }
