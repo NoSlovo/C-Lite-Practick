@@ -54,36 +54,25 @@ namespace GameConsoles1
             string addElement = Console.ReadLine();
             Console.WriteLine("Введитие должность");
             string addPosition = Console.ReadLine();
-            string[] newNameArray = new string[array.Length + 1];
-            string[] newArrayPosition = new string[arrayPosition.Length + 1];
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                newNameArray[i] = array[i];
-
-            }
-
-            array = newNameArray;
-            array[array.Length - 1] = addElement;
-            arrayPosition = newArrayPosition;
+            
+            Array.Resize<string>(ref array, array.Length + 1);
+            Array.Resize<string>(ref arrayPosition, arrayPosition.Length + 1);
             arrayPosition[arrayPosition.Length - 1] = addPosition;
+            array[array.Length - 1] = addElement;
         }
 
         static void SearchName(string[] arrayNames)
         {
-            string nameSearch = Console.ReadLine();
-            for (int i = 0; i < arrayNames.Length; i++)
+            string userInput = Console.ReadLine();
+            string result = "";
+            for (int i = 0; i < arrayNames.Length;i++)
             {
-                if (arrayNames[i].StartsWith(nameSearch))
+                if (arrayNames[i].StartsWith(userInput))
                 {
-                    Console.WriteLine(arrayNames[i]);
-                }
-                else
-                {
-                    Console.WriteLine("Такого человека нет");
-                    break;
+                    result = arrayNames[i];
                 }
             }
+            Console.WriteLine(result);
         }
 
         static void DisplayDossier( string[] arrayNames,  string[] position)
@@ -100,7 +89,6 @@ namespace GameConsoles1
             int idPosition = Convert.ToInt32(Console.ReadLine());
             string[] newArray = new string[array.Length - 1];
             string[] newPosition = new string[position.Length - 1];
-
             for (int i = 0; i < array.Length; i++)
             {
                 if (i + 1 != idPosition)
