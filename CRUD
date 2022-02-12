@@ -11,76 +11,86 @@ namespace GameConsoles1
 
         static void Main()
         {
-            string[] nameArray = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович" };
-            string[] positions = { "Программист", "Левел Дизайнер", "Сценарист", };
+            string[] nameArray = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович"};
+            string[] positions = { "Программист", "Левел Дизайнер", "Сценарист"};
             bool isWork = true;
 
             while (isWork)
             {
                 Console.WriteLine("Меню программы: ");
-                Console.WriteLine("0 - Вывести все досье\n1 - Добавить ФИО\n2 - Добивать досье\n3 - Поиск Досье\n4 - удалить досье\n 5-выход");
+                Console.WriteLine("0 - Вывести все досье\n1 - Добивать досье\n2 - Поиск Досье\n3 - удалить досье\n4-выход\n\n");
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
                     case "0":
-                        DisplayDossier(ref nameArray, ref positions);
+                        DisplayDossier( nameArray,  positions);
                         break;
 
                     case "1":
-                        AddElement(ref nameArray);
+                        AddDossier(ref nameArray, ref positions);
                         break;
 
                     case "2":
-                        AddElement(ref positions);
-                        break;
-
-                    case "3":
                         SearchName(nameArray);
                         break;
 
-                    case "4":
+                    case "3":
                         DeletePosition(ref nameArray, ref positions);
                         break;
                     
-                    case "5":
+                    case "4":
                         isWork = false;
                         break;
                 }
+
             }
+
         }
 
-        static void AddElement(ref string[] array)
+        static void AddDossier(ref string[] array, ref string[] arrayPosition)
         {
-            Console.WriteLine("Введите данные");
+            Console.WriteLine("Введите ФИО");
             string addElement = Console.ReadLine();
-            string[] newArray = new string[array.Length + 1];
+            Console.WriteLine("Введитие должность");
+            string addPosition = Console.ReadLine();
+            string[] newNameArray = new string[array.Length + 1];
+            string[] newArrayPosition = new string[arrayPosition.Length + 1];
+
             for (int i = 0; i < array.Length; i++)
             {
-                newArray[i] = array[i];
+                newNameArray[i] = array[i];
+
             }
-            array = newArray;
+
+            array = newNameArray;
             array[array.Length - 1] = addElement;
+            arrayPosition = newArrayPosition;
+            arrayPosition[arrayPosition.Length - 1] = addPosition;
         }
 
-        static void SearchName(string[] nameArray)
+        static void SearchName(string[] arrayNames)
         {
             string nameSearch = Console.ReadLine();
-            for (int i = 0; i < nameArray.Length; i++)
+            for (int i = 0; i < arrayNames.Length; i++)
             {
-                if (nameArray[i].StartsWith(nameSearch))
+                if (arrayNames[i].StartsWith(nameSearch))
                 {
-                    Console.WriteLine(nameArray[i]);
+                    Console.WriteLine(arrayNames[i]);
+                }
+                else
+                {
+                    Console.WriteLine("Такого человека нет");
+                    break;
                 }
             }
-
         }
 
-        static void DisplayDossier(ref string[] nameArray, ref string[] position)
+        static void DisplayDossier( string[] arrayNames,  string[] position)
         {
-            for (int i = 0; i < nameArray.Length; i++)
+            for (int i = 0; i < arrayNames.Length || i < position.Length; i++)
             {
-                Console.Write($" {i + 1}-{nameArray[i]} {position[i]}");
+                Console.Write($" {i + 1}-{arrayNames[i]} {position[i]} \t");
             }
         }
 
@@ -90,6 +100,7 @@ namespace GameConsoles1
             int idPosition = Convert.ToInt32(Console.ReadLine());
             string[] newArray = new string[array.Length - 1];
             string[] newPosition = new string[position.Length - 1];
+
             for (int i = 0; i < array.Length; i++)
             {
                 if (i + 1 != idPosition)
@@ -98,6 +109,7 @@ namespace GameConsoles1
                     newPosition[i] = position[i];
                 }
             }
+
             array = newArray;
             position = newPosition;
             Console.WriteLine("Удалено!");
