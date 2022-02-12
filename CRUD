@@ -11,7 +11,7 @@ namespace GameConsoles1
         static void Main()
         {
             string[] nameArray = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович", "Прокофьев Виктор Палыч" };
-            string[] positions = { "Программист", "Левел Дизайнер", "Сценарист","Стажер"};
+            string[] positions = { "Программист", "Левел Дизайнер", "Сценарист", "Стажер" };
             bool isWork = true;
 
             while (isWork)
@@ -23,7 +23,7 @@ namespace GameConsoles1
                 switch (userInput)
                 {
                     case "0":
-                        DisplayDossier( nameArray,  positions);
+                        DisplayDossier(nameArray, positions);
                         break;
 
                     case "1":
@@ -35,9 +35,9 @@ namespace GameConsoles1
                         break;
 
                     case "3":
-                        DeletePosition(ref nameArray, ref positions);
+                        DeleteELments(ref nameArray, ref positions);
                         break;
-                    
+
                     case "4":
                         isWork = false;
                         break;
@@ -51,15 +51,15 @@ namespace GameConsoles1
             string addElement = Console.ReadLine();
             Console.WriteLine("Введитие должность");
             string addPosition = Console.ReadLine();
-            addName(ref array, addElement);
-            AddPosition(ref arrayPosition, addPosition);
+            AddElemnt(ref array, addElement);
+            AddElemnt(ref arrayPosition, addPosition);
         }
 
         static void SearchName(string[] arrayNames)
         {
             Console.WriteLine("Введите фамилию");
             string userInput = Console.ReadLine();
-            foreach (string name  in arrayNames)
+            foreach (string name in arrayNames)
             {
                 if (name.StartsWith(userInput))
                 {
@@ -69,8 +69,15 @@ namespace GameConsoles1
 
 
         }
+        static void DeleteELments(ref string[] name, ref string[] positon)
+        {
+            Console.WriteLine("Введите номер элемента");
+            int numElement = Convert.ToInt32(Console.ReadLine());
+            DeletElemnt(ref name,numElement);
+            DeletElemnt(ref positon, numElement);
+        }
 
-        static void DisplayDossier( string[] arrayNames,  string[] position)
+        static void DisplayDossier(string[] arrayNames, string[] position)
         {
             for (int i = 0; i < arrayNames.Length || i < position.Length; i++)
             {
@@ -78,71 +85,30 @@ namespace GameConsoles1
             }
         }
 
-        static void DeletePosition(ref string[] array, ref string[] position)
+        static void DeletElemnt( ref string[] array, int numberElemnt)
         {
-            Console.WriteLine("Введите номер досье на удаление");
-            int userInput = Convert.ToInt32(Console.ReadLine());
-            DeleteName(ref  array, userInput);
-            DeletePosition(ref position, userInput);
-        }
+            string[]newArray = new string[array.Length - 1];
 
-        static void DeleteName(ref string[] array, int numName)
-        {
-            if (array.Length >= numName)
+            for (int i = 0; i < array.Length;i++)
             {
-                string[] newNameArray = new string[array.Length - 1];
-
-                for (int i = 0; i < array.Length; i++)
+                if (i + 1 != numberElemnt)
                 {
-                    if (i + 1 != numName)
-                    {
-                        newNameArray[i] = array[i];
-                    }
+                    newArray[i] = array[i];
                 }
-                array = newNameArray;
+                    
             }
+            array = newArray;
         }
-        
-        static void DeletePosition(ref string[] position, int numPosition)
+
+        static void AddElemnt(ref string[] array, string addElemtn)
         {
-            if (numPosition <= position.Length)
+            string[] newArray = new string[array.Length + 1];
+            for (int i = 0; i < array.Length;i++)
             {
-                string[] newArrayPostion = new string[position.Length - 1];
-
-                for (int i = 0; i < position.Length; i++)
-                {
-                    if (i + 1 != numPosition)
-                    {
-                        newArrayPostion[i] = position[i];
-                    }
-                }
-                position = newArrayPostion;
+                newArray[i] = array[i];
             }
+            array =  newArray;
+            array[array.Length - 1] = addElemtn;
         }
-
-        static void addName( ref string[] nameArray, string addName)
-        {
-            string[] newNameArray = new string[nameArray.Length + 1];
-
-            for (int i = 0; i < nameArray.Length; i++)
-            {
-                newNameArray[i] = nameArray[i];
-            }
-
-            nameArray = newNameArray;
-            nameArray[nameArray.Length - 1] = addName;
-        }
-
-        static void AddPosition( ref string[] namePosition, string addPosition)
-        {
-            string[] newPostion = new string[namePosition.Length + 1];
-
-            for (int i = 0; i < namePosition.Length;i++)
-            {
-                newPostion[i] = namePosition[i];
-            }
-            namePosition = newPostion;
-            namePosition[namePosition.Length - 1] = addPosition;
-        }
-     }
+    }      
 }
