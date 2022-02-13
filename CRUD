@@ -10,7 +10,7 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            string[] nameArray = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович", "Прокофьев Виктор Палыч" };
+            string[] fullNames = { "Павлов Виктор Анатольевич", "Поисковик Поисков Иванович", "Прокофьев Кантарович", "Прокофьев Виктор Палыч" };
             string[] positions = { "Программист", "Левел Дизайнер", "Сценарист", "Стажер" };
             bool isWork = true;
 
@@ -23,19 +23,19 @@ namespace GameConsoles1
                 switch (userInput)
                 {
                     case "0":
-                        DisplayDossier(nameArray, positions);
+                        DisplayDossier(fullNames, positions);
                         break;
 
                     case "1":
-                        AddDossier(ref nameArray, ref positions);
+                        AddDossier(ref fullNames, ref positions);
                         break;
 
                     case "2":
-                        SearchName(nameArray);
+                        SearchName(fullNames);
                         break;
 
                     case "3":
-                        DeleteELments(ref nameArray, ref positions);
+                        DeleteDossier(ref fullNames, ref positions);
                         break;
 
                     case "4":
@@ -51,14 +51,15 @@ namespace GameConsoles1
             string addElement = Console.ReadLine();
             Console.WriteLine("Введитие должность");
             string addPosition = Console.ReadLine();
-            AddElemnt(ref array, addElement);
-            AddElemnt(ref arrayPosition, addPosition);
+            AddElement(ref array, addElement);
+            AddElement(ref arrayPosition, addPosition);
         }
 
         static void SearchName(string[] arrayNames)
         {
             Console.WriteLine("Введите фамилию");
             string userInput = Console.ReadLine();
+
             foreach (string name in arrayNames)
             {
                 if (name.StartsWith(userInput))
@@ -67,46 +68,62 @@ namespace GameConsoles1
                 }
             }
 
-
         }
-        static void DeleteELments(ref string[] name, ref string[] positon)
+        static void DeleteDossier(ref string[] fullName, ref string[] positons)
         {
             Console.WriteLine("Введите номер элемента");
             int numElement = Convert.ToInt32(Console.ReadLine());
-            DeletElemnt(ref name,numElement);
-            DeletElemnt(ref positon, numElement);
+            DeletElemnt(ref fullName, numElement);
+            DeletElemnt(ref positons, numElement);
         }
 
         static void DisplayDossier(string[] arrayNames, string[] position)
         {
+
             for (int i = 0; i < arrayNames.Length || i < position.Length; i++)
             {
                 Console.Write($" {i + 1}-{arrayNames[i]} {position[i]} \n");
             }
+
         }
 
         static void DeletElemnt( ref string[] array, int numberElemnt)
         {
-            string[]newArray = new string[array.Length - 1];
+            if (numberElemnt > 0 && numberElemnt <= array.Length) {
+                if (array.Length > 0) {
+                    string[] newArray = new string[array.Length - 1];
 
-            for (int i = 0; i < array.Length;i++)
-            {
-                if (i + 1 != numberElemnt)
-                {
-                    newArray[i] = array[i];
+                    for (int i = 0; i < newArray.Length;i++)
+                    {
+                        if (i + 1 == numberElemnt)
+                        {
+                            newArray[i] = array[i + 1];
+                        }
+                        else
+                        {
+                            newArray[i]=array[i];
+                        }
+
+                    }
+
+                    array = newArray;
                 }
-                    
             }
-            array = newArray;
+            else
+            {
+                Console.WriteLine("Такого Элемента нет");
+            }
         }
 
-        static void AddElemnt(ref string[] array, string addElemtn)
+        static void AddElement(ref string[] array, string addElemtn)
         {
             string[] newArray = new string[array.Length + 1];
+
             for (int i = 0; i < array.Length;i++)
             {
                 newArray[i] = array[i];
             }
+
             array =  newArray;
             array[array.Length - 1] = addElemtn;
         }
