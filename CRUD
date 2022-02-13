@@ -31,7 +31,7 @@ namespace GameConsoles1
                         break;
 
                     case "2":
-                        SearchName(fullNames);
+                        SearchName(fullNames,positions);
                         break;
 
                     case "3":
@@ -55,16 +55,17 @@ namespace GameConsoles1
             AddElement(ref positions, addPosition);
         }
 
-        static void SearchName(string[] arrayNames)
+        static void SearchName(string[] arrayNames,string[] positions)
         {
             Console.WriteLine("Введите фамилию");
             string userInput = Console.ReadLine();
-
+            int count = 0;
             foreach (string name in arrayNames)
             {
+                count++;
                 if (name.StartsWith(userInput))
                 {
-                    Console.WriteLine(name);
+                    Console.WriteLine(name + "-" +  positions[count - 1]);
                 }
             }
 
@@ -97,19 +98,19 @@ namespace GameConsoles1
 
         static void DeletElement(ref string[] array, int numberElemnt)
         {
-          string[] newArray = new string[array.Length - 1];
+            string[] newArray = new string[array.Length - 1];
 
-            for (int i = 0; i < numberElemnt;i++)
+            for (int i = 0; i < numberElemnt; i++)
             {
-                newArray[i] = array[i];    
+                newArray[i] = array[i];
             }
 
-            for(int i = numberElemnt + 1; i < array.Length; i++)
+            for (int i = numberElemnt + 1; i < array.Length; i++)
             {
                 newArray[i - 1] = array[i];
             }
-           
-          array = newArray;      
+
+            array = newArray;
         }
 
         static void AddElement(ref string[] array, string addElemtn)
