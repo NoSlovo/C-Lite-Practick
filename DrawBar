@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            int hp = 5;
+            int maxHp = 10;
+            int mana = 3;
+            int maxMana = 10;
+
+            DrawBar(hp, maxHp, ConsoleColor.Red, 1);
+            DrawBar(mana, maxMana, ConsoleColor.Blue, 2);
+        }
+
+        static void DrawBar(int value, int maxValue,ConsoleColor color, int position)
+        {
+            ConsoleColor defaultColor = Console.BackgroundColor;
+            string bar = " ";
+
+            for (int i = 0; i <= value; i++)
+            {
+                    bar += '#';              
+            }
+
+            Console.SetCursorPosition(0,position);
+            Console.Write("[");
+            Console.BackgroundColor = color;
+            Console.Write(bar);
+            Console.BackgroundColor = defaultColor;
+
+            bar = "";
+
+            for(int i = value; i < maxValue;i++)
+            {
+                bar +=' ';
+            }
+            Console.Write(bar + "]");
+        }
+    }
+}
