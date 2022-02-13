@@ -13,23 +13,35 @@ namespace GameConsoles1
             int hp = 5;
             int maxHp = 10;
             int mana = 3;
-            int maxMana = 10;
+            int maxMana = 20;
 
-            DrawBar(hp, maxHp, ConsoleColor.Red, 1);
-            DrawBar(mana, maxMana, ConsoleColor.Blue, 2);
+            DrawBar(hp, maxHp, ConsoleColor.Red, 1, 50);
+            DrawBar(mana, maxMana, ConsoleColor.Blue, 2,50);
         }
 
-        static void DrawBar(int value, int maxValue,ConsoleColor color, int position)
+        static void DrawBar(int value, int maxValue, ConsoleColor color, int position, int percent)
         {
             ConsoleColor defaultColor = Console.BackgroundColor;
             string bar = " ";
-
-            for (int i = 0; i <= value; i++)
+            Console.WriteLine(percent);
+            if (value == 0 )
             {
-                    bar += '#';              
+                int maxPersent = 100;
+                for (int i = 0; i <= percent; i++)
+                {
+                    bar += '#';
+                }
             }
+            else
+            {
+                for (int i = 0; i <= value; i++)
+                {
+                    bar += '#';
+                }
+            }
+            
 
-            Console.SetCursorPosition(0,position);
+            Console.SetCursorPosition(0, position);
             Console.Write("[");
             Console.BackgroundColor = color;
             Console.Write(bar);
@@ -37,9 +49,21 @@ namespace GameConsoles1
 
             bar = "";
 
-            for(int i = value; i < maxValue;i++)
+            if (maxValue == 0)
             {
-                bar +=' ';
+                int maxPersent = 100;
+                for (int i = percent; i < maxPersent; i++)
+                {
+                    bar += ' ';
+                }
+                
+            }
+            else
+            {
+                for (int i = value; i < maxValue; i++)
+                {
+                    bar += ' ';
+                }
             }
             Console.Write(bar + "]");
         }
