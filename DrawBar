@@ -10,62 +10,77 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            int hp = 5;
-            int maxHp = 10;
-            int mana = 3;
-            int maxMana = 20;
-
-            DrawBar(hp, maxHp, ConsoleColor.Red, 1, 50);
-            DrawBar(mana, maxMana, ConsoleColor.Blue, 2,50);
+            double heal = 10;
+            double maxHeal = 100;
+            double mana = 20;
+            double maxMana = 100;
+            DrawBar(heal, maxHeal,43,1,ConsoleColor.Red);
+            DrawBar(mana, maxMana, 0, 2, ConsoleColor.Blue);
         }
 
-        static void DrawBar(int value, int maxValue, ConsoleColor color, int position, int percent)
+        static void DrawBar(double value, double maxValue, double percent,int position, ConsoleColor color)
         {
+            
             ConsoleColor defaultColor = Console.BackgroundColor;
+            
             string bar = " ";
-            Console.WriteLine(percent);
-            if (value == 0 )
-            {
-                int maxPersent = 100;
-                for (int i = 0; i <= percent; i++)
-                {
-                    bar += '#';
-                }
-            }
-            else
+            if (value > 0 && maxValue > 0 && value <= 100 &&  maxValue >= value && maxValue <=100)
             {
                 for (int i = 0; i <= value; i++)
                 {
                     bar += '#';
                 }
-            }
-            
 
-            Console.SetCursorPosition(0, position);
-            Console.Write("[");
-            Console.BackgroundColor = color;
-            Console.Write(bar);
-            Console.BackgroundColor = defaultColor;
+                Console.SetCursorPosition(0, position);
+                Console.Write("[");
+                Console.BackgroundColor = color;
+                Console.Write(bar);
+                Console.BackgroundColor = defaultColor;
 
-            bar = "";
+                bar = "";
 
-            if (maxValue == 0)
-            {
-                int maxPersent = 100;
-                for (int i = percent; i < maxPersent; i++)
+                for (double i = value; i < maxValue; i++)
                 {
                     bar += ' ';
+                }
+
+                Console.Write(bar + "]");
+
+            } else if (value == 0 && maxValue == 0 && percent > 0)
+            {
+                if (percent <=100)
+                {
+                    int maxPercetn = 100;
+                    for (int i = 0; i <= percent; i++)
+                    {
+                        bar += '#';
+                    }
+
+                    Console.SetCursorPosition(0, position);
+                    Console.Write("[");
+                    Console.BackgroundColor = color;
+                    Console.Write(bar);
+                    Console.BackgroundColor = defaultColor;
+
+                    bar = "";
+
+                    for (double i = percent; i < maxPercetn; i++)
+                    {
+                        bar += ' ';
+                    }
+
+                    Console.Write(bar + "]");
+                }
+                else
+                {
+                    Console.WriteLine("Такого процента нет");
                 }
                 
             }
             else
             {
-                for (int i = value; i < maxValue; i++)
-                {
-                    bar += ' ';
-                }
+                Console.WriteLine("Нет данных");
             }
-            Console.Write(bar + "]");
-        }
+        }  
     }
 }
