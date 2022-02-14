@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            Parse();
+        }
+
+        static int Parse()
+        {
+            bool isWork = true;
+            int result = 0;
+            while (isWork)
+            {
+                Console.WriteLine("Введите число для преобразования");
+                string userInput = Console.ReadLine();
+                
+                bool stringParse = int.TryParse(userInput, out result);
+                
+                if (stringParse)
+                {
+                    Console.WriteLine("Число успешно приабразовано!");
+                    isWork = false;
+                    return result;
+                }
+                else
+                {
+                    Console.WriteLine("Введите другое число");
+                }
+            }
+            return result;
+        }
+    }
+}
