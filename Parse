@@ -10,11 +10,11 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            int useNumber = NumberFromString();
+            int useNumber = ReadInt();
             Console.WriteLine(useNumber);
         }
 
-        static int NumberFromString()
+        static int ReadInt()
         {
             bool isWork = true;
             int result = 0;
