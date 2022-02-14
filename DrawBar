@@ -10,27 +10,27 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            float heal = 40;
-            float maxHeal = 100;
-            float mana = 100;
+            float health = 42;
+            float maxHealth = 100;
+            float mana = 50;
             float maxMana = 100;
-            DrawBar(heal, maxHeal,1,ConsoleColor.Red);
-            DrawBar(mana, maxMana,2, ConsoleColor.Blue);
+            DrawBar(health, maxHealth,10, 1, ConsoleColor.Red);
+            DrawBar(mana, maxMana,10,2, ConsoleColor.Blue);
         }
 
-        static void DrawBar(float value, float maxValue,int position, ConsoleColor color)
+        static void DrawBar(float value, float maxValue,int maxCels, int position, ConsoleColor color)
         {
-            if (value <= maxValue && value >= 0 && maxValue >= value)
+            if (value <= maxValue && value >= 0)
             {
-                float maxPercent = 100;
-                int minPercent = Convert.ToInt32(value / maxValue * maxPercent);
+                
+                int filedCells = Convert.ToInt32(value / maxValue * maxCels);
                 ConsoleColor defaultColor = Console.BackgroundColor;
 
                 string bar = " ";
 
-                for (int i = 0; i < minPercent; i++)
+                for (int i = 0; i < filedCells; i++)
                 {
-                    bar +='$';
+                    bar += '$';
                 }
 
                 Console.SetCursorPosition(0, position);
@@ -39,16 +39,16 @@ namespace GameConsoles1
                 Console.Write(bar);
                 Console.BackgroundColor = defaultColor;
 
-                bar =" ";
+                bar ="";
 
-                for (int i = minPercent; i < maxPercent; i++)
+                for (int i = filedCells; i < maxCels; i++)
                 {
-                    bar +=" ";
+                    bar +="_";
                 }
 
-                Console.Write(bar+"]");
+                Console.Write(bar + "]");
             }
-            else 
+            else
             {
                 Console.WriteLine("Ошибка данных");
             }
