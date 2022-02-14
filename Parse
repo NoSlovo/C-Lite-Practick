@@ -10,10 +10,11 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            Parse();
+            int useNumber = Converting();
+            Console.WriteLine(useNumber);
         }
 
-        static int Parse()
+        static int Converting()
         {
             bool isWork = true;
             int result = 0;
