@@ -11,6 +11,7 @@ namespace GameConsoles1
         static void Main()
         {
             Console.CursorVisible = false;
+
             char[,] map = {
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#','#','#','#','#','#','#','#','#',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
@@ -33,12 +34,12 @@ namespace GameConsoles1
                 {'#','#','#','#','#','#','#','#','#','#',' ',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
             };
-            DrowMap(ref map);
+            DrowMap(map);
             SetPlayerPosition(ref map, out int playerPositionX, out int playerPositionY);
-            MovingAroundMap(ref map, ref playerPositionY, ref playerPositionX);
+            MovingAroundMap(map,  playerPositionY,  playerPositionX);
         } 
 
-        static void DrowMap(ref char[,] map)
+        static void DrowMap(char[,] map)
         {
             for (int i = 0; i < map.GetLength(0);i++)
             {
@@ -50,51 +51,48 @@ namespace GameConsoles1
             }
         }
 
-        static void MovingAroundMap(ref char[,] map, ref int playerPositionY, ref int playerPositionX)
+        static void MovingAroundMap(char[,] map ,  int playerPositionY,  int playerPositionX)
         {
             bool isPlay = true;
             int playerMovementX = 0;
             int playerMovementY = 0;
             while (isPlay)
-            {
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey(true);
-                    switch (key.Key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            playerMovementX = -1;
-                            playerMovementY = 0;
-                            break;
-                        case ConsoleKey.DownArrow:
-                            playerMovementX = 1;
-                            playerMovementY = 0;
-                            break;
-                        case ConsoleKey.LeftArrow:
-                            playerMovementX = 0;
-                            playerMovementY = -1;
-                            break;
-                        case ConsoleKey.RightArrow:
-                            playerMovementX = 0;
-                            playerMovementY = 1;
-                            break;
-                    }
-                    BoundaryСhecking(ref map, ref playerPositionY, ref playerPositionX, ref playerMovementX, ref playerMovementY);
-                }
+            {     
+              InteractWithMap(map, ref playerPositionY, ref playerPositionX,   playerMovementX,  playerMovementY);  
             }
         }
 
-        static void BoundaryСhecking(ref char[,] map, ref int playerY, ref int playerX, ref int playerMovementX , ref int playerMovementY)
+        static void InteractWithMap( char[,] map, ref int playerPositionY, ref int playerPositionX,  int playerMovementX , int playerMovementY)
         {
-            if (map[playerX + playerMovementX, playerY + playerMovementY] != '#')
+            ConsoleKeyInfo key = Console.ReadKey(true);
+            switch (key.Key)
             {
-                Console.SetCursorPosition(playerY, playerX);
+                case ConsoleKey.UpArrow:
+                    playerMovementX = -1;
+                    playerMovementY = 0;
+                    break;
+                case ConsoleKey.DownArrow:
+                    playerMovementX = 1;
+                    playerMovementY = 0;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    playerMovementX = 0;
+                    playerMovementY = -1;
+                    break;
+                case ConsoleKey.RightArrow:
+                    playerMovementX = 0;
+                    playerMovementY = 1;
+                    break;
+            }
+            if (map[playerPositionX + playerMovementX, playerPositionY + playerMovementY] != '#')
+            {
+                Console.SetCursorPosition(playerPositionY, playerPositionX);
                 Console.Write(" ");
 
-                playerX += playerMovementX;
-                playerY += playerMovementY;
+                playerPositionX += playerMovementX;
+                playerPositionY += playerMovementY;
 
-                Console.SetCursorPosition(playerY, playerX);
+                Console.SetCursorPosition(playerPositionY, playerPositionX);
                 Console.Write('@');
             }
         }
