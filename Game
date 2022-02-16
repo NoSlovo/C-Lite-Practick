@@ -11,7 +11,6 @@ namespace GameConsoles1
         static void Main()
         {
             Console.CursorVisible = false;
-
             char[,] map = {
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#','#','#','#','#','#','#','#','#',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
@@ -36,7 +35,7 @@ namespace GameConsoles1
             };
             DrowMap(ref map);
             SetPlayerPosition(ref map, out int playerPositionX, out int playerPositionY);
-            MovingAroundMap(ref map, out int playerMovementX, out int playerMovementY, ref playerPositionY, ref playerPositionX);        
+            MovingAroundMap(ref map, ref playerPositionY, ref playerPositionX);
         } 
 
         static void DrowMap(ref char[,] map)
@@ -51,11 +50,11 @@ namespace GameConsoles1
             }
         }
 
-        static void MovingAroundMap( ref char[,] map,out int playerMovementX, out int playerMovementY, ref int playerY, ref int playerX)
+        static void MovingAroundMap(ref char[,] map, ref int playerPositionY, ref int playerPositionX)
         {
             bool isPlay = true;
-            playerMovementX = 0;
-            playerMovementY = 0;
+            int playerMovementX = 0;
+            int playerMovementY = 0;
             while (isPlay)
             {
                 if (Console.KeyAvailable)
@@ -80,18 +79,23 @@ namespace GameConsoles1
                             playerMovementY = 1;
                             break;
                     }
-                    if (map[playerX + playerMovementX, playerY + playerMovementY] != '#')
-                    {
-                        Console.SetCursorPosition(playerY, playerX);
-                        Console.Write(" ");
-
-                        playerX += playerMovementX;
-                        playerY += playerMovementY;
-
-                        Console.SetCursorPosition(playerY, playerX);
-                        Console.Write('@');
-                    }
+                    BoundaryСhecking(ref map, ref playerPositionY, ref playerPositionX, ref playerMovementX, ref playerMovementY);
                 }
+            }
+        }
+
+        static void BoundaryСhecking(ref char[,] map, ref int playerY, ref int playerX, ref int playerMovementX , ref int playerMovementY)
+        {
+            if (map[playerX + playerMovementX, playerY + playerMovementY] != '#')
+            {
+                Console.SetCursorPosition(playerY, playerX);
+                Console.Write(" ");
+
+                playerX += playerMovementX;
+                playerY += playerMovementY;
+
+                Console.SetCursorPosition(playerY, playerX);
+                Console.Write('@');
             }
         }
 
