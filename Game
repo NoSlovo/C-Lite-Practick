@@ -58,7 +58,8 @@ namespace GameConsoles1
             int playerMovementY = 0;
             while (isPlay)
             {     
-              InteractWithMap(map, ref playerPositionY, ref playerPositionX,   playerMovementX,  playerMovementY);  
+              InteractWithMap(map, ref playerPositionY, ref playerPositionX,   playerMovementX,  playerMovementY);
+
             }
         }
 
@@ -84,6 +85,12 @@ namespace GameConsoles1
                     playerMovementY = 1;
                     break;
             }
+            Move(map, ref playerPositionY, ref playerPositionX, ref playerMovementX,ref playerMovementY);
+
+        }
+
+        static void Move(char[,] map, ref int playerPositionY, ref int playerPositionX, ref int playerMovementX, ref  int playerMovementY)
+        {
             if (map[playerPositionX + playerMovementX, playerPositionY + playerMovementY] != '#')
             {
                 Console.SetCursorPosition(playerPositionY, playerPositionX);
