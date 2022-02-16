@@ -11,29 +11,17 @@ namespace GameConsoles1
         static void Main()
         {
             Console.CursorVisible = false;
-            bool isPlay = true;
-            int playerX, playerY;
-            
-            char[,] map = DrowMap(out playerX, out playerY);
-            PleyrControl(ref map, out int playerDX, out int playerDY, ref  playerY, ref  playerX);
-            
-            
-        } 
 
-        static char[,] DrowMap(out int playrX, out int playrY)
-        {
-             playrY = 0;
-             playrX = 0;
             char[,] map = {
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#','#','#','#','#','#','#','#','#',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#',' ','#',' ','#','#','#','#',' ',' ',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#',' ','#',' ','#','#','#',' ',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#',' ','#',' ','#','#','#',' ',' ','#','#','#','#','#',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#', },
-                {'#',' ','#',' ','#','#','#',' ','#','#','#','#',' ','#',' ','#','#','#','#',' ','#','#','#','#','#','#', },
+                {'#','@','#',' ','#','#','#',' ','#','#','#','#',' ','#',' ','#','#','#','#',' ','#','#','#','#','#','#', },
                 {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ','#',' ','#','#','#','#',' ','#','#','#','#','#','#', },
                 {'#','#',' ','#','#','#','#','#','#','#',' ','#',' ','#',' ',' ',' ',' ','#',' ','#','#','#','#','#','#', },
-                {'#','@',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#',' ','#','#','#','#','#','#', },
+                {'#',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#',' ','#','#','#','#','#','#', },
                 {'#',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#',' ','#','#','#','#','#','#', },
                 {'#',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#', },
                 {'#','#','#','#','#','#','#','#','#','#','#','#',' ','#','#','#','#','#','#','#','#','#','#','#','#','#', },
@@ -46,28 +34,28 @@ namespace GameConsoles1
                 {'#','#','#','#','#','#','#','#','#','#',' ',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
             };
+            DrowMap(ref map);
+            SetPlayerPosition(ref map, out int playerPositionX, out int playerPositionY);
+            MovingAroundMap(ref map, out int playerMovementX, out int playerMovementY, ref playerPositionY, ref playerPositionX);        
+        } 
 
+        static void DrowMap(ref char[,] map)
+        {
             for (int i = 0; i < map.GetLength(0);i++)
             {
                 for (int j = 0; j < map.GetLength(1);j++)
                 {
                     Console.Write(map[i,j]);
-                    if (map[i,j] == '@')
-                    {
-                        playrX = i;
-                        playrY = j;
-                    }
                 }
                 Console.WriteLine();
             }
-            return map;
         }
 
-        static void PleyrControl( ref char[,] map,out int playerDX, out int playerDY, ref int playerY, ref int playerX)
+        static void MovingAroundMap( ref char[,] map,out int playerMovementX, out int playerMovementY, ref int playerY, ref int playerX)
         {
             bool isPlay = true;
-            playerDX = 0;
-            playerDY = 0;
+            playerMovementX = 0;
+            playerMovementY = 0;
             while (isPlay)
             {
                 if (Console.KeyAvailable)
@@ -76,34 +64,52 @@ namespace GameConsoles1
                     switch (key.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            playerDX = -1;
-                            playerDY = 0;
+                            playerMovementX = -1;
+                            playerMovementY = 0;
                             break;
                         case ConsoleKey.DownArrow:
-                            playerDX = 1;
-                            playerDY = 0;
+                            playerMovementX = 1;
+                            playerMovementY = 0;
                             break;
                         case ConsoleKey.LeftArrow:
-                            playerDX = 0;
-                            playerDY = -1;
+                            playerMovementX = 0;
+                            playerMovementY = -1;
                             break;
                         case ConsoleKey.RightArrow:
-                            playerDX = 0;
-                            playerDY = 1;
+                            playerMovementX = 0;
+                            playerMovementY = 1;
                             break;
                     }
-                    if (map[playerX + playerDX, playerY + playerDY] != '#')
+                    if (map[playerX + playerMovementX, playerY + playerMovementY] != '#')
                     {
                         Console.SetCursorPosition(playerY, playerX);
                         Console.Write(" ");
 
-                        playerX += playerDX;
-                        playerY += playerDY;
+                        playerX += playerMovementX;
+                        playerY += playerMovementY;
 
                         Console.SetCursorPosition(playerY, playerX);
                         Console.Write('@');
                     }
                 }
+            }
+        }
+
+        static void SetPlayerPosition(ref char[,] array, out int playerPositionX, out int playerPositionY)
+        {
+            playerPositionX = 0;
+            playerPositionY = 0;
+
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] == '@')
+                    {
+                        playerPositionX = i;
+                        playerPositionY = j;
+                    }
+                }    
             }
         }
     }
