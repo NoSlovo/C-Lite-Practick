@@ -36,34 +36,35 @@ namespace GameConsoles1
             };
             DrowMap(map);
             SetPlayerPosition(ref map, out int playerPositionX, out int playerPositionY);
-            MovingAroundMap(map,  playerPositionY,  playerPositionX);
-        } 
+            MovingAroundMap(map, playerPositionY, playerPositionX);
+            
+        }
 
         static void DrowMap(char[,] map)
         {
-            for (int i = 0; i < map.GetLength(0);i++)
+            for (int i = 0; i < map.GetLength(0); i++)
             {
-                for (int j = 0; j < map.GetLength(1);j++)
+                for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    Console.Write(map[i,j]);
+                    Console.Write(map[i, j]);
                 }
                 Console.WriteLine();
             }
         }
 
-        static void MovingAroundMap(char[,] map ,  int playerPositionY,  int playerPositionX)
+        static void MovingAroundMap(char[,] map, int playerPositionY, int playerPositionX)
         {
             bool isPlay = true;
             int playerMovementX = 0;
             int playerMovementY = 0;
             while (isPlay)
             {
-                MoveMap(map, ref playerPositionY, ref playerPositionX,   playerMovementX,  playerMovementY);
-
+                NavigateMap(map, ref playerPositionY, ref playerPositionX,ref  playerMovementX, ref playerMovementY);
+                ChooseDirection(map, ref playerPositionY, ref playerPositionX, ref playerMovementX, ref playerMovementY);
             }
         }
 
-        static void MoveMap( char[,] map, ref int playerPositionY, ref int playerPositionX,  int playerMovementX , int playerMovementY)
+        static void NavigateMap(char[,] map, ref int playerPositionY, ref int playerPositionX,ref int playerMovementX, ref int playerMovementY)
         {
             ConsoleKeyInfo key = Console.ReadKey(true);
             switch (key.Key)
@@ -84,18 +85,21 @@ namespace GameConsoles1
                     playerMovementX = 0;
                     playerMovementY = 1;
                     break;
+            }
+        }
 
-                    if (map[playerPositionX + playerMovementX, playerPositionY + playerMovementY] != '#')
-                    {
-                        Console.SetCursorPosition(playerPositionY, playerPositionX);
-                        Console.Write(" ");
+        static void ChooseDirection(char[,] map, ref int playerPositionY, ref int playerPositionX,ref  int playerMovementX,ref  int playerMovementY)
+        {
+            if (map[playerPositionX + playerMovementX, playerPositionY + playerMovementY] != '#')
+            {
+                Console.SetCursorPosition(playerPositionY, playerPositionX);
+                Console.Write(" ");
 
-                        playerPositionX += playerMovementX;
-                        playerPositionY += playerMovementY;
+                playerPositionX += playerMovementX;
+                playerPositionY += playerMovementY;
 
-                        Console.SetCursorPosition(playerPositionY, playerPositionX);
-                        Console.Write('@');
-                    }
+                Console.SetCursorPosition(playerPositionY, playerPositionX);
+                Console.Write('@');
             }
         }
 
@@ -113,7 +117,7 @@ namespace GameConsoles1
                         playerPositionX = i;
                         playerPositionY = j;
                     }
-                }    
+                }
             }
         }
     }
