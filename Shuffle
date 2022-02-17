@@ -10,23 +10,28 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, };
+            int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
             Shuffle(array);
+            OutputData(array);
         }
 
         static void Shuffle(int[] array)
         {
             Random rand = new Random();
-            for (int i = array.Length - 1; i >= 1; i--)
+            for (int i = array.Length - 1; i > 1; i--)
             {
-                int j = rand.Next(i + 1);
+                int randomNumber = rand.Next(i + 1);
 
-                int intermediateValue = array[j];
-                array[j] = array[i];
+                int intermediateValue = array[randomNumber];
+                array[randomNumber] = array[i];
                 array[i] = intermediateValue;
             }
             
-            for (int i = 0; i <= array.Length;i++)
+        }
+
+        static void OutputData(int[] array)
+        {
+            for (int i = 0; i <= array.Length; i++)
             {
                 Console.Write(array[i]);
             }
