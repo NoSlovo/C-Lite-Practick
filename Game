@@ -37,7 +37,7 @@ namespace GameConsoles1
             DrowMap(map);
             SetPlayerPosition(ref map, out int playerPositionX, out int playerPositionY);
             MovingAroundMap(map, playerPositionY, playerPositionX);
-            
+
         }
 
         static void DrowMap(char[,] map)
@@ -59,12 +59,13 @@ namespace GameConsoles1
             int playerMovementY = 0;
             while (isPlay)
             {
-                NavigateMap(map, ref playerPositionY, ref playerPositionX,ref  playerMovementX, ref playerMovementY);
                 ChooseDirection(map, ref playerPositionY, ref playerPositionX, ref playerMovementX, ref playerMovementY);
+                NavigateMap(map, ref playerPositionY, ref playerPositionX, ref playerMovementX, ref playerMovementY);
+                
             }
         }
 
-        static void NavigateMap(char[,] map, ref int playerPositionY, ref int playerPositionX,ref int playerMovementX, ref int playerMovementY)
+        static void ChooseDirection(char[,] map, ref int playerPositionY, ref int playerPositionX, ref int playerMovementX, ref int playerMovementY)
         {
             ConsoleKeyInfo key = Console.ReadKey(true);
             switch (key.Key)
@@ -84,11 +85,11 @@ namespace GameConsoles1
                 case ConsoleKey.RightArrow:
                     playerMovementX = 0;
                     playerMovementY = 1;
-                    break;
+                    break;  
             }
         }
 
-        static void ChooseDirection(char[,] map, ref int playerPositionY, ref int playerPositionX,ref  int playerMovementX,ref  int playerMovementY)
+        static void NavigateMap(char[,] map, ref int playerPositionY, ref int playerPositionX, ref int playerMovementX, ref int playerMovementY)
         {
             if (map[playerPositionX + playerMovementX, playerPositionY + playerMovementY] != '#')
             {
