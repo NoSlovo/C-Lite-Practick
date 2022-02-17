@@ -57,13 +57,13 @@ namespace GameConsoles1
             int playerMovementX = 0;
             int playerMovementY = 0;
             while (isPlay)
-            {     
-              InteractWithMap(map, ref playerPositionY, ref playerPositionX,   playerMovementX,  playerMovementY);
+            {
+                MoveMap(map, ref playerPositionY, ref playerPositionX,   playerMovementX,  playerMovementY);
 
             }
         }
 
-        static void InteractWithMap( char[,] map, ref int playerPositionY, ref int playerPositionX,  int playerMovementX , int playerMovementY)
+        static void MoveMap( char[,] map, ref int playerPositionY, ref int playerPositionX,  int playerMovementX , int playerMovementY)
         {
             ConsoleKeyInfo key = Console.ReadKey(true);
             switch (key.Key)
@@ -84,23 +84,18 @@ namespace GameConsoles1
                     playerMovementX = 0;
                     playerMovementY = 1;
                     break;
-            }
-            Move(map, ref playerPositionY, ref playerPositionX, ref playerMovementX,ref playerMovementY);
 
-        }
+                    if (map[playerPositionX + playerMovementX, playerPositionY + playerMovementY] != '#')
+                    {
+                        Console.SetCursorPosition(playerPositionY, playerPositionX);
+                        Console.Write(" ");
 
-        static void Move(char[,] map, ref int playerPositionY, ref int playerPositionX, ref int playerMovementX, ref  int playerMovementY)
-        {
-            if (map[playerPositionX + playerMovementX, playerPositionY + playerMovementY] != '#')
-            {
-                Console.SetCursorPosition(playerPositionY, playerPositionX);
-                Console.Write(" ");
+                        playerPositionX += playerMovementX;
+                        playerPositionY += playerMovementY;
 
-                playerPositionX += playerMovementX;
-                playerPositionY += playerMovementY;
-
-                Console.SetCursorPosition(playerPositionY, playerPositionX);
-                Console.Write('@');
+                        Console.SetCursorPosition(playerPositionY, playerPositionX);
+                        Console.Write('@');
+                    }
             }
         }
 
