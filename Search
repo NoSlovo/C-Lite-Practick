@@ -10,35 +10,29 @@ namespace GameConsoles1
     {
         static void Main()
         {
-           bool isWork = true;
-           Dictionary<string, string> dictionary = new Dictionary<string, string>();
-           dictionary.Add("абдикация", "отказ от сана и власти правителя, сложение с себя этого звания");
-           dictionary.Add("абдраган", "страх, испуг, боязнь");
-           dictionary.Add("бадрянка", "порода персидских лимонов, очень крупных, бородавчатых, но малосочных.");
+            bool isWork = true;
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary.Add("абдикация", "отказ от сана и власти правителя, сложение с себя этого звания");
+            dictionary.Add("абдраган", "страх, испуг, боязнь");
+            dictionary.Add("бадрянка", "порода персидских лимонов, очень крупных, бородавчатых, но малосочных.");
 
             while (isWork)
             {
                 Console.WriteLine("Введите слово");
                 string userWord = Console.ReadLine();
-                Search( userWord, dictionary);
+                Search(userWord, dictionary);
             }
-            
+
         }
 
-        static void Search(string userWord,Dictionary<string,string> dictionary)
+        static void Search(string userWord, Dictionary<string, string> dictionary)
         {
             if (dictionary.ContainsKey(userWord))
             {
-                foreach (var item in dictionary)
-                {
-                    if (item.Key == userWord)
-                    {
-                        Console.WriteLine(item.Value);
-                    }
-                }
+                Console.WriteLine(dictionary[userWord]);
             }
-            else 
-            { 
+            else
+            {
                 Console.WriteLine("Не удалось найти слово");
             }
         }
