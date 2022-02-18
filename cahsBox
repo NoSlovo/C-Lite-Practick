@@ -11,23 +11,23 @@ namespace GameConsoles1
         static void Main()
         {
             int cashRegister = 0; 
-            Stack<int> amountPurchases = new Stack<int>();
-            amountPurchases.Push(2200);
-            amountPurchases.Push(1000);
-            amountPurchases.Push(10000);
-            amountPurchases.Push(5000);
-            amountPurchases.Push(200);
-
+            Queue<int> amountPurchases = new Queue<int>();
+            amountPurchases.Enqueue(200);
+            amountPurchases.Enqueue(10000);
+            amountPurchases.Enqueue(1000);
+            amountPurchases.Enqueue(1500);
+            amountPurchases.Enqueue(2000);
+            amountPurchases.Enqueue(250);
             QueueService(amountPurchases,cashRegister);
         }
 
-        static void QueueService(Stack<int> amountPurchases , int cashRegister )
+        static void QueueService(Queue<int> amountPurchases , int cashRegister )
         {
             while (amountPurchases.Count > 0)
             {
                 Console.WriteLine("Сумма покупки равна = " + amountPurchases.Peek());
                 Console.WriteLine("В кассе в данный момент: " + cashRegister);
-                cashRegister += amountPurchases.Pop();
+                cashRegister += amountPurchases.Dequeue();
                 Console.ReadKey();
                 Console.Clear();
             }
