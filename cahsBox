@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            int cashRegister = 0; 
+            Stack<int> amountPurchases = new Stack<int>();
+            amountPurchases.Push(2200);
+            amountPurchases.Push(1000);
+            amountPurchases.Push(10000);
+            amountPurchases.Push(5000);
+            amountPurchases.Push(200);
+
+            QueueService(amountPurchases,cashRegister);
+        }
+
+        static void QueueService(Stack<int> amountPurchases , int cashRegister )
+        {
+            while (amountPurchases.Count > 0)
+            {
+                Console.WriteLine("Сумма покупки равна = " + amountPurchases.Peek());
+                Console.WriteLine("В кассе в данный момент: " + cashRegister);
+                cashRegister += amountPurchases.Pop();
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+}
