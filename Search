@@ -38,7 +38,9 @@ namespace GameConsoles1
                 }
             }
             else 
-            { Console.WriteLine("Не удалось найти слово"); }
+            { 
+                Console.WriteLine("Не удалось найти слово");
+            }
         }
     }
 }
