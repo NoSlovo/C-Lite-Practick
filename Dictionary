@@ -10,43 +10,65 @@ namespace GameConsoles1
     {
         static void Main()
         {
-           Dictionary<string, string> dossier = new Dictionary<string, string>();
-            dossier.Add("Программист", "Виктор Павлов Блаженный");
-            dossier.Add("Левел Дизайнер", "Константин Прокофьев Владеленович");
-            dossier.Add("Сценарист", "Виктор Остапов Бодрячковый");
+            Dictionary<string, string> dossier = new Dictionary<string, string>();
+            dossier.Add("Виктор Павлов Блаженный", "Программист");
+            dossier.Add("Константин Прокофьев Владеленович", "Левел Дизанейр");
+            dossier.Add("Виктор Остапов Бодрячковый", "Сценарист");
 
             while (true)
             {
+                Console.WriteLine("1- Добавить досье\n2- Удалить досье\n3- Вывести досье");
                 string userInput = Console.ReadLine();
-                switch (userInput) 
+                switch (userInput)
                 {
                     case "1":
+                        Console.Clear();
                         AddDossier(dossier);
                         break;
-                        case "2":
+                    case "2":
+                        Console.Clear();
+                        DeleteDossier(dossier);
                         break;
-                        case "3":
+                    case "3":
+                        Console.Clear();
+                        DisplayDossier(dossier);
                         break;
                 }
 
             }
         }
-        
-        static void AddDossier(Dictionary<string,string> dossier)
+
+        static void AddDossier(Dictionary<string, string> dossier)
         {
             Console.WriteLine("Введите должность");
-            string key = Console.ReadLine();
+            string value = Console.ReadLine();
             Console.WriteLine("Введите данные роботника");
             string worker = Console.ReadLine();
+
+            dossier.Add(worker,value);
+            Console.WriteLine("Добавлен");
         }
 
         static void DeleteDossier(Dictionary<string, string> dossier)
         {
-            Console.WriteLine("Введите должность на удаление");
+            Console.WriteLine("Введите ФИО на удаление");
             string dossierKey = Console.ReadLine();
-            if (dossier.ContainsKey())
+            if (dossier.ContainsKey(dossierKey))
             {
+                dossier.Remove(dossierKey);
+                Console.WriteLine("Удалено");
+            }
+            else
+            {
+                Console.WriteLine("Такой должности нет ");
+            }
+        }
 
+        static void DisplayDossier(Dictionary<string, string> dossier)
+        {
+            foreach (var item in dossier)
+            {
+                Console.WriteLine($"{item.Key} - {item.Value}");
             }
         }
     }
