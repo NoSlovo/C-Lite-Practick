@@ -10,24 +10,21 @@ namespace GameConsoles1
     {
         static void Main()
         {
-           List<int>numbers = new List<int>();
-           SumNumbers(numbers);
-        }
-
-        static void SumNumbers(List<int> numbers)
-        {
+            List<int> numbers = new List<int>();
             bool isWork = true;
+            string exitCommand = "exit";
+            string sumCommand = "sum";
 
             while (isWork)
             {
-                Console.WriteLine("exit - выход\nsum - сумма всех введеных чисел");
+                Console.WriteLine($"{exitCommand} - выход\n{sumCommand} - сумма всех введеных чисел");
                 Console.WriteLine("Введите число");
                 string userInput = Console.ReadLine();
-                if (userInput == "exit")
+                if (userInput == exitCommand)
                 {
                     isWork = false;
                 }
-                else if (userInput == "sum")
+                else if (userInput == sumCommand)
                 {
                     int sum = 0;
                     for (int i = 0; i < numbers.Count; i++)
@@ -39,9 +36,18 @@ namespace GameConsoles1
                 }
                 else
                 {
-                    int userNumber = Convert.ToInt32(userInput);
-                    numbers.Add(userNumber);
-                    Console.Clear();
+                    if (int.TryParse(userInput,out int number)) //тут же в проверке получаем необходимое число для занесения 
+                    {
+                        int userNumber = number;
+                        numbers.Add(userNumber);
+                        Console.Clear();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("НЕ ВЕРНЫЙ ВВОД ДАННЫХ");
+                    }    
                 }
             }
         }
