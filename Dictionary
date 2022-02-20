@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+           Dictionary<string, string> dossier = new Dictionary<string, string>();
+            dossier.Add("Программист", "Виктор Павлов Блаженный");
+            dossier.Add("Левел Дизайнер", "Константин Прокофьев Владеленович");
+            dossier.Add("Сценарист", "Виктор Остапов Бодрячковый");
+
+            while (true)
+            {
+                string userInput = Console.ReadLine();
+                switch (userInput) 
+                {
+                    case "1":
+                        AddDossier(dossier);
+                        break;
+                        case "2":
+                        break;
+                        case "3":
+                        break;
+                }
+
+            }
+        }
+        
+        static void AddDossier(Dictionary<string,string> dossier)
+        {
+            Console.WriteLine("Введите должность");
+            string key = Console.ReadLine();
+            Console.WriteLine("Введите данные роботника");
+            string worker = Console.ReadLine();
+        }
+
+        static void DeleteDossier(Dictionary<string, string> dossier)
+        {
+            Console.WriteLine("Введите должность на удаление");
+            string dossierKey = Console.ReadLine();
+            if (dossier.ContainsKey())
+            {
+
+            }
+        }
+    }
+}
