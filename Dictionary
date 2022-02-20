@@ -10,71 +10,75 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            bool isWork = true;
-            Dictionary<string, string> dossier = new Dictionary<string, string>();
-            dossier.Add("Виктор Павлов Блаженный", "Программист");
-            dossier.Add("Константин Прокофьев Владеленович", "Левел Дизанейр");
-            dossier.Add("Виктор Остапов Бодрячковый", "Сценарист");
+           bool isWork = true;
+           List<string> workers = new List<string>();
+           List<string> positions = new List<string>();
+           workers.Add("Павлухин Виктор Витальивич");
+           positions.Add("Программист");
+           workers.Add("Степанов Анатолий Павлович");
+           positions.Add("Левел Дизайнер");
+           workers.Add("Курпатов Анатолий Викторович");
+           positions.Add("Сценарист");
 
             while (isWork)
             {
-                Console.WriteLine("1- Добавить досье\n2- Удалить досье\n3- Вывести досье\n4- Выход");
+                Console.WriteLine("1 - Вывод всех досье\n2 - Удалить досье\n3 - Добавить досье\n4 - Выход");
                 string userInput = Console.ReadLine();
+                Console.Clear();
                 switch (userInput)
                 {
-                    case "1":
-                        Console.Clear();
-                        AddDossier(dossier);
-                        break;
-                    case "2":
-                        Console.Clear();
-                        DeleteDossier(dossier);
-                        break;
-                    case "3":
-                        Console.Clear();
-                        DisplayDossier(dossier);
-                        break;
-                    case "4":
-                        isWork = false;
+                        case "1":
+                        ShowAllDossiers(workers,positions);
                         break;
 
+                        case "2":
+                        DeleteDossier(workers, positions);
+                        break;
+
+                        case"3":
+                        AddDossier(workers, positions);
+                        break;
+
+                        case"4":
+                        isWork = false;
+                        break;
                 }
 
             }
         }
 
-        static void AddDossier(Dictionary<string, string> dossier)
+        static void ShowAllDossiers(List<string> workers, List<string> positions)
         {
-            Console.WriteLine("Введите должность");
-            string value = Console.ReadLine();
-            Console.WriteLine("Введите данные роботника");
+            for (int i = 0; i < workers.Count;i++)
+            {
+                Console.WriteLine($"{workers[i]} - {positions[i]}");
+            }
+        }
+
+        static void DeleteDossier(List<string> workers, List<string> positions)
+        {
+            Console.WriteLine("Введите ФИО работника на удаление");
+            string userInput = Console.ReadLine();
+
+            for (int i = 0; i < workers.Count;i++)
+            {
+                if (userInput == workers[i])
+                {
+                    workers.RemoveAt(i);
+                    positions.RemoveAt(i);
+                }
+            }
+        }
+
+        static void AddDossier(List<string> workers, List<string> positions)
+        {
+            Console.WriteLine("Введите ФИО работника");
             string worker = Console.ReadLine();
+            Console.WriteLine("Введите должность");
+            string position = Console.ReadLine();
 
-            dossier.Add(worker,value);
-            Console.WriteLine("Добавлен");
-        }
-
-        static void DeleteDossier(Dictionary<string, string> dossier)
-        {
-            Console.WriteLine("Введите ФИО на удаление");
-            string dossierKey = Console.ReadLine();
-            if (dossier.ContainsKey(dossierKey))
-            {
-                dossier.Remove(dossierKey);
-                Console.WriteLine("Удалено");
-            }
-            else
-            {
-                Console.WriteLine("Такой должности нет ");
-            }
-        }
-
-        static void DisplayDossier(Dictionary<string, string> dossier)
-        {
-            foreach (var item in dossier)
-            {
-                Console.WriteLine($"{item.Key} - {item.Value}");
-            }
+            workers.Add(worker);
+            positions.Add(position);
         }
     }
 }
