@@ -10,14 +10,15 @@ namespace GameConsoles1
     {
         static void Main()
         {
+            bool isWork = true;
             Dictionary<string, string> dossier = new Dictionary<string, string>();
             dossier.Add("Виктор Павлов Блаженный", "Программист");
             dossier.Add("Константин Прокофьев Владеленович", "Левел Дизанейр");
             dossier.Add("Виктор Остапов Бодрячковый", "Сценарист");
 
-            while (true)
+            while (isWork)
             {
-                Console.WriteLine("1- Добавить досье\n2- Удалить досье\n3- Вывести досье");
+                Console.WriteLine("1- Добавить досье\n2- Удалить досье\n3- Вывести досье\n4- Выход");
                 string userInput = Console.ReadLine();
                 switch (userInput)
                 {
@@ -33,6 +34,10 @@ namespace GameConsoles1
                         Console.Clear();
                         DisplayDossier(dossier);
                         break;
+                    case "4":
+                        isWork = false;
+                        break;
+
                 }
 
             }
