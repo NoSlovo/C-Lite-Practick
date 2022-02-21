@@ -17,27 +17,24 @@ namespace GameConsoles1
 
     class Player
     {
-        private int _idPlayer;
-        private string _namePlayer;
-        private int _agePlayer;
-        private string _classPlayer;
+        private int _id;
+        private string _name;
+        private int _age;
+        private string _specialization;
 
-        public Player(int idPlayer, string namePlayer, int agePlayer, string classPlayer)
+        public Player(int id, string name, int age, string specialization )
         {
-            _idPlayer = idPlayer;
-            _namePlayer = namePlayer;
-            _agePlayer = agePlayer;
-            _classPlayer = classPlayer;
+            _id = id;
+            _name = name;
+            _age = age;
+            _specialization = specialization;
         }
 
-        public Player()
-        {
-
-        }
+        
 
         public void ShowInfo()
         {
-            Console.WriteLine($"Уникальный номер {_idPlayer}\nИмя игрока {_namePlayer}\nВозраст игрока {_agePlayer}\nКласс игрока {_classPlayer}");
+            Console.WriteLine($"Уникальный номер {_id}\nИмя игрока {_name}\nВозраст игрока {_age}\nКласс игрока {_specialization}");
         }
     }
 }
