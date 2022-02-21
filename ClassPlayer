@@ -10,19 +10,19 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            Player name = new Player();
-            name.ShowInfoPlayer();
+            Player player = new Player(0, "GodSpeed",22,"Паладин");
+            player.ShowInfo();
         }
     }
 
     class Player
     {
-        private int _idPlayer = 0;
-        private string _namePlayer = "GodSpeed";
-        private int _agePlayer = 20;
-        private string _classPlayer = "Паладин";
+        private int _idPlayer;
+        private string _namePlayer;
+        private int _agePlayer;
+        private string _classPlayer;
 
-        public Player(int idPlayer,string namePlayer, int agePlayer, string classPlayer)
+        public Player(int idPlayer, string namePlayer, int agePlayer, string classPlayer)
         {
             _idPlayer = idPlayer;
             _namePlayer = namePlayer;
@@ -35,7 +35,7 @@ namespace GameConsoles1
 
         }
 
-        public void ShowInfoPlayer()
+        public void ShowInfo()
         {
             Console.WriteLine($"Уникальный номер {_idPlayer}\nИмя игрока {_namePlayer}\nВозраст игрока {_agePlayer}\nКласс игрока {_classPlayer}");
         }
