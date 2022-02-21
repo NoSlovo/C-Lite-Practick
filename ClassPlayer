@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            Player name = new Player();
+            name.ShowInfoPlayer();
+        }
+    }
+
+    class Player
+    {
+        private int _idPlayer = 0;
+        private string _namePlayer = "GodSpeed";
+        private int _agePlayer = 20;
+        private string _classPlayer = "Паладин";
+
+        public Player(int idPlayer,string namePlayer, int agePlayer, string classPlayer)
+        {
+            _idPlayer = idPlayer;
+            _namePlayer = namePlayer;
+            _agePlayer = agePlayer;
+            _classPlayer = classPlayer;
+        }
+
+        public Player()
+        {
+
+        }
+
+        public void ShowInfoPlayer()
+        {
+            Console.WriteLine($"Уникальный номер {_idPlayer}\nИмя игрока {_namePlayer}\nВозраст игрока {_agePlayer}\nКласс игрока {_classPlayer}");
+        }
+    }
+}
