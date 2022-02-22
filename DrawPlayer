@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            Player user = new Player(10,10);
+            Draw positionDraw = new Draw(user);
+            positionDraw.DrawPlayer();
+        }
+    }
+
+    class Player
+    {
+        public int PositionX; 
+        public int PositionY;
+
+        public Player(int positionX, int positionY)
+        {
+            PositionX = positionX;
+            PositionY = positionY;
+        }
+    }
+
+    class Draw
+    {
+        public Player playerHow;
+
+        public Draw(Player player)
+        {
+            playerHow = player;
+        }
+        public void DrawPlayer()
+        {
+            Console.SetCursorPosition(playerHow.PositionY, playerHow.PositionX);
+            Console.WriteLine("@");
+        }
+    }
+}
