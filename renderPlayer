@@ -10,52 +10,54 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            Render  render = new Render();
-            Player player = new Player(1,2);
-            render.Draw(player.X, player.Y);
+            Render render = new Render();
+            Player player = new Player(1, 2);
+            render.DrawPlayer(player.positionX, player.positionY);
         }
     }
 
-    class Render 
+    class Render
     {
-        public void Draw(int x, int y,char player = '@')
+        public void DrawPlayer(int positionPlayerX, int postionPLayerY, char player = '@')
         {
-            Console.SetCursorPosition(x, y);
+            Console.SetCursorPosition(positionPlayerX, postionPLayerY);
             Console.Write(player);
         }
     }
 
     class Player
     {
-        private int _x;
-        private int _y;
+        private int _positionX;
+        private int _positionY;
 
-        public int X
-        {
-           get{ 
-                return _x;
-            }
-             private set
-            {
-                _x = value; 
-            } 
-        }
-        public int Y
+        public int positionX
         {
             get
             {
-                return _y;
+                return _positionX;
             }
             private set
             {
-                _y = value;
+                _positionX = value;
+            }
+        }
+        
+        public int positionY
+        {
+            get
+            {
+                return _positionY;
+            }
+            private set
+            {
+                _positionY = value;
             }
         }
 
-        public Player (int x ,int y)
+        public Player(int positionX, int positionY)
         {
-            _x = x;
-            _y = y;
+            _positionX = positionX;
+            _positionY = positionY;
         }
     }
 }
