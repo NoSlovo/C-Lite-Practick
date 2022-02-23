@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            Render  render = new Render();
+            Player player = new Player(1,2);
+            render.Draw(player.X, player.Y);
+        }
+    }
+
+    class Render 
+    {
+        public void Draw(int x, int y,char player = '@')
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(player);
+        }
+    }
+
+    class Player
+    {
+        private int _x;
+        private int _y;
+
+        public int X
+        {
+           get{ 
+                return _x;
+            }
+             private set
+            {
+                _x = value; 
+            } 
+        }
+        public int Y
+        {
+            get
+            {
+                return _y;
+            }
+            private set
+            {
+                _y = value;
+            }
+        }
+
+        public Player (int x ,int y)
+        {
+            _x = x;
+            _y = y;
+        }
+    }
+}
