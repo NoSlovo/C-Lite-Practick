@@ -10,119 +10,161 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            DataBase dataBase = new DataBase();
-            dataBase.AddPlayer(0, "Admin", 0);
+            int count = 0;
             bool isWork = true;
+            List<Player> players = new List<Player>();
+            DataBase dataBase = new DataBase(players);
 
             while (isWork)
             {
-                dataBase.ShowInfo();
-                Console.WriteLine("Добро пожаловать в БД игроков");
-                Console.WriteLine("\nМеню:\n1 - Добавить в БД\n2 - Удалить игрока\n3 - Забанить игрока\n4 - Разбанить игрока\n9 - выход");
+                dataBase.AllPlayer();
+                Console.WriteLine("Меню:\n1 - Добивить игрока\n2 - Забанить игрока\n3 - Разбанить икрока\n4 - удалить игрока");
                 string userInput = Console.ReadLine();
-                switch (userInput) 
+                switch (userInput)
                 {
                     case "1":
                         Console.Clear();
-                        int idPlayer = 0;
-                        idPlayer++;
-                        Console.WriteLine("Введите имя игрока");
-                        string namePlayer = Console.ReadLine();
-                        Console.WriteLine("Какой уровень у игрока");
-                        int levelPleuer = Convert.ToInt32(Console.ReadLine());
-                        dataBase.AddPlayer(idPlayer,namePlayer,levelPleuer);
-                        break;
+                        dataBase.AddPlayer(count++);
+                    break;
 
-                    case"2":
-                        Console.WriteLine("Введите ID игрока");
-                        int daletIdPlyert = Convert.ToInt32(Console.ReadLine());
-                        dataBase.DeletPlayer(daletIdPlyert);
-                        break;
+                    case "2":
+                        Console.Clear();
+                        dataBase.BanPlayer();
+                    break;
 
-                   case"3":
-                        Console.WriteLine("Введите ID игрока на бан");
-                        int baneIdPlayer = Convert.ToInt32(Console.ReadLine());
-                        dataBase.BanePlayer(baneIdPlayer);
-                        break;
+                    case "3":
+                        Console.Clear();
+                        dataBase.UnbanPlayer();
+                    break;
 
-                   case"4":
-                        Console.WriteLine("Введите ID игрока на Разблакировку");
-                        int unBanIdPlayer = Convert.ToInt32(Console.ReadLine());
-                        dataBase.UnbanPlayer(unBanIdPlayer);
-                        break;
-
-                    case "9":
-                        isWork = false;
-                        break;
+                    case "4":
+                        Console.Clear();
+                        dataBase.DeletePlayer();
+                    break;
                 }
             }
         }
     }
 
-
+    
     class DataBase
     {
-        private List<int> _id = new List<int>();
-        private List<string> _name = new List<string>();
-        private List<int> _level = new List<int>();
-        private List<bool> _flag = new List<bool>();
-
-        public void AddPlayer(int id, string name, int level, bool flag = true)
+        List<Player> players;
+        public DataBase(List<Player> users)
         {
-            _id.Add(id);
-            _name.Add(name);
-            _level.Add(level);
-            _flag.Add(flag);
+            players = users;
         }
 
-        public void BanePlayer(int idPlayer)
+        public void AllPlayer()
         {
-            for (int i = 0; i < _id.Count; i++)
+            for (int i = 0; i < players.Count; i++)
             {
-                if (_id[i] == idPlayer)
+                players[i].Info();
+            }
+        }
+
+        public void AddPlayer(int id)
+        {               
+            Console.WriteLine("Введите имя игрока");
+            string name = Console.ReadLine();
+            Random rand = new Random();
+            int level = rand.Next(1, 11);
+            bool flag = true;
+            players.Add(new Player(id, name, level, flag));
+        }
+
+        public void BanPlayer()
+        {
+            int idBanPlayer = Convert.ToInt32(Console.ReadLine());
+            if (idBanPlayer <= players.Count)
+            {
+                for (int i = 0; i < players.Count; i++)
                 {
-                    _flag[i] = false;
-                    Console.Clear();
-                    Console.WriteLine("Игрок Заблокирован");
+                    if (players[i].Id == idBanPlayer)
+                    {
+                        players[i].Flag = false;
+                    }
                 }
             }
+            else 
+            {
+                Console.WriteLine("Такого ID нет ");
+            }    
         }
 
-        public void UnbanPlayer(int idPlayer)
+        public void UnbanPlayer()
         {
-            for (int i = 0; i < _id.Count; i++)
+            int idUnBanPlayer = Convert.ToInt32(Console.ReadLine());
+            if (idUnBanPlayer <= players.Count)
             {
-                if (_id[i] == idPlayer)
+                for (int i = 0; i < players.Count; i++)
                 {
-                    _flag[i] = true;
-                    Console.Clear();
-                    Console.WriteLine("Разблакирован");
-                } 
-            }
-        }
-
-        public void DeletPlayer(int idPlayer)
-        {
-            for (int i = 0; i < _id.Count; i++)
-            {
-                if (_id[i] == idPlayer)
-                {
-                    _id.RemoveAt(i);
-                    _name.RemoveAt(i);
-                    _level.RemoveAt(i);
-                    _flag.RemoveAt(i);
-                    Console.Clear();
-                    Console.WriteLine("Удалено");
+                    if (players[i].Id == idUnBanPlayer)
+                    {
+                        players[i].Flag = true;
+                    }
                 }
             }
-        }
-
-        public void ShowInfo()
-        {
-            for (int i = 0; i < _id.Count; i++)
+            else
             {
-                Console.WriteLine($" ID Игрока = {_id[i]} Имя игрока:{_name[i]}, Уровень игрока:{_level[i]},Статус игрока:{_flag[i]}");
+                Console.WriteLine("Такого ID нет ");
             }
         }
+
+        public void DeletePlayer()
+        {
+            int idDaletePlayer = Convert.ToInt32(Console.ReadLine());
+            if (idDaletePlayer <=players.Count)
+            {
+                for (int i = 0; i < players.Count; i++)
+                {
+                    if (players[i].Id == idDaletePlayer)
+                    {
+                        players.RemoveAt(i);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Такого ID нет ");
+            }
+        }
+    }
+
+    class Player
+    {
+        private int _id;
+        private string _name;
+        private int _level;
+        private bool _flag;
+
+        public int Id 
+        {
+            get { return _id; }
+        }
+        public bool Flag
+        {
+            get 
+            {
+                return _flag;
+            }
+             set
+            {
+                _flag = value;
+            }
+        }
+
+        public Player(int id, string name, int level, bool flag = true)
+        {
+            _id = id;
+            _name = name;
+            _level = level;
+            _flag = flag;
+        }
+
+        public void Info()
+        {
+            Console.WriteLine($"id игрока = {_id}, Имя игрока = {_name},Уровень игрока = {_level}, Его статус = {_flag}");
+        }     
     }
 }
