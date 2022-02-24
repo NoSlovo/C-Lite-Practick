@@ -12,7 +12,7 @@ namespace GameConsoles1
         {
             Render render = new Render();
             Player player = new Player(1, 2);
-            render.DrawPlayer(player.positionX, player.positionY);
+            render.DrawPlayer(player.PositionX, player.PositionY);
         }
     }
 
@@ -30,7 +30,7 @@ namespace GameConsoles1
         private int _positionX;
         private int _positionY;
 
-        public int positionX
+        public int PositionX
         {
             get
             {
@@ -41,8 +41,8 @@ namespace GameConsoles1
                 _positionX = value;
             }
         }
-        
-        public int positionY
+
+        public int PositionY
         {
             get
             {
