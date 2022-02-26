@@ -62,54 +62,56 @@ namespace GameConsoles1
             Console.Clear();
         }
 
+          public int  FindId()
+        {
+            Console.WriteLine("Введите ID игрока");
+            string numberUser = Console.ReadLine();
+            int.TryParse(numberUser, out int userId);
+
+            for (int i = 0; i < _players.Count; i++)
+            {
+                if (userId  == _players[i].Id)
+                {
+                    return _players[i].Id;
+                }
+            }
+            return 0;
+        }
+
         public void BanPlayer()
         {
-            Console.WriteLine("Введите порядковый номер игрока");
-            string  numberUser = Console.ReadLine();
-            int userId;
-            if (int.TryParse(numberUser,out userId))
+            int userId = FindId();
+
+            for (int i = 0; i < _players.Count; i++)
             {
-                for (int i = 0; i < _players.Count; i++)
+                if (i + 1  == userId)
                 {
-                    if (i + 1 == userId)
-                    {
-                        _players[i].ActivateBlocking();
-                    }
+                    _players[i].ActivateBlocking();
                 }
-            }   
+            }
         }
+
 
         public void UnBanPlayer()
         {
-            Console.WriteLine("Введите порядковый номер игрока");
-            string numberUser = Console.ReadLine();
-            int userId;
-            if (int.TryParse(numberUser, out userId))
+            int userId = FindId();
+            for (int i = 0; i < _players.Count; i++)
             {
-                for (int i = 0; i < _players.Count; i++)
+                if (i + 1 == userId)
                 {
-                    if (i + 1 == userId)
-                    {
-                        _players[i].RemoveBlocking();
-                    }
+                    _players[i].RemoveBlocking();
                 }
             }
         }
 
         public void DeletePlayer()
         {
-            Console.WriteLine("Введите порядковый номер игрока");
-            string numberUser = Console.ReadLine();
-            int userId;
-            if (int.TryParse(numberUser, out userId))
+            int userId = FindId();
+            for (int i = 0; i < _players.Count; i++)
             {
-                for (int i = 0; i < _players.Count; i++)
+                if (i + 1 == userId)
                 {
-                    if (i + 1   == userId)
-                    {
-                        _players.RemoveAt(i);
-                    }
-                    
+                    _players.RemoveAt(i);
                 }
             }
         }
@@ -118,27 +120,28 @@ namespace GameConsoles1
         {
             for (int i = 0; i < _players.Count; i++)
             {
-                Console.Write($"{i + 1} - ");
-                _players[i].Info();
+                _players[i].DisplayInfo();
             }
         }
     }
 
     class Player
     {
-        private int _maxLevel;
-        private int _minLevel;
+        private static int Ids;
+        private int _id;
         private string _name;
         private int _level;
         private bool _playerBan;
 
+        public int Id { get { return _id; } }
         public Player( string name, bool playerBan = false)
         {
             Random random = new Random();
-            _minLevel = 1;
-            _maxLevel = 11;
+           int minLevel = 1;
+           int maxLevel = 11;
+            _id = ++Ids;
             _name = name;
-            _level = random.Next(_minLevel, _maxLevel); 
+            _level = random.Next(minLevel, maxLevel); 
             _playerBan = playerBan;
         }
 
@@ -151,9 +154,9 @@ namespace GameConsoles1
         {
             _playerBan = false;
         }
-        public void Info()
+        public void DisplayInfo()
         {
-            Console.WriteLine($"Имя игрока = {_name},Уровень игрока = {_level}, Игрок заблокирован = { _playerBan}");
+            Console.WriteLine($" ID игрока = {_id},Имя игрока = {_name},Уровень игрока = {_level}, Игрок заблокирован = { _playerBan}");
         }     
     }
 }
