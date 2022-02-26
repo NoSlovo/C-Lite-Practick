@@ -78,24 +78,24 @@ namespace GameConsoles1
 
         public void BanPlayer()
         {
-            Player userId = FindPlayer();
-            userId.ActivateBlocking();
+            Player player = FindPlayer();
+            player.ActivateBlocking();
         }
 
 
         public void UnBanPlayer()
         {
-            Player userId = FindPlayer();
-            userId.RemoveBlocking();                  
+            Player player = FindPlayer();
+            player.RemoveBlocking();                  
         }
 
         public void DeletePlayer()
         {
-            Player userId = FindPlayer();
+            Player player = FindPlayer();
 
             for (int i = 0; i < _players.Count; i++)
             {
-                if (userId == _players[i])
+                if (player == _players[i])
                 {
                     _players.RemoveAt(i);
                 }
@@ -118,6 +118,7 @@ namespace GameConsoles1
         private string _name;
         private int _level;
         private bool _playerBan;
+
         public  int Id => _id;
 
         public Player( string name, bool playerBan = false)
