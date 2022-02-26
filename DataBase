@@ -19,25 +19,22 @@ namespace GameConsoles1
                 dataBase.DisplayInformation();
                 Console.WriteLine("Меню:\n1 - Добивить игрока\n2 - Забанить игрока\n3 - Разбанить икрока\n4 - удалить игрока");
                 string userInput = Console.ReadLine();
+                Console.Clear();
                 switch (userInput)
                 {
-                    case "1":
-                        Console.Clear();
+                    case "1":                        
                         dataBase.AddPlayer();
                     break;
                         
-                    case "2":
-                        Console.Clear();
+                    case "2":                        
                         dataBase.BanPlayer();
                     break;
                         
-                    case "3":
-                        Console.Clear();
+                    case "3":                       
                         dataBase.UnBanPlayer();
                     break;
                         
-                    case "4":
-                        Console.Clear();
+                    case "4":                       
                         dataBase.DeletePlayer();
                     break;
                 }
@@ -62,7 +59,7 @@ namespace GameConsoles1
             Console.Clear();
         }
 
-          public int  FindId()
+        private Player FindId()
         {
             Console.WriteLine("Введите ID игрока");
             string numberUser = Console.ReadLine();
@@ -72,48 +69,36 @@ namespace GameConsoles1
             {
                 if (userId  == _players[i].Id)
                 {
-                    return _players[i].Id;
+                  return _players[i];
                 }
             }
-            return 0;
+            return null;
         }
 
         public void BanPlayer()
         {
-            int userId = FindId();
-
-            for (int i = 0; i < _players.Count; i++)
-            {
-                if (i + 1  == userId)
-                {
-                    _players[i].ActivateBlocking();
-                }
-            }
+            Player userId = FindId();
+            userId.ActivateBlocking();
         }
 
 
         public void UnBanPlayer()
         {
-            int userId = FindId();
-            for (int i = 0; i < _players.Count; i++)
-            {
-                if (i + 1 == userId)
-                {
-                    _players[i].RemoveBlocking();
-                }
-            }
+            Player userId = FindId();
+            userId.RemoveBlocking();                  
         }
 
         public void DeletePlayer()
         {
-            int userId = FindId();
+            Player userId = FindId();
+
             for (int i = 0; i < _players.Count; i++)
             {
-                if (i + 1 == userId)
+                if (userId == _players[i])
                 {
                     _players.RemoveAt(i);
                 }
-            }
+            }   
         }
 
         public void DisplayInformation()
@@ -127,19 +112,19 @@ namespace GameConsoles1
 
     class Player
     {
-        private static int Ids;
+        private static int _ids;
         private int _id;
         private string _name;
         private int _level;
         private bool _playerBan;
 
-        public int Id { get { return _id; } }
+        public  int Id => _id;
         public Player( string name, bool playerBan = false)
         {
             Random random = new Random();
            int minLevel = 1;
            int maxLevel = 11;
-            _id = ++Ids;
+            _id = ++_ids;
             _name = name;
             _level = random.Next(minLevel, maxLevel); 
             _playerBan = playerBan;
@@ -147,16 +132,23 @@ namespace GameConsoles1
 
         public void ActivateBlocking()
         {
+
             _playerBan = true;
+
         }
 
         public void RemoveBlocking()
         {
+
             _playerBan = false;
+
         }
+
         public void DisplayInfo()
         {
+
             Console.WriteLine($" ID игрока = {_id},Имя игрока = {_name},Уровень игрока = {_level}, Игрок заблокирован = { _playerBan}");
+
         }     
     }
 }
