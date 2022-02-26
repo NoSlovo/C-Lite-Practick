@@ -46,6 +46,7 @@ namespace GameConsoles1
     class DataBase
     {
         private  List<Player> _players;
+
         public DataBase(List<Player> users)
         {
             _players = users;
@@ -59,7 +60,7 @@ namespace GameConsoles1
             Console.Clear();
         }
 
-        private Player FindId()
+        private Player FindPlayer()
         {
             Console.WriteLine("Введите ID игрока");
             string numberUser = Console.ReadLine();
@@ -77,20 +78,20 @@ namespace GameConsoles1
 
         public void BanPlayer()
         {
-            Player userId = FindId();
+            Player userId = FindPlayer();
             userId.ActivateBlocking();
         }
 
 
         public void UnBanPlayer()
         {
-            Player userId = FindId();
+            Player userId = FindPlayer();
             userId.RemoveBlocking();                  
         }
 
         public void DeletePlayer()
         {
-            Player userId = FindId();
+            Player userId = FindPlayer();
 
             for (int i = 0; i < _players.Count; i++)
             {
@@ -117,8 +118,8 @@ namespace GameConsoles1
         private string _name;
         private int _level;
         private bool _playerBan;
-
         public  int Id => _id;
+
         public Player( string name, bool playerBan = false)
         {
             Random random = new Random();
