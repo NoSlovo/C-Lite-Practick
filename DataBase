@@ -10,33 +10,32 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            int count = 0;
             bool isWork = true;
             List<Player> players = new List<Player>();
             DataBase dataBase = new DataBase(players);
 
             while (isWork)
             {
-                dataBase.AllPlayer();
+                dataBase.DisplayInformation();
                 Console.WriteLine("Меню:\n1 - Добивить игрока\n2 - Забанить игрока\n3 - Разбанить икрока\n4 - удалить игрока");
                 string userInput = Console.ReadLine();
                 switch (userInput)
                 {
                     case "1":
                         Console.Clear();
-                        dataBase.AddPlayer(count++);
+                        dataBase.AddPlayer();
                     break;
-
+                        
                     case "2":
                         Console.Clear();
                         dataBase.BanPlayer();
                     break;
-
+                        
                     case "3":
                         Console.Clear();
-                        dataBase.UnbanPlayer();
+                        dataBase.UnBanPlayer();
                     break;
-
+                        
                     case "4":
                         Console.Clear();
                         dataBase.DeletePlayer();
@@ -49,122 +48,112 @@ namespace GameConsoles1
     
     class DataBase
     {
-        List<Player> players;
+        private  List<Player> _players;
         public DataBase(List<Player> users)
         {
-            players = users;
+            _players = users;
         }
 
-        public void AllPlayer()
+        public void AddPlayer()
         {
-            for (int i = 0; i < players.Count; i++)
-            {
-                players[i].Info();
-            }
-        }
-
-        public void AddPlayer(int id)
-        {               
             Console.WriteLine("Введите имя игрока");
-            string name = Console.ReadLine();
-            Random rand = new Random();
-            int level = rand.Next(1, 11);
-            bool flag = true;
-            players.Add(new Player(id, name, level, flag));
+             string name = Console.ReadLine();
+            _players.Add(new Player(name));
+            Console.Clear();
         }
 
         public void BanPlayer()
         {
-            int idBanPlayer = Convert.ToInt32(Console.ReadLine());
-            if (idBanPlayer <= players.Count)
+            Console.WriteLine("Введите порядковый номер игрока");
+            string  numberUser = Console.ReadLine();
+            int userId;
+            if (int.TryParse(numberUser,out userId))
             {
-                for (int i = 0; i < players.Count; i++)
+                for (int i = 0; i < _players.Count; i++)
                 {
-                    if (players[i].Id == idBanPlayer)
+                    if (i + 1 == userId)
                     {
-                        players[i].Flag = false;
+                        _players[i].ActivateBlocking();
                     }
                 }
-            }
-            else 
-            {
-                Console.WriteLine("Такого ID нет ");
-            }    
+            }   
         }
 
-        public void UnbanPlayer()
+        public void UnBanPlayer()
         {
-            int idUnBanPlayer = Convert.ToInt32(Console.ReadLine());
-            if (idUnBanPlayer <= players.Count)
+            Console.WriteLine("Введите порядковый номер игрока");
+            string numberUser = Console.ReadLine();
+            int userId;
+            if (int.TryParse(numberUser, out userId))
             {
-                for (int i = 0; i < players.Count; i++)
+                for (int i = 0; i < _players.Count; i++)
                 {
-                    if (players[i].Id == idUnBanPlayer)
+                    if (i + 1 == userId)
                     {
-                        players[i].Flag = true;
+                        _players[i].RemoveBlocking();
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine("Такого ID нет ");
             }
         }
 
         public void DeletePlayer()
         {
-            int idDaletePlayer = Convert.ToInt32(Console.ReadLine());
-            if (idDaletePlayer <=players.Count)
+            Console.WriteLine("Введите порядковый номер игрока");
+            string numberUser = Console.ReadLine();
+            int userId;
+            if (int.TryParse(numberUser, out userId))
             {
-                for (int i = 0; i < players.Count; i++)
+                for (int i = 0; i < _players.Count; i++)
                 {
-                    if (players[i].Id == idDaletePlayer)
+                    if (i + 1   == userId)
                     {
-                        players.RemoveAt(i);
+                        _players.RemoveAt(i);
                     }
+                    
                 }
             }
-            else
+        }
+
+        public void DisplayInformation()
+        {
+            for (int i = 0; i < _players.Count; i++)
             {
-                Console.WriteLine("Такого ID нет ");
+                Console.Write($"{i + 1} - ");
+                _players[i].Info();
             }
         }
     }
 
     class Player
     {
-        private int _id;
+        private int _maxLevel;
+        private int _minLevel;
         private string _name;
         private int _level;
-        private bool _flag;
+        private bool _playerBan;
 
-        public int Id 
+        public Player( string name, bool playerBan = false)
         {
-            get { return _id; }
-        }
-        public bool Flag
-        {
-            get 
-            {
-                return _flag;
-            }
-             set
-            {
-                _flag = value;
-            }
-        }
-
-        public Player(int id, string name, int level, bool flag = true)
-        {
-            _id = id;
+            Random random = new Random();
+            _minLevel = 1;
+            _maxLevel = 11;
             _name = name;
-            _level = level;
-            _flag = flag;
+            _level = random.Next(_minLevel, _maxLevel); 
+            _playerBan = playerBan;
         }
 
+        public void ActivateBlocking()
+        {
+            _playerBan = true;
+        }
+
+        public void RemoveBlocking()
+        {
+            _playerBan = false;
+        }
         public void Info()
         {
-            Console.WriteLine($"id игрока = {_id}, Имя игрока = {_name},Уровень игрока = {_level}, Его статус = {_flag}");
+            Console.WriteLine($"Имя игрока = {_name},Уровень игрока = {_level}, Игрок заблокирован = { _playerBan}");
         }     
     }
 }
