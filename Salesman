@@ -1,0 +1,122 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+
+            bool isWork = true;
+            List<Product> products = new List<Product>();
+            Salesman salesman = new Salesman(products);
+            Player player = new Player();
+            products.Add(new Product("Меч",100));
+            products.Add(new Product("Лук", 100));
+            products.Add(new Product("Посох", 100));
+            products.Add(new Product("Паприка", 100));
+
+            while (isWork)
+            {   
+                Console.WriteLine("Список товаров");
+                salesman.DisplayList();
+                Console.WriteLine();
+                Console.WriteLine("Покупки игрока");
+                player.ShowInfo();
+                Console.WriteLine("Что хотите приобрести?");
+                string numbeUser = Console.ReadLine();
+                Console.Clear();
+                if (int.TryParse(numbeUser,out int userId))
+                {
+                    salesman.SellProduct(userId);
+                    player.AddProduct(salesman.SellProduct(userId));
+                    products.Remove(salesman.SellProduct(userId));
+                }
+                else
+                {
+                    Console.WriteLine("Что-то пошло не так");
+                }
+            }     
+        }
+    }
+    
+     class Product 
+    {
+        private static int _ids;
+        private int _id;
+        private string _name;
+        private int _prise;
+
+        public int Id => _id;
+
+        public Product(string name,int price)
+        {
+            _id = _ids++;
+            _name = name;
+            _prise = price;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{_id} - {_name} - {_prise} ");
+        }
+    }
+
+    class Salesman
+    {
+        List<Product> _products = new List<Product>();
+        
+        public Salesman(List<Product> products)
+        {
+            
+            _products = products;
+        }
+
+        public void DisplayList()
+        {
+            foreach (Product product in _products)
+            {
+                   product.ShowInfo();
+            }
+        }
+        
+        public Product SellProduct(int userNumber)
+        {
+            for (int i = 0; i < _products.Count;i++)
+            {
+                if (userNumber  == _products[i].Id)
+                { 
+                    return _products[i];
+                }      
+            }
+            return null;
+        }
+    }
+
+    class Player
+    {
+        private List<Product> _userProduct;
+
+        public Player()
+        {
+            _userProduct = new List<Product>();
+        }
+
+        public void AddProduct(Product product)
+        {
+            _userProduct.Add(product);
+        }
+
+        public void ShowInfo()
+        {
+            for (int i = 0; i < _userProduct.Count; i++)
+            {
+                _userProduct[i].ShowInfo();
+            }
+        }
+    }
+}
