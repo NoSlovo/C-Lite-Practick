@@ -21,7 +21,7 @@ namespace GameConsoles1
             products.Add(new Product("Паприка", 100));
 
             while (isWork)
-            {   
+            {
                 Console.WriteLine("Список товаров");
                 salesman.DisplayList();
                 Console.WriteLine();
@@ -30,16 +30,17 @@ namespace GameConsoles1
                 Console.WriteLine("Что хотите приобрести?");
                 string numbeUser = Console.ReadLine();
                 Console.Clear();
-                if (int.TryParse(numbeUser,out int userId))
+                if (int.TryParse(numbeUser, out int userId))
                 {
-                    salesman.SellProduct(userId);
-                    player.AddProduct(salesman.SellProduct(userId));
-                    products.Remove(salesman.SellProduct(userId));
+                    salesman.GetProduct(userId);
+                    player.AddProduct(salesman.GetProduct(userId));
+                    salesman.Remove(salesman.GetProduct(userId));
                 }
                 else
                 {
                     Console.WriteLine("Что-то пошло не так");
                 }
+
             }     
         }
     }
@@ -83,8 +84,13 @@ namespace GameConsoles1
                    product.ShowInfo();
             }
         }
+
+        public void Remove(Product id)
+        {
+            _products.Remove(id);
+        }
         
-        public Product SellProduct(int userNumber)
+        public Product GetProduct(int userNumber)
         {
             for (int i = 0; i < _products.Count;i++)
             {
