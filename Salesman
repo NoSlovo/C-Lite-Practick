@@ -13,38 +13,66 @@ namespace GameConsoles1
 
             bool isWork = true;
             List<Product> products = new List<Product>();
+            Shop shop = new Shop(products);
             Salesman salesman = new Salesman(products);
             Player player = new Player();
-            products.Add(new Product("Меч",100));
-            products.Add(new Product("Лук", 100));
-            products.Add(new Product("Посох", 100));
-            products.Add(new Product("Паприка", 100));
+            salesman.AddProduct("Меч",400);
+            salesman.AddProduct("Лук",200);
+            salesman.AddProduct("Щит",100);
+            salesman.AddProduct("Паприка",10);
 
             while (isWork)
             {
-                Console.WriteLine("Список товаров");
-                salesman.DisplayList();
-                Console.WriteLine();
-                Console.WriteLine("Покупки игрока");
+                shop.DisplayList();
                 player.ShowInfo();
-                Console.WriteLine("Что хотите приобрести?");
                 string numbeUser = Console.ReadLine();
                 Console.Clear();
                 if (int.TryParse(numbeUser, out int userId))
                 {
                     salesman.GetProduct(userId);
                     player.AddProduct(salesman.GetProduct(userId));
-                    salesman.Remove(salesman.GetProduct(userId));
+                    shop.Remove(salesman.GetProduct(userId),player);
                 }
                 else
                 {
                     Console.WriteLine("Что-то пошло не так");
                 }
-
             }     
         }
     }
     
+    class Shop
+    {
+        private List<Product> _products = new List<Product>();
+
+        public Shop(List<Product> products)
+        {
+            _products = products;
+        }
+
+
+        public void Remove(Product product, Player player)
+        {
+            if (product.Prise <= player.Money)
+            {
+                _products.Remove(product);
+            }
+
+        }
+
+        public void DisplayList()
+        {
+            Console.WriteLine("Список товаров:");
+            foreach (Product product in _products)
+            {
+                product.ShowInfo();
+            }
+
+            Console.WriteLine("Что хотите приобрести?");
+            Console.WriteLine();
+        }
+    }
+
      class Product 
     {
         private static int _ids;
@@ -53,6 +81,7 @@ namespace GameConsoles1
         private int _prise;
 
         public int Id => _id;
+        public int Prise => _prise;
 
         public Product(string name,int price)
         {
@@ -67,28 +96,21 @@ namespace GameConsoles1
         }
     }
 
-    class Salesman
+    class Salesman:Shop
     {
-        List<Product> _products = new List<Product>();
-        
-        public Salesman(List<Product> products)
+        private List<Product> _products = new List<Product>();
+        public Salesman(List<Product> products) : base(products)
         {
             
             _products = products;
         }
 
-        public void DisplayList()
+        public void AddProduct(string name, int money)
         {
-            foreach (Product product in _products)
-            {
-                   product.ShowInfo();
-            }
+            _products.Add(new Product(name,money));
         }
 
-        public void Remove(Product id)
-        {
-            _products.Remove(id);
-        }
+        
         
         public Product GetProduct(int userNumber)
         {
@@ -106,6 +128,9 @@ namespace GameConsoles1
     class Player
     {
         private List<Product> _userProduct;
+        private int _money = 600;
+
+        public int Money { get { return _money; } private set { _money = value; } }
 
         public Player()
         {
@@ -114,11 +139,21 @@ namespace GameConsoles1
 
         public void AddProduct(Product product)
         {
-            _userProduct.Add(product);
+            if (Money >= product.Prise)
+            {
+                Money -= product.Prise;
+                _userProduct.Add(product);
+            }
+            else
+            {
+                Console.WriteLine("Недостаточно средств");
+            }
+            Console.WriteLine($" У игрока {Money} золотых");
         }
 
         public void ShowInfo()
         {
+            Console.WriteLine("Покупки игрока");
             for (int i = 0; i < _userProduct.Count; i++)
             {
                 _userProduct[i].ShowInfo();
