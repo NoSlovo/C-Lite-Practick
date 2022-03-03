@@ -53,6 +53,7 @@ namespace GameConsoles1
 
         class Deal
         {
+            protected List<Product> _products = new List<Product>();
             protected int _money;
 
             protected void DispalayInfo(List<Product> products)
@@ -66,7 +67,7 @@ namespace GameConsoles1
 
         class Exchange
         {
-            public int getId()
+            private int GetId()
             {
                 Console.WriteLine("Введите номер товара");
                 int.TryParse(Console.ReadLine(),out int useId);
@@ -74,21 +75,22 @@ namespace GameConsoles1
             }
             public void ExcangeProduct(Player player, Salesman salesman)
             {
-                Product buyProduct = salesman.GetProduct(getId());
+                Product buyProduct = salesman.GetProduct(GetId());
                 if (player.CheckForMoney(buyProduct))
                 {
-                    player.ByProduct(buyProduct);
+                    player.BuyProduct(buyProduct);
                     salesman.TakeMoney(buyProduct);
-                    salesman.Remov(buyProduct);
+                    salesman.Remove(buyProduct);
                 }   
             }
         }
         class Salesman : Deal
         {
-           private List<Product> _products = new List<Product>();
+           
 
            public Salesman()
            {
+                List<Product> products = _products;
                _money = 0;
            }
 
@@ -120,7 +122,7 @@ namespace GameConsoles1
            }
            
 
-           public void Remov(Product product)
+           public void Remove(Product product)
            {
                _products.Remove(product);
            }
@@ -134,21 +136,22 @@ namespace GameConsoles1
 
        class Player : Deal
        {
-         private List<Product> _byProducts = new List<Product>();
+          List<Product> _buyProducts ;
 
          public Player()
-         {
-             _money = 600;
+         { 
+           _money = 600;
          }
-         public void ByProduct(Product buyProduct)
+
+         public void BuyProduct(Product buyProduct)
          {
              _money -= buyProduct.Price;
-             _byProducts.Add(buyProduct);
+             _buyProducts.Add(buyProduct);
          }
          public void DisplayBuyProducts()
          {
              Console.WriteLine($"Деньги игрока {_money}");
-             DispalayInfo(_byProducts);
+             DispalayInfo(_buyProducts);
          }
 
          public bool CheckForMoney(Product product)
