@@ -11,142 +11,154 @@ namespace GameConsoles1
         static void Main()
         {
             bool isWork = true;
-            List<Product> products = new List<Product>();
+            Exchange exchange = new Exchange();
             Player player = new Player();
-            Salesman salesman = new Salesman(products);
+            Salesman salesman = new Salesman();
             salesman.AddProducts();
-            Deal deal = new Deal();
 
             while (isWork)
             {
                 salesman.DisplayProducts();
                 Console.WriteLine();
-                player.WithdrawPurchases();
-                deal.Sell(player, salesman);
-            }
-        }
-    }
-
-    class Product
-    {
-        private int _id;
-        private static int _ids;
-        private string _name;
-        private int _prise;
-        public int Id => _id;
-        public int Prise => _prise;
-
-        public Product(string name, int prise)
-        {
-            _id = _ids++;
-            _name = name;
-            _prise = prise;
-        }
-
-        public void DisplayProduct()
-        {
-            Console.WriteLine($"{_id} - {_name} - {_prise}");
-        }
-    }
-
-    class Deal
-    {
-       public static int Money = 600;
-       public static int CashRegister = 0;
-
-       public void Sell (Player player, Salesman salesman)
-       {
-           Product product = salesman.GiveProduct();
-
-           if (product != null && Money >= product.Prise)
-            {
-                Money -= product.Prise;
-                CashRegister += product.Prise;
-                player.BuyProduct(product);
-                salesman.Remov(product);
+                player.DisplayBuyProducts();
+                exchange.ExcangeProduct(player, salesman);
                 Console.Clear();
             }
-            else
+
+        }
+
+        class Product
+        {
+            private static int _Ids;
+            private int _id;
+            private string _name;
+            private int _price;
+
+            public int Id => _id;
+            public int Price => _price;
+
+
+            public Product(string name, int price)
             {
-                Console.Clear();
-                Console.WriteLine("Что-то пошло не так");
+                _id = _Ids++;
+                _name = name;
+                _price = price;
             }
-       }
-    }
 
-
-
-
-    class Salesman : Deal
-    {
-        private List<Product> _products = new List<Product>();
-
-        public Salesman(List<Product> products)
-        {
-            _products = products;
-        }
-
-        public void AddProducts()
-        {
-            _products.Add(new Product("Меч", 100));
-            _products.Add(new Product("Щит", 200));
-            _products.Add(new Product("Лук", 400));
-            _products.Add(new Product("Паприка", 30));
-        }
-
-        public void DisplayProducts()
-        {
-            Console.WriteLine($"{CashRegister} - Касса");
-            for (int i = 0; i < _products.Count; i++)
+            public void DisplayProduct()
             {
-                _products[i].DisplayProduct();
+                Console.WriteLine($"{_id} - {_name} - {_price}");
             }
         }
 
-        public Product GiveProduct()
+        class Deal
         {
-            Console.WriteLine("Введите ID продукта");
-            string userId = Console.ReadLine();
+            protected int _money;
 
-            if (int.TryParse(userId, out int numberUser))
+            protected void DispalayInfo(List<Product> products)
             {
-                for (int i = 0; i < _products.Count; i++)
+                for (int i = 0; i < products.Count; i++)
                 {
-                    if (numberUser == _products[i].Id)
-                    {
-                        return _products[i];
-                    }
+                    products[i].DisplayProduct();
                 }
             }
-            else
+        }
+
+        class Exchange
+        {
+            public int getId()
             {
-                Console.WriteLine("Продукт не найден");
+                Console.WriteLine("Введите номер товара");
+                int.TryParse(Console.ReadLine(),out int useId);
+                return useId;
             }
-            return null;    
-        }
-
-        public void Remov(Product product)
-        {
-            _products.Remove(product);
-        }
-    }
-
-    class Player : Deal
-    {
-       private List<Product> _purchasedProducts = new List<Product>();
-       
-       public void BuyProduct(Product byProduct)
-       {
-          _purchasedProducts.Add(byProduct);
-       }
-
-        public void WithdrawPurchases()
-        {
-            Console.WriteLine($"{Money} - Игрок");
-            for (int i = 0;i < _purchasedProducts.Count; i++)
+            public void ExcangeProduct(Player player, Salesman salesman)
             {
-                _purchasedProducts[i].DisplayProduct();
+                Product buyProduct = salesman.GetProduct(getId());
+                if (player.CheckForMoney(buyProduct))
+                {
+                    player.ByProduct(buyProduct);
+                    salesman.TakeMoney(buyProduct);
+                    salesman.Remov(buyProduct);
+                }   
             }
         }
+            class Salesman : Deal
+            {
+                private List<Product> _products = new List<Product>();
+
+                public Salesman()
+                {
+                    _money = 0;
+                }
+
+                public void AddProducts()
+                {
+                    _products.Add(new Product("Меч", 100));
+                    _products.Add(new Product("Лук", 200));
+                    _products.Add(new Product("Щит", 400));
+                    _products.Add(new Product("Паприка", 30));
+                }
+
+                public void DisplayProducts()
+                {
+                    Console.WriteLine("Деньги продовца " + _money);
+                    DispalayInfo(_products);
+                }
+
+                public Product GetProduct(int userId)
+                {
+
+                    for (int i = 0; i < _products.Count; i++)
+                    {
+                        if (_products[i].Id == userId)
+                        {
+                            return _products[i];
+                        }
+                    }
+                    return null;
+                }
+                
+
+                public void Remov(Product product)
+                {
+                    _products.Remove(product);
+                }
+
+                public void TakeMoney(Product product)
+                {
+                    _money += product.Price;
+                }
+            }
+        
+
+            class Player : Deal
+            {
+                private List<Product> _byProducts = new List<Product>();
+
+                public Player()
+                {
+                    _money = 600;
+                }
+                public void ByProduct(Product buyProduct)
+                {
+                    _money -= buyProduct.Price;
+                    _byProducts.Add(buyProduct);
+                }
+                public void DisplayBuyProducts()
+                {
+                    Console.WriteLine($"Деньги игрока {_money}");
+                    DispalayInfo(_byProducts);
+                }
+
+                public bool CheckForMoney(Product product)
+                {
+                    if (product !=  null && _money >= product.Price)
+                    {
+                        return true;
+                    }
+                        return false;
+                }
+            }
+        }
     }
-}
