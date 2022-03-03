@@ -56,11 +56,11 @@ namespace GameConsoles1
             protected List<Product> _products = new List<Product>();
             protected int _money;
 
-            protected void DispalayInfo(List<Product> products)
+            protected void DispalayInfo()
             {
-                for (int i = 0; i < products.Count; i++)
+                for (int i = 0; i < _products.Count; i++)
                 {
-                    products[i].DisplayProduct();
+                    _products[i].DisplayProduct();
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace GameConsoles1
 
            public Salesman()
            {
-                List<Product> products = _products;
+                
                _money = 0;
            }
 
@@ -105,7 +105,7 @@ namespace GameConsoles1
            public void DisplayProducts()
            {
                Console.WriteLine("Деньги продовца " + _money);
-               DispalayInfo(_products);
+               DispalayInfo();
            }
 
            public Product GetProduct(int userId)
@@ -136,22 +136,23 @@ namespace GameConsoles1
 
        class Player : Deal
        {
-          List<Product> _buyProducts ;
+         
 
          public Player()
-         { 
+         {
+           _products = new List<Product>();
            _money = 600;
          }
 
          public void BuyProduct(Product buyProduct)
          {
              _money -= buyProduct.Price;
-             _buyProducts.Add(buyProduct);
+             _products.Add(buyProduct);
          }
          public void DisplayBuyProducts()
          {
              Console.WriteLine($"Деньги игрока {_money}");
-             DispalayInfo(_buyProducts);
+             DispalayInfo();
          }
 
          public bool CheckForMoney(Product product)
