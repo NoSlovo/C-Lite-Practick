@@ -1,0 +1,190 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            
+            Calliseum calliseum = new Calliseum();
+            calliseum.AddWariors();
+            calliseum.DisplayWariors();
+            Gladiator warior1 = (Gladiator)calliseum.СallFighters();
+            Gladiator warior2 = (Gladiator)calliseum.СallFighters();
+
+            while (warior1.Health > 0 || warior2.Health > 0)
+            {
+                warior1.TakeDamege(warior2.Damage);
+                warior2.TakeDamege(warior1.Damage);
+
+                if (warior1.Health == 0 && warior2.Health == 0)
+                {
+                    Console.WriteLine("Ничья");
+                }
+                else if (warior1.Health == 0 && warior2.Health > 0)
+                {
+                    Console.WriteLine("Побел");
+                    warior2.DisplayInfo();
+                }
+                else if (warior1.Health > 0 && warior2.Health == 0)
+                {
+                    Console.WriteLine("Побел");
+                    warior1.DisplayInfo();
+                } 
+            }
+        }
+    }
+
+    class Calliseum
+    {
+       
+     private List<Gladiator> _wariors = new List<Gladiator>();
+        
+        public  void AddWariors()
+        {
+            _wariors.Add(new Gladiator());
+            _wariors.Add(new Paladin());
+            _wariors.Add(new Niga());
+            _wariors.Add(new Samurai());
+            _wariors.Add(new Barbarian());
+        }
+        
+        public object СallFighters()
+        {
+            Console.WriteLine("Выберете гладиатора");
+            string userInpit = Console.ReadLine();
+            if (int.TryParse(userInpit,out int number))
+            {
+                for (int i = 0; i < _wariors.Count; i++)
+                {
+                    if (number - 1 == i)
+                    {
+                        return _wariors[i];
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void DisplayWariors()
+        {
+            for (int i = 0; i < _wariors.Count; i++)
+            {
+                _wariors[i].DisplayInfo();
+            }
+        }
+    }
+
+    class Gladiator 
+    {
+        protected string _name;
+        protected int _health;
+        protected int _armor;
+        protected int _damage;
+
+        public int Health
+        {
+            get { return _health; } private set { _health = value; }
+        }
+        public int Damage
+        {
+            get { return _damage; } private set { _damage = value; }
+        }
+
+        public Gladiator()
+        {
+            _name = "Гладиатор";
+            _health = 100;
+            _armor = 10;
+            _damage = 23;
+        }
+
+        public void OpenSecondWind()
+        {
+            _health += 35;
+        }
+
+        public void TakeDamege(int damage)
+        {
+            _health -= damage;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"{_name} - {_health} - {_armor} - {_damage}");
+        }
+    }
+
+    class Paladin: Gladiator
+    {
+        
+        public Paladin() 
+        {
+            _name = "Паладин";
+            _health = 125;
+            _armor = 15;
+            _damage = 15;
+        }
+        
+        public void GodsHand()
+        {
+            _damage += 10;
+        }
+    }
+
+    class Niga : Gladiator
+    {
+        public Niga()
+        {
+            _name = "Нига";
+            _health = 25;
+            _armor = 0;
+            _damage = 15;
+        }
+
+        public void TakeAShot()
+        {
+            _damage += 125;
+        }
+    }
+
+
+    class Samurai : Gladiator
+    {
+        
+        public Samurai()
+        {
+            _name = "Самурай";
+            _health = 150;
+            _damage = 25;
+            _armor = 10;
+        }
+
+        public void GetKatana()
+        {
+            _damage += 35;
+        }
+    }
+
+    class Barbarian : Gladiator
+    {
+        
+        public Barbarian()
+        {
+            _name = "Варвар";
+            _damage = 50;
+            _armor = 0;
+            _health = 150;
+        }
+
+        public void FallFury()
+        {
+            _armor = 10;
+        }
+    }
+}
