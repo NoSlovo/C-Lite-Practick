@@ -12,7 +12,6 @@ namespace GameConsoles1
         {
             bool isWork = true;
             RussianRailway railwayСarriage = new RussianRailway();
-            Train train = new Train();
             while (isWork)
             {
                 railwayСarriage.RussianRailwayInfo();
@@ -26,7 +25,7 @@ namespace GameConsoles1
                         break;
                     case "2":
                         Console.Clear();
-                        train.AddRailWays(railwayСarriage.SellTikets());
+                        railwayСarriage.AssembleTrain();
                         break;
                     case "3":
                         Console.Clear();
@@ -44,7 +43,6 @@ namespace GameConsoles1
 
         public RussianRailway()
         {
-            
             _createDirection = new Dictionary<string, string>();
         }
 
@@ -61,8 +59,8 @@ namespace GameConsoles1
 
         public void AddTrain()
         {
-            Console.WriteLine("Поезд добавлен");
             _trains.Add(new Train());
+
         }
 
         public Train AssembleTrain()
@@ -75,9 +73,10 @@ namespace GameConsoles1
                 {
                     if (userTrain == _trains[i].Id)
                     {
+                        _trains[i].AddWagons(SellTikets());
                         return _trains[i];
                     }
-                }
+                }       
             }
             else
             {
@@ -99,6 +98,8 @@ namespace GameConsoles1
                         _trains.Remove(train);
                     }
                 }
+                _createDirection.Clear();
+                Console.Clear();
             }
             else
             {
@@ -141,7 +142,7 @@ namespace GameConsoles1
         }
 
 
-        public void AddRailWays(int passangers)
+        public void AddWagons(int passangers)
         {
             int i = 0;
             while (passangers > 0)
@@ -149,6 +150,7 @@ namespace GameConsoles1
                 _railways.Add(new RailwayСarriage());
                 passangers -= _railways[i].Capacity;
                 i++;
+                Console.Clear();
                 Console.WriteLine(i + " Вагон добавлен");
             }
             
@@ -156,9 +158,9 @@ namespace GameConsoles1
 
         public bool Verify()
         {
-            if (_railways.Count <= 1)
+            if (_railways.Count >= 1)
             {
-                Console.WriteLine("Поезд   готов");
+                Console.WriteLine("Поезд готов");
                 return true;
             }
             else
@@ -184,3 +186,4 @@ namespace GameConsoles1
         }
     }
 }
+
