@@ -1,0 +1,186 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            bool isWork = true;
+            RussianRailway railwayСarriage = new RussianRailway();
+            Train train = new Train();
+            while (isWork)
+            {
+                railwayСarriage.RussianRailwayInfo();
+                Console.WriteLine("1 - Создать направление\n2 - Сформировать поезд\n3 - отправить поезд");
+                string userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        Console.Clear();
+                        railwayСarriage.CreateDirection();
+                        break;
+                    case "2":
+                        Console.Clear();
+                        train.AddRailWays(railwayСarriage.SellTikets());
+                        break;
+                    case "3":
+                        Console.Clear();
+                        railwayСarriage.SendTrain(railwayСarriage.AssembleTrain());
+                        break;
+                }
+            }
+        }
+    }
+
+    class RussianRailway
+    {
+        private Dictionary<string, string> _createDirection;
+        private List<Train> _trains = new List<Train>();
+
+        public RussianRailway()
+        {
+            
+            _createDirection = new Dictionary<string, string>();
+        }
+
+        public void CreateDirection()
+        {
+            Console.WriteLine("Откуда");
+            string startPoint = Console.ReadLine();
+            Console.WriteLine("Куда?");
+            string endPoint = Console.ReadLine();
+            _createDirection.Add(startPoint, endPoint);
+            AddTrain();
+        }
+
+
+        public void AddTrain()
+        {
+            Console.WriteLine("Поезд добавлен");
+            _trains.Add(new Train());
+        }
+
+        public Train AssembleTrain()
+        {
+            Console.WriteLine("Выберете поезд:");
+            string userNumber = Console.ReadLine();
+            if (int.TryParse(userNumber, out int userTrain))
+            {
+                for (int i = 0; i < _trains.Count; i++)
+                {
+                    if (userTrain == _trains[i].Id)
+                    {
+                        return _trains[i];
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Что-то пошло не так");
+            }
+            return null;
+        }
+
+        public void SendTrain(Train train)
+        {
+            if (train.Verify())
+            {
+                Console.WriteLine("Поезд отправлен");
+                Console.Clear();
+                for (int i = 0; i < _trains.Count; i++)
+                {
+                    if (train == _trains[i])
+                    {
+                        _trains.Remove(train);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Недостаточно пассажиров");
+            }
+        }
+
+        public int SellTikets()
+        {
+            int _passangers;
+            int minPassangers = 10;
+            int maxPassangers = 100;
+            Random random = new Random();
+            return _passangers = random.Next(minPassangers, maxPassangers);
+        }
+
+        public void RussianRailwayInfo()
+        {
+            foreach (var item in _createDirection)
+            {
+                int i = 0;
+                Console.WriteLine($"Направление {item.Key} - {item.Value} : поезд {_trains[i].Id} статус {_trains[i].Verify()}");
+                i++;
+            }
+        }
+    }
+
+   
+
+    class Train 
+    {
+        private static int _ids; 
+        private int _id;
+        private List<RailwayСarriage> _railways = new List<RailwayСarriage>();
+        public int Id => _id;
+
+        public Train()
+        {
+            _id = _ids++;
+        }
+
+
+        public void AddRailWays(int passangers)
+        {
+            int i = 0;
+            while (passangers > 0)
+            {
+                _railways.Add(new RailwayСarriage());
+                passangers -= _railways[i].Capacity;
+                i++;
+                Console.WriteLine(i + " Вагон добавлен");
+            }
+            
+        }
+
+        public bool Verify()
+        {
+            if (_railways.Count <= 1)
+            {
+                Console.WriteLine("Поезд   готов");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Поезд не готов");
+                return false;
+            }
+        }
+    }
+
+    class RailwayСarriage
+    {
+        private int _сapacity;
+
+        public int Capacity => _сapacity;
+
+        public RailwayСarriage()
+        {
+            int minCapacity = 10;
+            int maxCapacity = 20;
+            Random random = new Random();
+            _сapacity = random.Next(minCapacity, maxCapacity);
+        }
+    }
+}
