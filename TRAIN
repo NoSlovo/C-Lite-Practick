@@ -14,7 +14,7 @@ namespace GameConsoles1
             RussianRailway railwayСarriage = new RussianRailway();
             while (isWork)
             {
-                railwayСarriage.RussianRailwayInfo();
+                railwayСarriage.DisplayRussianRailway();
                 Console.WriteLine("1 - Создать направление\n2 - Сформировать поезд\n3 - отправить поезд");
                 string userInput = Console.ReadLine();
                 switch (userInput)
@@ -116,7 +116,7 @@ namespace GameConsoles1
             return _passangers = random.Next(minPassangers, maxPassangers);
         }
 
-        public void RussianRailwayInfo()
+        public void DisplayRussianRailway()
         {
             foreach (var item in _createDirection)
             {
@@ -186,4 +186,3 @@ namespace GameConsoles1
         }
     }
 }
-
