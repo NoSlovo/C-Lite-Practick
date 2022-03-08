@@ -38,7 +38,6 @@ namespace GameConsoles1
             {
                 Console.WriteLine("Что-то не так");
             }
-
             return null;
         }
 
@@ -46,15 +45,13 @@ namespace GameConsoles1
         {
             if (gladiator != gladiator2)
             {
-                while (gladiator.Health > 0 && gladiator2.Health >0)
+                int round = 0;
+                while (gladiator.IsAlive && gladiator2.IsAlive)
                 {
-                    if (gladiator.Health == 50)
+                    round++;
+                    if (round == 3)
                     {
                         gladiator.UseSpell();
-                    }
-
-                    if (gladiator2.Health >= 75)
-                    {
                         gladiator2.UseSpell();
                     }
                     gladiator2.TakeDamege(gladiator.Damage);
@@ -63,15 +60,15 @@ namespace GameConsoles1
                     gladiator2.DisplayInfo();
                 }
 
-                if (gladiator.Health == 0 && gladiator2.Health == 0)
+                if (gladiator.IsAlive == false && gladiator2.IsAlive == false)
                 {
                     Console.WriteLine("\nНичья\n");
                 }
-                else if (gladiator.Health > 0 && gladiator2.Health <= 0)
+                else if (gladiator.IsAlive == true && gladiator2.IsAlive == false)
                 {
                     DisplayWiner(gladiator);
                 }
-                else if(gladiator2.Health > 0 &&gladiator.Health <= 0)
+                else if(gladiator.IsAlive == false && gladiator2.IsAlive == true)
                 {
                     DisplayWiner(gladiator2);
                 }
@@ -87,43 +84,42 @@ namespace GameConsoles1
 
     class Gladiator 
     {
-        protected string _name;
-        protected int _health;
-        protected int _armor;
-        protected int _damage;
+        protected string Name;
+        protected int Health;
+        protected int Armor;
+        public int Damage { get; protected set; }
+        public bool IsAlive => Health > 0;
 
-        public int Health => _health;
 
-        public int Damage => _damage;
-       
         public Gladiator()
         {
-            _name = "Гладиатор";
-            _health = 100;
-            _armor = 10;
-            _damage = 23;
+            Name = "Гладиатор";
+            Health = 100;
+            Armor = 10;
+            Damage = 25;
         }
 
         public void OpenSecondWind()
         {
             int buffGLadiator = 35;
-            _health += buffGLadiator;
+            Health += buffGLadiator;
         }
 
         public void TakeDamege(int damage)
         {
-            _health -= damage;
+            Health -= damage;
         }
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"{_name} - {_health} - {_armor} - {_damage}");
+            Console.WriteLine($"{Name} - {Health} - {Armor} - {Damage}");
         }
 
         public virtual void UseSpell()
         {
             OpenSecondWind();
         }
+
     }
 
     class Paladin: Gladiator
@@ -131,38 +127,39 @@ namespace GameConsoles1
         
         public Paladin() 
         {
-            _name = "Паладин";
-            _health = 125;
-            _armor = 15;
-            _damage = 15;
+            Name = "Паладин";
+            Health = 125;
+            Armor = 15;
+            Damage = 15;
         }
         
         public void GodsHand()
         {
             int buffPaladin = 10;
-            _damage += buffPaladin;
+            Damage += buffPaladin;
         }
 
         public override void UseSpell()
         {
             GodsHand();
         }
+
     }
 
     class Niga : Gladiator
     {
         public Niga()
         {
-            _name = "Нига";
-            _health = 25;
-            _armor = 0;
-            _damage = 15;
+            Name = "Нига";
+            Health = 25;
+            Armor = 0;
+            Damage = 15;
         }
 
         public void TakeAShot()
         {
             int buffNiga = 125;
-            _damage += buffNiga;
+            Damage += buffNiga;
         }
 
         public override void UseSpell()
@@ -178,22 +175,23 @@ namespace GameConsoles1
         
         public Samurai()
         {
-            _name = "Самурай";
-            _health = 150;
-            _damage = 25;
-            _armor = 10;
+            Name = "Самурай";
+            Health = 150;
+            Damage = 25;
+            Armor = 10;
         }
 
         public void GetKatana()
         {
             int buffSamurai = 35;
-            _damage += buffSamurai;
+            Damage += buffSamurai;
         }
 
         public override void UseSpell()
         {
             GetKatana();
         }
+
     }
 
     class Barbarian : Gladiator
@@ -201,21 +199,22 @@ namespace GameConsoles1
         
         public Barbarian()
         {
-            _name = "Варвар";
-            _damage = 50;
-            _armor = 0;
-            _health = 150;
+            Name = "Варвар";
+            Damage = 50;
+            Armor = 0;
+            Health = 150;
         }
 
         public void FallFury()
         {
             int buffBarbarian = 10;
-            _armor = buffBarbarian;
+            Armor = buffBarbarian;
         }
 
         public override void UseSpell()
         {
             FallFury();
         }
+
     }
 }
