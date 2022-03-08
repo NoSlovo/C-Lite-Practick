@@ -46,13 +46,20 @@ namespace GameConsoles1
         {
             if (gladiator != gladiator2)
             {
-                gladiator.UseSpell();
-                gladiator2.UseSpell();
                 while (gladiator.Health > 0 && gladiator2.Health >0)
                 {
-                    gladiator.TakeDamege(gladiator2.Damage);
-                    gladiator.DisplayInfo();
+                    if (gladiator.Health == 50)
+                    {
+                        gladiator.UseSpell();
+                    }
+
+                    if (gladiator2.Health >= 75)
+                    {
+                        gladiator2.UseSpell();
+                    }
                     gladiator2.TakeDamege(gladiator.Damage);
+                    gladiator.DisplayInfo();
+                    gladiator.TakeDamege(gladiator2.Damage);
                     gladiator2.DisplayInfo();
                 }
 
@@ -62,15 +69,19 @@ namespace GameConsoles1
                 }
                 else if (gladiator.Health > 0 && gladiator2.Health <= 0)
                 {
-                    Console.WriteLine("\nПобедил\n");
-                    gladiator.DisplayInfo();
+                    DisplayWiner(gladiator);
                 }
                 else if(gladiator2.Health > 0 &&gladiator.Health <= 0)
                 {
-                    Console.WriteLine("\nПобедил\n");
-                    gladiator2.DisplayInfo();
+                    DisplayWiner(gladiator2);
                 }
             }
+        }
+
+        public void DisplayWiner(Gladiator gladiator)
+        {
+            Console.WriteLine($"Победил");
+            gladiator.DisplayInfo();
         }
     }
 
@@ -81,15 +92,10 @@ namespace GameConsoles1
         protected int _armor;
         protected int _damage;
 
-        public int Health
-        {
-            get { return _health; } private set { _health = value; }
-        }
-        public int Damage
-        {
-            get { return _damage; } private set { _damage = value; }
-        }
+        public int Health => _health;
 
+        public int Damage => _damage;
+       
         public Gladiator()
         {
             _name = "Гладиатор";
