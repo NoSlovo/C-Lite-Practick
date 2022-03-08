@@ -10,159 +10,207 @@ namespace GameConsoles1
     {
         static void Main()
         {
-          bool isWork = true;
-          Exchange exchange = new Exchange();
-          Player player = new Player();
-          Salesman salesman = new Salesman();
-          salesman.AddProducts();
-
-          while (isWork)
-          {
-              salesman.DisplayProducts();
-              Console.WriteLine();
-              player.DisplayBuyProducts();
-              exchange.ExcangeProduct(player, salesman);
-              Console.Clear();
-          }
-
+            Calliseum calliseum = new Calliseum();
+            calliseum.FightGladiators(calliseum.ChooseGladiator(),calliseum.ChooseGladiator());
         }
+    }
 
-        class Product
+    class Calliseum
+    {
+        private List<Gladiator> _gladiators = new List<Gladiator>() { new Gladiator(), new Samurai(), new Paladin(), new Niga(), new Barbarian()};
+
+        public Gladiator ChooseGladiator()
         {
-           private static int _Ids;
-           private int _id;
-           private string _name;
-           private int _price;
-           
-           public int Id => _id;
-           public int Price => _price;
-           
-           
-           public Product(string name, int price)
-           {
-               _id = _Ids++;
-               _name = name;
-               _price = price;
-           }
-           
-           public void DisplayProduct()
-           {
-               Console.WriteLine($"{_id} - {_name} - {_price}");
-           }
-        }
+            Console.WriteLine("Выберете гладиатора");
+            string userInput = Console.ReadLine();
 
-        class Deal
-        {
-            protected List<Product> _products = new List<Product>();
-            protected int _money;
-
-            protected void DispalayInfo()
+            if (int.TryParse(userInput,out int userNumber) && userNumber <= _gladiators.Count)
             {
-                for (int i = 0; i < _products.Count; i++)
+                for (int i = 0; i < _gladiators.Count; i++)
                 {
-                    _products[i].DisplayProduct();
+                    if (i + 1 == userNumber)
+                    {
+                        return _gladiators[i];
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Что-то не так");
+            }
+            return null;
+        }
+
+        public void FightGladiators(Gladiator gladiator, Gladiator gladiator2)
+        {
+            if (gladiator != gladiator2)
+            {
+                gladiator.UseSpell();
+                gladiator2.UseSpell();
+                while (gladiator.Health > 0 && gladiator2.Health >0)
+                {
+                    gladiator2.TakeDamege(gladiator.Damage);
+                    gladiator.DisplayInfo();
+                    gladiator.TakeDamege(gladiator2.Damage);
+                    gladiator2.DisplayInfo();
+                }
+
+                if (gladiator.Health == 0 && gladiator2.Health == 0)
+                {
+                    Console.WriteLine("\nНичья\n");
+                }
+                else if (gladiator.Health > 0 && gladiator2.Health <= 0)
+                {
+                    DisplayWiner(gladiator);
+                }
+                else if(gladiator2.Health > 0 &&gladiator.Health <= 0)
+                {
+                    DisplayWiner(gladiator2);
                 }
             }
         }
 
-        class Exchange
+        public void DisplayWiner(Gladiator gladiator)
         {
-            private int GetId()
-            {
-                Console.WriteLine("Введите номер товара");
-                int.TryParse(Console.ReadLine(),out int useId);
-                return useId;
-            }
-            public void ExcangeProduct(Player player, Salesman salesman)
-            {
-                Product buyProduct = salesman.GetProduct(GetId());
-                if (player.CheckForMoney(buyProduct))
-                {
-                    player.BuyProduct(buyProduct);
-                    salesman.TakeMoney(buyProduct);
-                    salesman.Remove(buyProduct);
-                }   
-            }
+            Console.WriteLine($"Победил");
+            gladiator.DisplayInfo();
         }
-        class Salesman : Deal
+    }
+
+    class Gladiator 
+    {
+        protected string Name;
+        protected int _Health;
+        protected int Armor;
+        protected int _Damage;
+
+        public int Health => _Health;
+        public int Damage => _Damage;
+       
+        public Gladiator()
         {
-           
+            Name = "Гладиатор";
+            _Health = 100;
+            Armor = 10;
+            _Damage = 23;
+        }
 
-           public Salesman()
-           {
-                
-               _money = 0;
-           }
+        public void OpenSecondWind()
+        {
+            int buffGLadiator = 35;
+            _Health += buffGLadiator;
+        }
 
-           public void AddProducts()
-           {
-               _products.Add(new Product("Меч", 100));
-               _products.Add(new Product("Лук", 200));
-               _products.Add(new Product("Щит", 400));
-               _products.Add(new Product("Паприка", 30));
-           }
+        public void TakeDamege(int damage)
+        {
+            _Health -= damage;
+        }
 
-           public void DisplayProducts()
-           {
-               Console.WriteLine("Деньги продовца " + _money);
-               DispalayInfo();
-           }
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"{Name} - {_Health} - {Armor} - {_Damage}");
+        }
 
-           public Product GetProduct(int userId)
-           {
+        public virtual void UseSpell()
+        {
+            OpenSecondWind();
+        }
 
-               for (int i = 0; i < _products.Count; i++)
-               {
-                   if (_products[i].Id == userId)
-                   {
-                       return _products[i];
-                   }
-               }
-               return null;
-           }
-           
+    }
 
-           public void Remove(Product product)
-           {
-               _products.Remove(product);
-           }
-
-           public void TakeMoney(Product product)
-           {
-               _money += product.Price;
-           }
+    class Paladin: Gladiator
+    {
+        
+        public Paladin() 
+        {
+            Name = "Паладин";
+            _Health = 125;
+            Armor = 15;
+            _Damage = 15;
         }
         
+        public void GodsHand()
+        {
+            int buffPaladin = 10;
+            _Damage += buffPaladin;
+        }
 
-       class Player : Deal
-       {
-         
+        public override void UseSpell()
+        {
+            GodsHand();
+        }
 
-         public Player()
-         {
-           _products = new List<Product>();
-           _money = 600;
-         }
+    }
 
-         public void BuyProduct(Product buyProduct)
-         {
-             _money -= buyProduct.Price;
-             _products.Add(buyProduct);
-         }
-         public void DisplayBuyProducts()
-         {
-             Console.WriteLine($"Деньги игрока {_money}");
-             DispalayInfo();
-         }
+    class Niga : Gladiator
+    {
+        public Niga()
+        {
+            Name = "Нига";
+            _Health = 25;
+            Armor = 0;
+            _Damage = 15;
+        }
 
-         public bool CheckForMoney(Product product)
-         {
-             if (product !=  null && _money >= product.Price)
-             {
-               return true;
-             }
-           return false;
-         }
-       }
+        public void TakeAShot()
+        {
+            int buffNiga = 125;
+            _Damage += buffNiga;
+        }
+
+        public override void UseSpell()
+        {
+            TakeAShot();
+        }
+
+    }
+
+
+    class Samurai : Gladiator
+    {
+        
+        public Samurai()
+        {
+            Name = "Самурай";
+            _Health = 150;
+            _Damage = 25;
+            Armor = 10;
+        }
+
+        public void GetKatana()
+        {
+            int buffSamurai = 35;
+            _Damage += buffSamurai;
+        }
+
+        public override void UseSpell()
+        {
+            GetKatana();
+        }
+
+    }
+
+    class Barbarian : Gladiator
+    {
+        
+        public Barbarian()
+        {
+            Name = "Варвар";
+            _Damage = 50;
+            Armor = 0;
+            _Health = 150;
+        }
+
+        public void FallFury()
+        {
+            int buffBarbarian = 10;
+            Armor = buffBarbarian;
+        }
+
+        public override void UseSpell()
+        {
+            FallFury();
+        }
+
     }
 }
