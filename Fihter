@@ -10,72 +10,66 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            
             Calliseum calliseum = new Calliseum();
-            calliseum.AddWariors();
-            calliseum.DisplayWariors();
-            Gladiator warior1 = (Gladiator)calliseum.СallFighters();
-            Gladiator warior2 = (Gladiator)calliseum.СallFighters();
-
-            while (warior1.Health > 0 || warior2.Health > 0)
-            {
-                warior1.TakeDamege(warior2.Damage);
-                warior2.TakeDamege(warior1.Damage);
-
-                if (warior1.Health == 0 && warior2.Health == 0)
-                {
-                    Console.WriteLine("Ничья");
-                }
-                else if (warior1.Health == 0 && warior2.Health > 0)
-                {
-                    Console.WriteLine("Побел");
-                    warior2.DisplayInfo();
-                }
-                else if (warior1.Health > 0 && warior2.Health == 0)
-                {
-                    Console.WriteLine("Побел");
-                    warior1.DisplayInfo();
-                } 
-            }
+            calliseum.FightGladiators(calliseum.ChooseGladiator(),calliseum.ChooseGladiator());
         }
     }
 
     class Calliseum
     {
-       
-     private List<Gladiator> _wariors = new List<Gladiator>();
-        
-        public  void AddWariors()
-        {
-            _wariors.Add(new Gladiator());
-            _wariors.Add(new Paladin());
-            _wariors.Add(new Niga());
-            _wariors.Add(new Samurai());
-            _wariors.Add(new Barbarian());
-        }
-        
-        public object СallFighters()
+        private List<Gladiator> _gladiators = new List<Gladiator>() { new Gladiator(), new Samurai(), new Paladin(), new Niga(), new Barbarian()};
+
+        public Gladiator ChooseGladiator()
         {
             Console.WriteLine("Выберете гладиатора");
-            string userInpit = Console.ReadLine();
-            if (int.TryParse(userInpit,out int number))
+            string userInput = Console.ReadLine();
+
+            if (int.TryParse(userInput,out int userNumber) && userNumber <= _gladiators.Count)
             {
-                for (int i = 0; i < _wariors.Count; i++)
+                for (int i = 0; i < _gladiators.Count; i++)
                 {
-                    if (number - 1 == i)
+                    if (i + 1 == userNumber)
                     {
-                        return _wariors[i];
+                        return _gladiators[i];
                     }
                 }
             }
+            else
+            {
+                Console.WriteLine("Что-то не так");
+            }
+
             return null;
         }
 
-        public void DisplayWariors()
+        public void FightGladiators(Gladiator gladiator, Gladiator gladiator2)
         {
-            for (int i = 0; i < _wariors.Count; i++)
+            if (gladiator != gladiator2)
             {
-                _wariors[i].DisplayInfo();
+                gladiator.UseSpell();
+                gladiator2.UseSpell();
+                while (gladiator.Health > 0 && gladiator2.Health >0)
+                {
+                    gladiator.TakeDamege(gladiator2.Damage);
+                    gladiator.DisplayInfo();
+                    gladiator2.TakeDamege(gladiator.Damage);
+                    gladiator2.DisplayInfo();
+                }
+
+                if (gladiator.Health == 0 && gladiator2.Health == 0)
+                {
+                    Console.WriteLine("\nНичья\n");
+                }
+                else if (gladiator.Health > 0 && gladiator2.Health <= 0)
+                {
+                    Console.WriteLine("\nПобедил\n");
+                    gladiator.DisplayInfo();
+                }
+                else if(gladiator2.Health > 0 &&gladiator.Health <= 0)
+                {
+                    Console.WriteLine("\nПобедил\n");
+                    gladiator2.DisplayInfo();
+                }
             }
         }
     }
@@ -106,7 +100,8 @@ namespace GameConsoles1
 
         public void OpenSecondWind()
         {
-            _health += 35;
+            int buffGLadiator = 35;
+            _health += buffGLadiator;
         }
 
         public void TakeDamege(int damage)
@@ -117,6 +112,11 @@ namespace GameConsoles1
         public void DisplayInfo()
         {
             Console.WriteLine($"{_name} - {_health} - {_armor} - {_damage}");
+        }
+
+        public virtual void UseSpell()
+        {
+            OpenSecondWind();
         }
     }
 
@@ -133,7 +133,13 @@ namespace GameConsoles1
         
         public void GodsHand()
         {
-            _damage += 10;
+            int buffPaladin = 10;
+            _damage += buffPaladin;
+        }
+
+        public override void UseSpell()
+        {
+            GodsHand();
         }
     }
 
@@ -149,8 +155,15 @@ namespace GameConsoles1
 
         public void TakeAShot()
         {
-            _damage += 125;
+            int buffNiga = 125;
+            _damage += buffNiga;
         }
+
+        public override void UseSpell()
+        {
+            TakeAShot();
+        }
+
     }
 
 
@@ -167,7 +180,13 @@ namespace GameConsoles1
 
         public void GetKatana()
         {
-            _damage += 35;
+            int buffSamurai = 35;
+            _damage += buffSamurai;
+        }
+
+        public override void UseSpell()
+        {
+            GetKatana();
         }
     }
 
@@ -184,7 +203,13 @@ namespace GameConsoles1
 
         public void FallFury()
         {
-            _armor = 10;
+            int buffBarbarian = 10;
+            _armor = buffBarbarian;
+        }
+
+        public override void UseSpell()
+        {
+            FallFury();
         }
     }
 }
