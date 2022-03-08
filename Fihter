@@ -18,7 +18,6 @@ namespace GameConsoles1
     class Calliseum
     {
         private List<Gladiator> _gladiators = new List<Gladiator>() { new Gladiator(), new Samurai(), new Paladin(), new Niga(), new Barbarian()};
-
         public Gladiator ChooseGladiator()
         {
             Console.WriteLine("Выберете гладиатора");
@@ -60,7 +59,7 @@ namespace GameConsoles1
                     gladiator2.DisplayInfo();
                 }
 
-                if (gladiator.IsAlive == false && gladiator2.IsAlive == false)
+                if (CheckingDraw(gladiator, gladiator2))
                 {
                     Console.WriteLine("\nНичья\n");
                 }
@@ -80,6 +79,18 @@ namespace GameConsoles1
             Console.WriteLine($"Победил");
             gladiator.DisplayInfo();
         }
+
+        public bool CheckingDraw(Gladiator gladiator, Gladiator gladiator1)
+        {
+            if (gladiator.IsAlive == false && gladiator1.IsAlive == false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     class Gladiator 
@@ -89,7 +100,6 @@ namespace GameConsoles1
         protected int Armor;
         public int Damage { get; protected set; }
         public bool IsAlive => Health > 0;
-
 
         public Gladiator()
         {
@@ -119,12 +129,10 @@ namespace GameConsoles1
         {
             OpenSecondWind();
         }
-
     }
 
     class Paladin: Gladiator
     {
-        
         public Paladin() 
         {
             Name = "Паладин";
@@ -143,7 +151,6 @@ namespace GameConsoles1
         {
             GodsHand();
         }
-
     }
 
     class Niga : Gladiator
@@ -166,13 +173,11 @@ namespace GameConsoles1
         {
             TakeAShot();
         }
-
     }
 
 
     class Samurai : Gladiator
-    {
-        
+    {  
         public Samurai()
         {
             Name = "Самурай";
@@ -191,7 +196,6 @@ namespace GameConsoles1
         {
             GetKatana();
         }
-
     }
 
     class Barbarian : Gladiator
@@ -215,6 +219,5 @@ namespace GameConsoles1
         {
             FallFury();
         }
-
     }
 }
