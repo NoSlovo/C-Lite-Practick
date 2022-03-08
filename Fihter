@@ -57,39 +57,39 @@ namespace GameConsoles1
                     gladiator.DisplayInfo();
                     gladiator.TakeDamege(gladiator2.Damage);
                     gladiator2.DisplayInfo();
+                    CheckingDraw(gladiator, gladiator2);
                 }
 
-                if (CheckingDraw(gladiator, gladiator2))
-                {
-                    Console.WriteLine("\nНичья\n");
-                }
-                else if (gladiator.IsAlive == true && gladiator2.IsAlive == false)
-                {
-                    DisplayWiner(gladiator);
-                }
-                else if(gladiator.IsAlive == false && gladiator2.IsAlive == true)
-                {
-                    DisplayWiner(gladiator2);
-                }
+                
             }
         }
 
-        public void DisplayWiner(Gladiator gladiator)
+        public void ConclusionWinner(Gladiator gladiator)
         {
             Console.WriteLine($"Победил");
             gladiator.DisplayInfo();
         }
 
-        public bool CheckingDraw(Gladiator gladiator, Gladiator gladiator1)
+        public void CheckingDraw(Gladiator gladiator, Gladiator gladiator1)
         {
             if (gladiator.IsAlive == false && gladiator1.IsAlive == false)
             {
-                return true;
+                Console.WriteLine("\nНичья\n");
             }
-            else
+            else if (gladiator.IsAlive == true && gladiator1.IsAlive == false)
             {
-                return false;
+                DisplayWiner(gladiator);
             }
+            else if (gladiator.IsAlive == false && gladiator1.IsAlive == true)
+            {
+                DisplayWiner(gladiator1);
+            }
+        }
+
+        public void DisplayWiner(Gladiator gladiator)
+        {
+            Console.WriteLine("\nПобедил\n");
+            gladiator.DisplayInfo();
         }
     }
 
