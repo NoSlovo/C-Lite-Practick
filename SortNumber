@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            int[] number = { 12, 24, 3, 42, 555, 631, 71, 81, 95, 1, };
+
+            int[] sortNumber = BubleSort(number);
+
+            for (int i = 0; i < sortNumber.Length; i++)
+            {
+                Console.WriteLine(sortNumber[i]);
+            }
+        }
+    static int[] BubleSort(int[] array)
+    {
+            int element;
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    if (array[i] > array[j])
+                    {
+                        element = array[i];
+                        array[i] = array[j];
+                        array[j] = element;
+                    }
+                }
+            }
+            return array;
+        }
+    }
+}
