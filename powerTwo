@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            powerTwo();
+        }
+
+
+        static void powerTwo()
+        {
+            Console.WriteLine("Я работаю");
+            Random random = new Random();
+            int number = random.Next(0, 100);
+            int count = 0;
+            int numberTwo = 2;
+            int result = 0;
+
+            while (result < number)
+            {
+               count++;
+                result = numberTwo * count;
+                Console.WriteLine(result);
+            }
+            Console.WriteLine($"Степень 2 равна {count} больше числа {number}");
+        }
+    }
+}
