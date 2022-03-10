@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            string scobs = "(()(()))";
+            Examination(scobs);
+        }
+
+        static void Examination(string scobs)
+        {
+            int a = 0;
+            int count = 0;
+            for (var i = 0; i < scobs.Length; i++)
+            {
+                if (scobs[i] == '(')
+                {
+                  count++;
+                }
+                else if (scobs[i] == ')')
+                {
+                  count--;
+                    if (scobs[i] != '(' && scobs[scobs.Length - i] != ')')
+                    {
+                       a++;
+                    }
+                    
+                }
+            }
+
+            if (count == 0)
+            {
+                Console.WriteLine("Проверка пройдена");
+            }
+            else
+            {
+                Console.WriteLine("Проверка не пройдена");
+            }
+
+            Console.WriteLine($"Вложенность - {a}");
+        }
+    }
+}
