@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            int numberOne = 1;
+            int numberTwo = 0;
+
+            Console.WriteLine($"{numberOne} - {numberTwo}");
+
+            int oneNumber = numberTwo;
+            int twoNumber = numberOne;
+
+            numberOne = oneNumber;
+            numberTwo = twoNumber;
+
+            Console.WriteLine($"{numberOne} - {numberTwo}");
+        }
+    }
+}
