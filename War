@@ -1,0 +1,292 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            PlatoonOne platoonOne = new PlatoonOne();
+            platoonOne.Summon();
+            platoonOne.DisplayUnits();
+        }
+    }
+
+    class War
+    {
+        List<UnitPlatoonOne> PlatoonOneWinner = new List<UnitPlatoonOne>();
+        List<UnitPlatoonTwo> platoonTwoWinner = new List<UnitPlatoonTwo>();
+
+        public void Fight(UnitPlatoonOne one, UnitPlatoonTwo two )
+        {
+            while (one.IsAlive == true && two.IsAlive == true)
+            {
+                one.TakeDamage(two.Damage);
+                two.TakeDamage(one.Damage);
+
+                if (one.IsAlive == false && two.IsAlive == false)
+                {
+                    Console.WriteLine("ничья");
+                }
+                else if (one.IsAlive == true && two.IsAlive == false)
+                {
+                    PlatoonOneWinner.Add(one);
+                    Console.WriteLine("Победил боец Первого взвода");
+                }
+                else if (one.IsAlive == false && two.IsAlive == true)
+                {
+                    platoonTwoWinner.Add(two);
+                    Console.WriteLine("Победил боец Второго взвода взвода");
+                }
+            }
+        }
+
+        public void DisplayWinner(List<UnitPlatoonOne> PlatoonOneWinner, List<UnitPlatoonTwo> platoonTwoWinner)
+        {
+            if (PlatoonOneWinner.Count > platoonTwoWinner.Count)
+            {
+                Console.WriteLine("Победил ПЕРВЫЙ взвод");
+            }
+            else if (PlatoonOneWinner.Count < platoonTwoWinner.Count)
+            {
+                Console.WriteLine("Победил Второй взвод");
+            }
+        }
+    }
+
+    class PlatoonOne
+    {
+        private List<UnitPlatoonOne> units = new List<UnitPlatoonOne> ();
+
+        public void Summon()
+        {
+            units.Add(new Sniper());
+            units.Add(new Soldier());
+            units.Add(new Stormtrooper());
+        }
+
+        public void DisplayUnits()
+        {
+            foreach (var unit in units)
+            {
+               unit.DisplayUnits();
+            }
+        }
+
+        public void Remove(UnitPlatoonOne unit)
+        {
+            units.Remove(unit);
+        }
+    }
+
+
+    class UnitPlatoonOne
+    {
+        protected string Name;
+        protected int Health;
+        public int Damage { get; protected set; }
+
+        public bool IsAlive => Health > 0;
+        
+
+       public virtual void UseSpale()
+        {
+
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
+
+        public void DisplayUnits()
+        {
+            Console.WriteLine($"{Name} Здоровье-{Health} Урон-{Damage} Статус - {IsAlive}");
+        }
+    }
+
+
+    class Soldier : UnitPlatoonOne
+    {
+        
+
+        public Soldier()
+        {
+            Name = "Солдат";
+            Health = 80;
+            Damage = 30;
+        }
+
+        public void FightingSpirit()
+        {
+            Damage += 12;
+        }
+
+        public  override void UseSpale()
+        {
+            FightingSpirit();
+        }
+    }
+
+
+    class Sniper : UnitPlatoonOne
+    {
+
+        public Sniper()
+        {
+            Name = "Снайпер";
+            Health = 100;
+            Damage = 10;
+        }
+
+        public void Headshot()
+        {
+            int buffSiper = 100;
+            Damage += buffSiper;
+        }
+
+        public override void UseSpale()
+        {
+            Headshot();
+        }
+    }
+
+    class Stormtrooper : UnitPlatoonOne
+    {
+        
+
+        public Stormtrooper()
+        {
+            Name = "Штуромовик";
+            Health = 110;
+            Damage = 60;
+        }
+
+       public void MachineGunSalvo()
+        {
+            Damage += 110;
+        }
+
+        public override void UseSpale()
+        {
+            MachineGunSalvo();
+        }
+    }
+
+    class PlatoonTwo
+    {
+       private List<UnitPlatoonTwo> _unitsTwo = new List<UnitPlatoonTwo>();
+
+        public void Summon()
+        {
+            _unitsTwo.Add(new Trooper());
+            _unitsTwo.Add(new Gunner());
+            _unitsTwo.Add(new Infantry());
+        }
+
+        public void DisplayUnits()
+        {
+            foreach (var unit in _unitsTwo)
+            {
+                unit.DisplayUnits();
+            }
+        }
+
+        public void Remove(UnitPlatoonTwo unitsTwo)
+        {
+            _unitsTwo.Remove(unitsTwo);
+        }
+
+    }
+
+     class UnitPlatoonTwo
+    {
+        protected string Name;
+        protected int Health;
+        public int Damage { get; protected set; }
+
+        public bool IsAlive => Health > 0;
+
+        public virtual void UseSpale()
+        {
+
+        }
+
+        public void DisplayUnits()
+        {
+            Console.WriteLine($"{Name}\nЗдоровье-{Health}\nУрон-{Damage}");
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
+    }
+
+    class Trooper : UnitPlatoonTwo
+    {
+
+        public Trooper()
+        {
+            Name = "Солдат";
+            Health = 110;
+            Damage = 90;
+        }
+
+        public void ExplosiveAmmunition()
+        {
+            Damage += 30;
+        }
+
+        public override void UseSpale()
+        {
+            ExplosiveAmmunition();
+        }
+    }
+
+    class Gunner : UnitPlatoonTwo
+    {
+
+        public Gunner()
+        {
+            Name = "Пулеметчик";
+            Health = 10;
+            Damage = 100;
+        }
+
+        public void UpgradeArmor()
+        {
+            Health += 40;
+        }
+
+        public override void UseSpale()
+        {
+            UpgradeArmor();
+        }
+    }
+
+    class Infantry : UnitPlatoonTwo
+    {
+
+        public Infantry()
+        {
+            Name = "Пехотинец";
+            Health = 80;
+            Damage = 70;
+        }
+
+        public void ThrowGrenade()
+        {
+            Damage += 70;
+        }
+
+        public override void UseSpale()
+        {
+            ThrowGrenade();
+        }
+    }
+}
