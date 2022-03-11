@@ -16,7 +16,7 @@ namespace GameConsoles1
 
         static void Examination(string scobs)
         {
-            int a = 0;
+            int depth = 0;
             int count = 0;
             for (var i = 0; i < scobs.Length; i++)
             {
@@ -29,7 +29,7 @@ namespace GameConsoles1
                   count--;
                     if (scobs[i] != '(' && scobs[scobs.Length - i] != ')')
                     {
-                       a++;
+                       depth++;
                     }
                     
                 }
@@ -44,7 +44,7 @@ namespace GameConsoles1
                 Console.WriteLine("Проверка не пройдена");
             }
 
-            Console.WriteLine($"Вложенность - {a}");
+            Console.WriteLine($"Глубина - {a}");
         }
     }
 }
