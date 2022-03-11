@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            string text = "Мир дружба жвачка";
+            SplitString(text);
+            
+        }
+    
+        static void SplitString(string text)
+        {
+           string[] array =  text.Split(' ');
+
+            for (int i = 0; i < array.Length;i++)
+            {
+                Console.WriteLine(array[i]);
+            }
+        }
+    }
+}
