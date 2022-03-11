@@ -12,14 +12,11 @@ namespace GameConsoles1
         {
             int[] number = { 12, 24, 3, 42, 555, 631, 71, 81, 95, 1, };
 
-            int[] sortNumber = BubleSort(number);
+             BubleSort(number);
 
-            for (int i = 0; i < sortNumber.Length; i++)
-            {
-                Console.WriteLine(sortNumber[i]);
-            }
+            
         }
-    static int[] BubleSort(int[] array)
+    static void BubleSort(int[] array)
     {
             int element;
             for (int i = 0; i < array.Length; i++)
@@ -33,8 +30,9 @@ namespace GameConsoles1
                         array[j] = element;
                     }
                 }
+                Console.WriteLine(array[i]);
             }
-            return array;
+            
         }
     }
 }
