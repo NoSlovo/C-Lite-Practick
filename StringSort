@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            string[] arrayOne = { "Павел", "Анатолий", "Виктор", "Кирилл","Анастасия"};
+            string[] arrayTwo = { "Виктор", "Витя", "Коля", "Кирилл","Анастасия"};
+
+            string[] tempArray = arrayOne.Concat(arrayTwo).ToArray();
+
+
+            List<string> result = new List<string>();
+            
+            for (int i = 0; i < tempArray.Length;i++)
+            {
+                result.Add(tempArray[i]);
+            }
+
+            result.Sort();
+
+            for (int i = 0; i < result.Count - 1; i++)
+            {
+                if (result[i] == result[i + 1])
+                {
+                   result.RemoveRange(i, 2);
+                }
+            }
+
+            for (int i = 0; i < result.Count;i++)
+            {
+                Console.WriteLine(result[i]);
+            }
+        }     
+    }
+}
