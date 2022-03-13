@@ -21,11 +21,8 @@ namespace GameConsoles1
             int depth = 0;
             int count = 0;
 
-
             for (var i = 0; i < scobs.Length; i++)
             {
-
-
                 if (scobs[i] == '(')
                 {
                     count++;
@@ -41,8 +38,6 @@ namespace GameConsoles1
 
                 }
             }
-
-            
 
             if (count == 0)
             {
