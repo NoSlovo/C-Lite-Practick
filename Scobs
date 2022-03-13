@@ -10,41 +10,51 @@ namespace GameConsoles1
     {
         static void Main()
         {
-            string scobs = "(()(()))";
+            string scobs = "((()))";
             Examination(scobs);
         }
 
-        static void Examination(string scobs)
+        static bool Examination(string scobs)
         {
             int depth = 0;
             int count = 0;
+
+            
             for (var i = 0; i < scobs.Length; i++)
             {
                 if (scobs[i] == '(')
                 {
-                  count++;
+                    count++;
                 }
                 else if (scobs[i] == ')')
                 {
-                  count--;
+                    if (scobs[0] == ')' || scobs[i] ==')' && scobs[scobs.Length - i] == '('|| scobs.Length % 2 != 0)
+                    {
+                        Console.WriteLine("Не коректная строка");
+                        return false;
+                    }
+                    count--;
+
                     if (scobs[i] != '(' && scobs[scobs.Length - i] != ')')
                     {
-                       depth++;
+                        depth++;
                     }
-                    
+
                 }
             }
+
+            Console.WriteLine($"Глубина - {depth}");
 
             if (count == 0)
             {
                 Console.WriteLine("Проверка пройдена");
+                return true;
             }
             else
             {
                 Console.WriteLine("Проверка не пройдена");
-            }
-
-            Console.WriteLine($"Глубина - {a}");
+                return false;
+            }            
         }
     }
 }
