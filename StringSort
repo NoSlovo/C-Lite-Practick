@@ -16,26 +16,16 @@ namespace GameConsoles1
             string[] tempArray = arrayOne.Concat(arrayTwo).ToArray();
 
 
-            List<string> result = new List<string>();
-            
-            for (int i = 0; i < tempArray.Length;i++)
+            HashSet<string> result = new HashSet<string>();
+
+            for (int i = 0; i < tempArray.Length; i++)
             {
                 result.Add(tempArray[i]);
             }
 
-            result.Sort();
-
-            for (int i = 0; i < result.Count - 1; i++)
+            foreach (string i in result)
             {
-                if (result[i] == result[i + 1])
-                {
-                   result.RemoveRange(i, 2);
-                }
-            }
-
-            for (int i = 0; i < result.Count;i++)
-            {
-                Console.WriteLine(result[i]);
+                Console.WriteLine(i);
             }
         }     
     }
