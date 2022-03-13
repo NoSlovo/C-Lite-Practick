@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GameConsoles1
 {
@@ -16,23 +13,25 @@ namespace GameConsoles1
 
         static bool Examination(string scobs)
         {
+            if (scobs[0] == ')')
+            {
+                Console.WriteLine("Не кореткная строка");
+                return false;
+            }
             int depth = 0;
             int count = 0;
 
-            
+
             for (var i = 0; i < scobs.Length; i++)
             {
+
+
                 if (scobs[i] == '(')
                 {
                     count++;
                 }
                 else if (scobs[i] == ')')
                 {
-                    if (scobs[0] == ')' || scobs[i] ==')' && scobs[scobs.Length - i] == '('|| scobs.Length % 2 != 0)
-                    {
-                        Console.WriteLine("Не коректная строка");
-                        return false;
-                    }
                     count--;
 
                     if (scobs[i] != '(' && scobs[scobs.Length - i] != ')')
@@ -54,7 +53,7 @@ namespace GameConsoles1
             {
                 Console.WriteLine("Проверка не пройдена");
                 return false;
-            }            
+            }
         }
     }
 }
