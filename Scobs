@@ -8,10 +8,10 @@ namespace GameConsoles1
         static void Main()
         {
             string scobs = "((()))";
-            Examination(scobs);
+            isValidation(scobs);
         }
 
-        static bool Examination(string scobs)
+        static bool isValidation(string scobs)
         {
             if (scobs[0] == ')')
             {
@@ -42,11 +42,12 @@ namespace GameConsoles1
                 }
             }
 
-            Console.WriteLine($"Глубина - {depth}");
+            
 
             if (count == 0)
             {
                 Console.WriteLine("Проверка пройдена");
+                Console.WriteLine($"Глубина - {depth}");
                 return true;
             }
             else
