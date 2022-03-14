@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GameConsoles1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int N = random.Next(1,28);
+            int tempNumber = N;
+            int number = tempNumber;
+            int minNumber = 100;
+            int maxNumber = 999;
+            int count = 0;
+            while (N <= minNumber)
+            {
+                N += number;
+                
+            }
+
+            while(N>= minNumber && N<= maxNumber)
+            {
+                N += number;
+                count++;
+            }
+            Console.WriteLine(number);
+            Console.WriteLine(N);
+            Console.WriteLine(count);
+            Console.WriteLine(count / N);
+        }
+    }
+}
