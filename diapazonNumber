@@ -11,27 +11,25 @@ namespace GameConsoles1
         static void Main(string[] args)
         {
             Random random = new Random();
-            int N = random.Next(1,28);
-            int tempNumber = N;
+            int numberRandom = random.Next(1,28);
+            int tempNumber = numberRandom;
             int number = tempNumber;
             int minNumber = 100;
             int maxNumber = 999;
             int count = 0;
-            while (N <= minNumber)
+            
+            for(int i = numberRandom; i <= maxNumber; i++)
             {
-                N += number;
+                i += number;
                 
+                if (i > minNumber && i <= maxNumber)
+                {
+                    i += number;
+                    count++;
+                }
             }
-
-            while(N>= minNumber && N<= maxNumber)
-            {
-                N += number;
-                count++;
-            }
-            Console.WriteLine(number);
-            Console.WriteLine(N);
-            Console.WriteLine(count);
-            Console.WriteLine(count / N);
+            Console.WriteLine("Количество трехзначных чисел: " + count);
+            Console.WriteLine("Число " + number);
         }
     }
 }
