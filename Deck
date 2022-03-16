@@ -1,0 +1,114 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace GameConsoles1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isWork = true;
+            Player player = new Player();
+            Deck deck = new Deck();
+            deck.AddCards();
+            
+
+            while (isWork)
+            {
+                Console.WriteLine("1 - Взять карту 2 - Вывести все выши карты");
+                Card card = deck.GetCard();
+                string userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        player.TakeCard(card);
+                        break;
+                    case "2":
+                        player.DisplayMayCard();
+                        isWork = false;
+                        break;
+
+                }
+                deck.Remov(card);
+            }
+        }
+    }
+
+    class Card
+    {
+
+        private string _name;
+
+        public Card(string name)
+        {
+            _name = name;
+        }
+
+        public void DisplayCardInfo()
+        {
+            Console.WriteLine(_name);
+        }
+    }
+
+    class Player
+    {
+        private List<Card> _cardsPlayer = new List<Card>();
+
+        public void DisplayMayCard()
+        {
+            foreach (Card card in _cardsPlayer)
+            {
+                card.DisplayCardInfo();
+            }
+        }
+
+        public void TakeCard(Card card)
+        {
+            if (card != null)
+            {
+                Console.Clear();
+                Console.WriteLine("Вы взяли карту");
+                _cardsPlayer.Add(card);
+                
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Что-то не так");
+            } 
+        }
+    }
+
+    class Deck
+    {
+        private List<Card> _cards = new List<Card>();
+
+
+        public void AddCards()
+        {
+            _cards.Add(new Card("6"));
+            _cards.Add(new Card("7"));
+            _cards.Add(new Card("8"));
+            _cards.Add(new Card("9"));
+            _cards.Add(new Card("10"));
+            _cards.Add(new Card("Валет"));
+        }
+
+        public Card GetCard()
+        {
+            int itemNumber = 0;
+            if (_cards.Count != 0)
+            {
+                return _cards[itemNumber];
+            }
+            return null;
+        }
+
+        public void Remov(Card removItem)
+        {
+            _cards.Remove(removItem);
+        }
+    }
+}
