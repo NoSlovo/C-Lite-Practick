@@ -14,7 +14,7 @@ namespace GameConsoles1
 
             while (isWork)
             {
-                Console.WriteLine("Хранилище книг\n 1 - Добавить Книгу \n 2 - Удалить книгу \n 3 - Вывести все книги");
+                Console.WriteLine("Хранилище книг\n 1 - Добавить Книгу \n 2 - Удалить книгу \n 3 - Вывести все книги \n 4 - Поиск книги по году");
                 string userInput = Console.ReadLine();
                 switch (userInput) 
                 {
@@ -27,6 +27,9 @@ namespace GameConsoles1
                     case "3":
                         storageBoks.DisplayAllBooks();
                         break;
+                    case "4":
+                        storageBoks.BookSearch();
+                        break;
                 }
             }
         }
@@ -36,8 +39,10 @@ namespace GameConsoles1
     {
         List<Book> _books = new List<Book>();
 
+
         public void AddBook()
         {
+            Console.Clear();
             Console.WriteLine("Введите данные для добовления");
             Console.WriteLine("Введите имя Книги");
             string addName = Console.ReadLine();
@@ -53,6 +58,7 @@ namespace GameConsoles1
 
         public void RemovBook()
         {
+            Console.Clear();
             Console.WriteLine("Выберете ID книги для ее удаления");
             string userInput = Console.ReadLine();
             if (int.TryParse(userInput,out int userNumber))
@@ -74,6 +80,27 @@ namespace GameConsoles1
                 _books[i].DisplayInfoBook();
             }
         }
+
+        public void BookSearch()
+        {
+            Console.Clear();
+            Console.WriteLine("Введите год книги");
+            string userInput = Console.ReadLine();
+            if (int.TryParse(userInput,out int userAge))
+            {
+                for (int i = 0; i < _books.Count;i++)
+                {
+                    if (_books[i].Age == userAge)
+                    {
+                        _books[i].DisplayInfoBook();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Книга не найдена");
+                    }
+                }
+            }
+        }
     }
 
     class Book
@@ -85,6 +112,8 @@ namespace GameConsoles1
         private int _age;
 
         public int Id => _id;
+        public int Age => _age; 
+
         public Book(string name,string author,int age)
         {
             _id = _ids++;
