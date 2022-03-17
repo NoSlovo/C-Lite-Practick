@@ -14,7 +14,7 @@ namespace GameConsoles1
 
             while (isWork)
             {
-                Console.WriteLine("Хранилище книг\n 1 - Добавить Книгу \n 2 - Удалить книгу \n 3 - Вывести все книги \n 4 - Поиск книги по году");
+                Console.WriteLine("Хранилище книг\n 1 - Добавить Книгу \n 2 - Удалить книгу \n 3 - Вывести все книги \n 4 - Поиск книги");
                 string userInput = Console.ReadLine();
                 switch (userInput) 
                 {
@@ -28,7 +28,7 @@ namespace GameConsoles1
                         storageBoks.DisplayAllBooks();
                         break;
                     case "4":
-                        storageBoks.BookSearch();
+                        storageBoks.SearchBook();
                         break;
                 }
             }
@@ -81,13 +81,14 @@ namespace GameConsoles1
             }
         }
 
-        public void BookSearch()
+        public void SearchBook()
         {
             Console.Clear();
-            Console.WriteLine("Введите год книги");
+            Console.WriteLine("Введите год книги,Автора или название");
             string userInput = Console.ReadLine();
             if (int.TryParse(userInput,out int userAge))
             {
+                
                 for (int i = 0; i < _books.Count;i++)
                 {
                     if (_books[i].Age == userAge)
@@ -97,6 +98,16 @@ namespace GameConsoles1
                     else
                     {
                         Console.WriteLine("Книга не найдена");
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0;i < _books.Count;i++)
+                {
+                    if (_books[i].Name == userInput || _books[i].Author == userInput)
+                    {
+                        _books[i].DisplayInfoBook();
                     }
                 }
             }
@@ -112,7 +123,9 @@ namespace GameConsoles1
         private int _age;
 
         public int Id => _id;
-        public int Age => _age; 
+        public int Age => _age;
+        public string Name => _name;
+        public string Author => _author;
 
         public Book(string name,string author,int age)
         {
