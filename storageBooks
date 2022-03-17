@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace GameConsoles1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isWork = true;
+            StorageBoks storageBoks = new StorageBoks();
+
+            while (isWork)
+            {
+                Console.WriteLine("Хранилище книг\n 1 - Добавить Книгу \n 2 - Удалить книгу \n 3 - Вывести все книги");
+                string userInput = Console.ReadLine();
+                switch (userInput) 
+                {
+                    case "1":
+                        storageBoks.AddBook();
+                        break;
+                    case "2":
+                        storageBoks.RemovBook();
+                        break;
+                    case "3":
+                        storageBoks.DisplayAllBooks();
+                        break;
+                }
+            }
+        }
+    }
+
+    class StorageBoks 
+    {
+        List<Book> _books = new List<Book>();
+
+        public void AddBook()
+        {
+            Console.WriteLine("Введите данные для добовления");
+            Console.WriteLine("Введите имя Книги");
+            string addName = Console.ReadLine();
+            Console.WriteLine("Введите автора Книги");
+            string addAuthor = Console.ReadLine();
+            Console.WriteLine("Введите год Книги");
+            string userInput = Console.ReadLine();
+            int.TryParse(userInput, out int ageUserBook);
+
+            Book addBookUser = new Book(addName, addAuthor, ageUserBook); 
+            _books.Add(addBookUser);
+        }
+
+        public void RemovBook()
+        {
+            Console.WriteLine("Выберете ID книги для ее удаления");
+            string userInput = Console.ReadLine();
+            if (int.TryParse(userInput,out int userNumber))
+            {
+                for (int i = 0; i < _books.Count; i++)
+                {
+                    if (_books[i].Id == userNumber)
+                    {
+                        _books.Remove(_books[i]);
+                    }
+                }
+            }
+        }
+
+        public void DisplayAllBooks()
+        {
+            for (int i = 0; i < _books.Count;i++)
+            {
+                _books[i].DisplayInfoBook();
+            }
+        }
+    }
+
+    class Book
+    {
+        private static int _ids;
+        private int _id;
+        private string _name;
+        private string _author;
+        private int _age;
+
+        public int Id => _id;
+        public Book(string name,string author,int age)
+        {
+            _id = _ids++;
+            _name = name;
+            _author = author;
+            _age = age;
+        }
+         public void DisplayInfoBook()
+        {
+            Console.WriteLine($"ID - {_id} Название книги:{_name}\nАвтор Книги:{_author}\nГод кники:{_age}");
+        }
+    }
+}
