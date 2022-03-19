@@ -2,291 +2,282 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GameConsoles1
 {
-    internal class Program
+    class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
+            bool isWork = true;
+            War war = new War();
             PlatoonOne platoonOne = new PlatoonOne();
-            platoonOne.Summon();
-            platoonOne.DisplayUnits();
+            PlatoonTwo platoonTwo = new PlatoonTwo();
+            platoonOne.AddUnits();
+            platoonTwo.AddUnits();
+
+            while (isWork)
+            {
+                war.Fight(platoonOne.GetUnit(), platoonTwo.GetUnit());
+                platoonOne.RamoveUnit(platoonOne.GetUnit());
+                platoonTwo.RamoveUnit(platoonTwo.GetUnit());
+            }
         }
     }
 
     class War
     {
-        List<UnitPlatoonOne> PlatoonOneWinner = new List<UnitPlatoonOne>();
-        List<UnitPlatoonTwo> platoonTwoWinner = new List<UnitPlatoonTwo>();
+        private List< Fighter> _winUnitsPlatoonOne = new List< Fighter>();
+        private List< Fighter> _winUnitsPlatoonTwo = new List< Fighter>();
 
-        public void Fight(UnitPlatoonOne one, UnitPlatoonTwo two )
+        public void Fight( Fighter unitOne,  Fighter unitTwo)
         {
-            while (one.IsAlive == true && two.IsAlive == true)
+            while (unitOne.IsAlive && unitTwo.IsAlive)
             {
-                one.TakeDamage(two.Damage);
-                two.TakeDamage(one.Damage);
+                unitOne.ActivateSpell();
+                unitTwo.ActivateSpell();
+                unitOne.DisplayInfoUnit();
+                unitTwo.DisplayInfoUnit();
+                unitOne.TakeDamage(unitTwo.Damage);
+                unitTwo.TakeDamage(unitOne.Damage);
 
-                if (one.IsAlive == false && two.IsAlive == false)
+                if (unitOne.IsAlive == false && unitTwo.IsAlive == false)
                 {
-                    Console.WriteLine("ничья");
+                    Console.WriteLine();
+                    Console.WriteLine("Ничья");
                 }
-                else if (one.IsAlive == true && two.IsAlive == false)
+                else if (unitOne.IsAlive == true && unitTwo.IsAlive == false)
                 {
-                    PlatoonOneWinner.Add(one);
-                    Console.WriteLine("Победил боец Первого взвода");
+                    Console.WriteLine();
+                    Console.WriteLine("Победил боец первого отряда");
+                    Console.WriteLine();
+                    _winUnitsPlatoonOne.Add(unitOne);
                 }
-                else if (one.IsAlive == false && two.IsAlive == true)
+                else if (unitOne.IsAlive == false && unitTwo.IsAlive == true)
                 {
-                    platoonTwoWinner.Add(two);
-                    Console.WriteLine("Победил боец Второго взвода взвода");
-                }
+                    Console.WriteLine();
+                    Console.WriteLine("Победил боец второго отряда");
+                    Console.WriteLine();
+                    _winUnitsPlatoonTwo.Add(unitTwo);
+                }    
             }
+
+            Console.WriteLine($"Победителей со стороны Страны 1 - {_winUnitsPlatoonOne.Count}\nПобедителей со стороны Страны 2 - {_winUnitsPlatoonTwo.Count}");
+            Console.WriteLine();
         }
 
-        public void DisplayWinner(List<UnitPlatoonOne> PlatoonOneWinner, List<UnitPlatoonTwo> platoonTwoWinner)
+        public void DisplayWinner()
         {
-            if (PlatoonOneWinner.Count > platoonTwoWinner.Count)
+            if (_winUnitsPlatoonOne.Count == _winUnitsPlatoonTwo.Count)
             {
-                Console.WriteLine("Победил ПЕРВЫЙ взвод");
+                Console.WriteLine("Победителей нет");
             }
-            else if (PlatoonOneWinner.Count < platoonTwoWinner.Count)
+            else if (_winUnitsPlatoonOne.Count > _winUnitsPlatoonTwo.Count)
             {
-                Console.WriteLine("Победил Второй взвод");
+                Console.WriteLine("Победил первый отряд");
+            }
+            else if (_winUnitsPlatoonOne.Count < _winUnitsPlatoonTwo.Count)
+            {
+                Console.WriteLine("Победил второй отряд");
             }
         }
     }
 
     class PlatoonOne
     {
-        private List<UnitPlatoonOne> units = new List<UnitPlatoonOne> ();
+       private List< Fighter> _unitsOne = new List< Fighter>();
 
-        public void Summon()
-        {
-            units.Add(new Sniper());
-            units.Add(new Soldier());
-            units.Add(new Stormtrooper());
-        }
+       public void AddUnits()
+       {
+            _unitsOne.Add(new Sniper());
+            _unitsOne.Add(new Infantryman());
+            _unitsOne.Add(new Miner());
+       }
 
         public void DisplayUnits()
         {
-            foreach (var unit in units)
+            Console.WriteLine("Отряд Один");
+            foreach ( Fighter unit in _unitsOne)
             {
-               unit.DisplayUnits();
+                unit.DisplayInfoUnit();
             }
         }
 
-        public void Remove(UnitPlatoonOne unit)
+        public  Fighter GetUnit()
         {
-            units.Remove(unit);
-        }
-    }
+            
+           if (_unitsOne.Count > 0)
+           {
+               return _unitsOne[0];
+            }
+            else
+            {
+                Console.WriteLine("Бойци закончились");
+            }
 
-
-    class UnitPlatoonOne
-    {
-        protected string Name;
-        protected int Health;
-        public int Damage { get; protected set; }
-
-        public bool IsAlive => Health > 0;
-        
-
-       public virtual void UseSpale()
-        {
-
+            return null;
         }
 
-        public void TakeDamage(int damage)
+        public void RamoveUnit( Fighter unit)
         {
-            Health -= damage;
-        }
-
-        public void DisplayUnits()
-        {
-            Console.WriteLine($"{Name} Здоровье-{Health} Урон-{Damage} Статус - {IsAlive}");
-        }
-    }
-
-
-    class Soldier : UnitPlatoonOne
-    {
-        
-
-        public Soldier()
-        {
-            Name = "Солдат";
-            Health = 80;
-            Damage = 30;
-        }
-
-        public void FightingSpirit()
-        {
-            Damage += 12;
-        }
-
-        public  override void UseSpale()
-        {
-            FightingSpirit();
-        }
-    }
-
-
-    class Sniper : UnitPlatoonOne
-    {
-
-        public Sniper()
-        {
-            Name = "Снайпер";
-            Health = 100;
-            Damage = 10;
-        }
-
-        public void Headshot()
-        {
-            int buffSiper = 100;
-            Damage += buffSiper;
-        }
-
-        public override void UseSpale()
-        {
-            Headshot();
-        }
-    }
-
-    class Stormtrooper : UnitPlatoonOne
-    {
-        
-
-        public Stormtrooper()
-        {
-            Name = "Штуромовик";
-            Health = 110;
-            Damage = 60;
-        }
-
-       public void MachineGunSalvo()
-        {
-            Damage += 110;
-        }
-
-        public override void UseSpale()
-        {
-            MachineGunSalvo();
+            _unitsOne.Remove(unit);
         }
     }
 
     class PlatoonTwo
     {
-       private List<UnitPlatoonTwo> _unitsTwo = new List<UnitPlatoonTwo>();
+        private List< Fighter> _unitsTwo = new List< Fighter>();
 
-        public void Summon()
+        public void AddUnits()
         {
-            _unitsTwo.Add(new Trooper());
-            _unitsTwo.Add(new Gunner());
-            _unitsTwo.Add(new Infantry());
+            _unitsTwo.Add(new Engineer());
+            _unitsTwo.Add(new Medic());
+            _unitsTwo.Add(new Comando());
         }
 
         public void DisplayUnits()
         {
-            foreach (var unit in _unitsTwo)
+            Console.WriteLine("Отряд Два");
+            foreach ( Fighter unit in _unitsTwo)
             {
-                unit.DisplayUnits();
+                unit.DisplayInfoUnit();
             }
         }
 
-        public void Remove(UnitPlatoonTwo unitsTwo)
+        public  Fighter GetUnit()
         {
-            _unitsTwo.Remove(unitsTwo);
+            if (_unitsTwo.Count > 0)
+            {
+                return _unitsTwo[0];
+            }
+
+            return null;  
         }
 
-    }
-
-     class UnitPlatoonTwo
-    {
-        protected string Name;
-        protected int Health;
-        public int Damage { get; protected set; }
-
-        public bool IsAlive => Health > 0;
-
-        public virtual void UseSpale()
+        public void RamoveUnit( Fighter unit)
         {
-
-        }
-
-        public void DisplayUnits()
-        {
-            Console.WriteLine($"{Name}\nЗдоровье-{Health}\nУрон-{Damage}");
-        }
-
-        public void TakeDamage(int damage)
-        {
-            Health -= damage;
+            _unitsTwo.Remove(unit);
         }
     }
 
-    class Trooper : UnitPlatoonTwo
+
+
+   abstract class Fighter 
+    {
+        protected string _name;
+        protected int _health;
+        protected int _damage;
+        public bool IsAlive => _health > 0;
+        public int Damage => _damage;
+        public int Health => _health; 
+
+        public  void TakeDamage(int damege)
+        {
+            _health -= damege;
+        }
+
+        public  void DisplayInfoUnit()
+        {
+            Console.WriteLine($"Имя-{_name} Жизни - {_health} Урон - {_damage}");
+        }
+
+        public abstract void ActivateSpell();
+    }
+
+
+    class Sniper : Fighter
     {
 
-        public Trooper()
+        public Sniper()
         {
-            Name = "Солдат";
-            Health = 110;
-            Damage = 90;
+            _name = "Снайпер";
+            _health = 50;
+            _damage = 52;
         }
 
-        public void ExplosiveAmmunition()
+        public override void ActivateSpell()
         {
-            Damage += 30;
+            _damage = 120;
+        } 
+    }
+
+    class Infantryman: Sniper
+    {
+
+        public Infantryman()
+        {
+            _name = "Штурмовик";
+            _health = 100;
+            _damage = 30;
         }
 
-        public override void UseSpale()
+        public override void ActivateSpell()
         {
-            ExplosiveAmmunition();
+            _damage = 120;
         }
     }
 
-    class Gunner : UnitPlatoonTwo
+    class Miner : Sniper
     {
-
-        public Gunner()
+        public Miner()
         {
-            Name = "Пулеметчик";
-            Health = 10;
-            Damage = 100;
+            _name = "Минер";
+            _health = 200;
+            _damage = 1;
         }
 
-        public void UpgradeArmor()
-        {
-            Health += 40;
-        }
-
-        public override void UseSpale()
-        {
-            UpgradeArmor();
+        public override void ActivateSpell()
+        {        
+                _damage = 300;          
         }
     }
 
-    class Infantry : UnitPlatoonTwo
+    class Engineer : Sniper
     {
-
-        public Infantry()
+        public Engineer()
         {
-            Name = "Пехотинец";
-            Health = 80;
-            Damage = 70;
+            _name = "Инженер";
+            _health = 250;
+            _damage = 100;
         }
 
-        public void ThrowGrenade()
+        public override void ActivateSpell()
         {
-            Damage += 70;
+            _health = 350;
+            _damage = 150;
+        }
+    }
+
+    class Medic : Sniper
+    {
+        public Medic()
+        {
+            _name = "Медик";
+            _health = 100;
+            _damage = 60;
         }
 
-        public override void UseSpale()
+       public override void ActivateSpell()
         {
-            ThrowGrenade();
+            if (_health == _health / 2)
+            {
+                _health = _health * 2;
+            }
         }
+    }
+
+    class Comando: Sniper
+    {
+        public Comando()
+        {
+            _name = "Командо";
+            _health = 500;
+            _damage = 300;
+        }
+
+        public override void ActivateSpell()
+        {
+            _damage = _health / 3;
+        }  
     }
 }
