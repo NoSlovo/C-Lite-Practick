@@ -17,10 +17,11 @@ namespace GameConsoles1
             platoonTwo.AddUnits();
 
             while (isWork)
-            {
+            { 
                 war.Fight(platoonOne.GetUnit(), platoonTwo.GetUnit());
                 platoonOne.RamoveUnit(platoonOne.GetUnit());
                 platoonTwo.RamoveUnit(platoonTwo.GetUnit());
+                war.DisplayWinner();
             }
         }
     }
@@ -38,8 +39,8 @@ namespace GameConsoles1
                 unitTwo.ActivateSpell();
                 unitOne.DisplayInfoUnit();
                 unitTwo.DisplayInfoUnit();
-                unitOne.TakeDamage(unitTwo.Damage);
-                unitTwo.TakeDamage(unitOne.Damage);
+                unitOne.TakeDamage(unitTwo.DamageUnit);
+                unitTwo.TakeDamage(unitOne.DamageUnit);
 
                 if (unitOne.IsAlive == false && unitTwo.IsAlive == false)
                 {
@@ -61,13 +62,12 @@ namespace GameConsoles1
                     _winUnitsPlatoonTwo.Add(unitTwo);
                 }    
             }
-
-            Console.WriteLine($"Победителей со стороны Страны 1 - {_winUnitsPlatoonOne.Count}\nПобедителей со стороны Страны 2 - {_winUnitsPlatoonTwo.Count}");
-            Console.WriteLine();
         }
 
         public void DisplayWinner()
         {
+            Console.WriteLine($"Победителей со стороны Страны 1 - {_winUnitsPlatoonOne.Count}\nПобедителей со стороны Страны 2 - {_winUnitsPlatoonTwo.Count}");
+
             if (_winUnitsPlatoonOne.Count == _winUnitsPlatoonTwo.Count)
             {
                 Console.WriteLine("Победителей нет");
@@ -164,21 +164,21 @@ namespace GameConsoles1
 
    abstract class Fighter 
     {
-        protected string _name;
-        protected int _health;
-        protected int _damage;
-        public bool IsAlive => _health > 0;
-        public int Damage => _damage;
-        public int Health => _health; 
+        protected string Name;
+        protected int Health;
+        protected int Damage;
+        public bool IsAlive => Health > 0;
+        public int DamageUnit => Damage;
+ 
 
         public  void TakeDamage(int damege)
         {
-            _health -= damege;
+            Health -= damege;
         }
 
         public  void DisplayInfoUnit()
         {
-            Console.WriteLine($"Имя-{_name} Жизни - {_health} Урон - {_damage}");
+            Console.WriteLine($"Имя-{Name} Жизни - {Health} Урон - {Damage}");
         }
 
         public abstract void ActivateSpell();
@@ -190,14 +190,17 @@ namespace GameConsoles1
 
         public Sniper()
         {
-            _name = "Снайпер";
-            _health = 50;
-            _damage = 52;
+            Name = "Снайпер";
+            Health = 200;
+            Damage = 52;
         }
 
         public override void ActivateSpell()
         {
-            _damage = 120;
+            if (Health < 100)
+            {
+                Damage += Damage;
+            }
         } 
     }
 
@@ -206,14 +209,15 @@ namespace GameConsoles1
 
         public Infantryman()
         {
-            _name = "Штурмовик";
-            _health = 100;
-            _damage = 30;
+            Name = "Штурмовик";
+            Health = 100;
+            Damage = 30;
         }
 
         public override void ActivateSpell()
         {
-            _damage = 120;
+            int bulletDamage = 10;
+            Damage += bulletDamage ;
         }
     }
 
@@ -221,14 +225,19 @@ namespace GameConsoles1
     {
         public Miner()
         {
-            _name = "Минер";
-            _health = 200;
-            _damage = 1;
+            Name = "Минер";
+            Health = 800;
+            Damage = 1;
         }
 
         public override void ActivateSpell()
-        {        
-                _damage = 300;          
+        {
+            int mineExplosion = 300;
+
+            if (Health < 300)
+            {
+                Damage += mineExplosion;
+            }         
         }
     }
 
@@ -236,15 +245,21 @@ namespace GameConsoles1
     {
         public Engineer()
         {
-            _name = "Инженер";
-            _health = 250;
-            _damage = 100;
+            Name = "Инженер";
+            Health = 250;
+            Damage = 100;
         }
 
         public override void ActivateSpell()
         {
-            _health = 350;
-            _damage = 150;
+            int minHealth = 80;
+            int armor = 100;
+
+            if (Health < minHealth)
+            {
+                Health += armor;
+                Damage = 150;
+            }
         }
     }
 
@@ -252,16 +267,17 @@ namespace GameConsoles1
     {
         public Medic()
         {
-            _name = "Медик";
-            _health = 100;
-            _damage = 60;
+            Name = "Медик";
+            Health = 100;
+            Damage = 60;
         }
 
        public override void ActivateSpell()
         {
-            if (_health == _health / 2)
+            int middleHealth = 50;
+            if (Health <= middleHealth)
             {
-                _health = _health * 2;
+                Health += middleHealth;
             }
         }
     }
@@ -270,14 +286,18 @@ namespace GameConsoles1
     {
         public Comando()
         {
-            _name = "Командо";
-            _health = 500;
-            _damage = 300;
+            Name = "Командо";
+            Health = 500;
+            Damage = 300;
         }
 
         public override void ActivateSpell()
         {
-            _damage = _health / 3;
+            int grenadeDamage = 100;
+            if (Health == Health / 2)
+            {
+                Damage += grenadeDamage;
+            }
         }  
     }
 }
