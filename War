@@ -19,9 +19,13 @@ namespace GameConsoles1
             while (isWork)
             { 
                 war.Fight(platoonOne.GetUnit(), platoonTwo.GetUnit());
-                platoonOne.RamoveUnit(platoonOne.GetUnit());
-                platoonTwo.RamoveUnit(platoonTwo.GetUnit());
-                war.DisplayWinner();
+                platoonOne.RemoveUnit(platoonOne.GetUnit());
+                platoonTwo.RemoveUnit(platoonTwo.GetUnit());
+                if (platoonOne.GetUnit() == null && platoonTwo.GetUnit() == null)
+                {
+                    isWork = false;
+                    war.DisplayWinner();
+                }
             }
         }
     }
@@ -33,34 +37,37 @@ namespace GameConsoles1
 
         public void Fight( Fighter unitOne,  Fighter unitTwo)
         {
-            while (unitOne.IsAlive && unitTwo.IsAlive)
+            if (unitOne != null && unitOne != null)
             {
-                unitOne.ActivateSpell();
-                unitTwo.ActivateSpell();
-                unitOne.DisplayInfoUnit();
-                unitTwo.DisplayInfoUnit();
-                unitOne.TakeDamage(unitTwo.DamageUnit);
-                unitTwo.TakeDamage(unitOne.DamageUnit);
+                while (unitOne.IsAlive && unitTwo.IsAlive)
+                {
+                    unitOne.ActivateSpell();
+                    unitTwo.ActivateSpell();
+                    unitOne.DisplayInfoUnit();
+                    unitTwo.DisplayInfoUnit();
+                    unitOne.TakeDamage(unitTwo.DamageUnit);
+                    unitTwo.TakeDamage(unitOne.DamageUnit);
 
-                if (unitOne.IsAlive == false && unitTwo.IsAlive == false)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Ничья");
+                    if (unitOne.IsAlive == false && unitTwo.IsAlive == false)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Ничья");
+                    }
+                    else if (unitOne.IsAlive == true && unitTwo.IsAlive == false)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Победил боец первого отряда");
+                        Console.WriteLine();
+                        _winUnitsPlatoonOne.Add(unitOne);
+                    }
+                    else if (unitOne.IsAlive == false && unitTwo.IsAlive == true)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Победил боец второго отряда");
+                        Console.WriteLine();
+                        _winUnitsPlatoonTwo.Add(unitTwo);
+                    }
                 }
-                else if (unitOne.IsAlive == true && unitTwo.IsAlive == false)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Победил боец первого отряда");
-                    Console.WriteLine();
-                    _winUnitsPlatoonOne.Add(unitOne);
-                }
-                else if (unitOne.IsAlive == false && unitTwo.IsAlive == true)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Победил боец второго отряда");
-                    Console.WriteLine();
-                    _winUnitsPlatoonTwo.Add(unitTwo);
-                }    
             }
         }
 
@@ -83,21 +90,34 @@ namespace GameConsoles1
         }
     }
 
-    class PlatoonOne
+    abstract class  Platoon
     {
-       private List< Fighter> _unitsOne = new List< Fighter>();
+        protected List<Fighter> Units = new List<Fighter>();
 
-       public void AddUnits()
+        public abstract void AddUnits();
+        public abstract void DisplayUnits();
+        public abstract void RemoveUnit(Fighter fighter);
+    }
+
+    class PlatoonOne : Platoon
+    {
+
+        public PlatoonOne()
+        {
+           Units = new List<Fighter>();
+        }
+
+       public override void AddUnits()
        {
-            _unitsOne.Add(new Sniper());
-            _unitsOne.Add(new Infantryman());
-            _unitsOne.Add(new Miner());
+            Units.Add(new Sniper());
+            Units.Add(new Infantryman());
+            Units.Add(new Miner());
        }
 
-        public void DisplayUnits()
+        public override void DisplayUnits()
         {
             Console.WriteLine("Отряд Один");
-            foreach ( Fighter unit in _unitsOne)
+            foreach ( Fighter unit in Units)
             {
                 unit.DisplayInfoUnit();
             }
@@ -106,58 +126,33 @@ namespace GameConsoles1
         public  Fighter GetUnit()
         {
             
-           if (_unitsOne.Count > 0)
+           if (Units.Count > 0)
            {
-               return _unitsOne[0];
-            }
-            else
-            {
-                Console.WriteLine("Бойци закончились");
-            }
+                return Units[0];
+           }
 
             return null;
         }
 
-        public void RamoveUnit( Fighter unit)
+        public override void RemoveUnit(Fighter fighter)
         {
-            _unitsOne.Remove(unit);
+            Units.Remove(fighter);
         }
     }
 
-    class PlatoonTwo
+    class PlatoonTwo : PlatoonOne
     {
-        private List< Fighter> _unitsTwo = new List< Fighter>();
+      public PlatoonTwo()
+      {
+        Units = new List<Fighter>();
+      }
 
-        public void AddUnits()
-        {
-            _unitsTwo.Add(new Engineer());
-            _unitsTwo.Add(new Medic());
-            _unitsTwo.Add(new Comando());
-        }
-
-        public void DisplayUnits()
-        {
-            Console.WriteLine("Отряд Два");
-            foreach ( Fighter unit in _unitsTwo)
-            {
-                unit.DisplayInfoUnit();
-            }
-        }
-
-        public  Fighter GetUnit()
-        {
-            if (_unitsTwo.Count > 0)
-            {
-                return _unitsTwo[0];
-            }
-
-            return null;  
-        }
-
-        public void RamoveUnit( Fighter unit)
-        {
-            _unitsTwo.Remove(unit);
-        }
+      public override void AddUnits()
+      {
+          Units.Add(new Engineer());
+          Units.Add(new Medic());
+          Units.Add(new Comando());
+      }
     }
 
 
@@ -197,7 +192,8 @@ namespace GameConsoles1
 
         public override void ActivateSpell()
         {
-            if (Health < 100)
+            int middleDamage = 100;
+            if (Health < middleDamage)
             {
                 Damage += Damage;
             }
@@ -275,6 +271,7 @@ namespace GameConsoles1
        public override void ActivateSpell()
         {
             int middleHealth = 50;
+
             if (Health <= middleHealth)
             {
                 Health += middleHealth;
@@ -293,11 +290,8 @@ namespace GameConsoles1
 
         public override void ActivateSpell()
         {
-            int grenadeDamage = 100;
-            if (Health == Health / 2)
-            {
-                Damage += grenadeDamage;
-            }
+            int grenadeDamage = 100;      
+            Damage += grenadeDamage;
         }  
     }
 }
