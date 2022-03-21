@@ -11,258 +11,75 @@ namespace GameConsoles1
         {
             bool isWork = true;
             Zoo zoo = new Zoo();
-            zoo.AddAViary();
-            zoo.AddAnimalsAviary();
-
+            zoo.AddAviary();
             while (isWork)
             {
-                Console.WriteLine("Добро пожаловать в зоопарк");
-                Console.WriteLine("Выберете вольер\n1 - Медведь\n2 - Павлин\n3 - Тигр\n4 - Шемпанзе");
+                Console.WriteLine("Добро пожаловать в зоопарк\nВыберете вольер");
+                Console.WriteLine("1 - Медведи\n2 - Павлин\n3 - Тигр\n4 - Шемпанзе");
                 string userInput = Console.ReadLine();
-                if (int.TryParse(userInput,out int userNumber))
+                if (int.TryParse(userInput, out int userNumber))
                 {
-                    zoo.DisplayInfoAviary(userNumber);
-                }
-                else
-                {
-                    Console.WriteLine("Что-то не так");
-                    isWork = false;
+                    zoo.DisplayAviaries(userNumber);
                 }
             }
         }
     }
 
-    class Zoo 
+    class Zoo
     {
-       private List<Aviary> _aviary = new List<Aviary>();
+       private List<Aviary> _aviaries = new List<Aviary>();
 
-       public void AddAViary()
+       public void DisplayAviaries(int userNumber)
        {
-            _aviary.Add(new AviaryBrownBear());
-            _aviary.Add(new AviaryPeacock());
-            _aviary.Add(new AviaryTiger());
-            _aviary.Add(new AviaryChimpanzee());
-       }
-
-        public void AddAnimalsAviary()
-        {
-            foreach (var item in _aviary)
+            if (userNumber <= _aviaries.Count)
             {
-                item.AddAnimals();
-            }
-        }
-
-        public void DisplayInfoAviary(int userNumber)
-        {
-            if (userNumber <= _aviary.Count)
-            {
-                for (int i = 0; i < _aviary.Count; i++)
+                for (int i = 0; i < _aviaries.Count; i++)
                 {
-                    if (userNumber - 1 == i)
+                    if (i == userNumber - 1)
                     {
-                        _aviary[i].DisplayInfo();
+                        _aviaries[i].DisplayInfo();
                     }
                 }
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("Такого вальера нет");
-            }
-            
+                Console.WriteLine("Такого вольера нет");
+            }       
+       }
+        
+        public void AddAviary()
+        {
+            _aviaries.Add(new Aviary("Бурый медведь",'М',"ррррр"));
+            _aviaries.Add(new Aviary("Павлин", 'Ж', "Ай-ай"));
+            _aviaries.Add(new Aviary("Тигр", 'М', "Аррр"));
+            _aviaries.Add(new Aviary("Шемпанзе", 'Ж', "Уа-уа"));
         }
     }
 
-    abstract class Aviary
+    class Aviary 
     {
-        protected int MinAnimals;
-        protected int MaxAnimals;
-        protected List<Animale> Animals;
-        protected string TypeAviary;
-        protected int CountAnimal;
+        private  int _minAnimals;
+        private  int _maxAnimals;
+        private  int _countAnimal;
+        private  string _name;
+        private  char _gender;
+        private  string _vois;
 
-        public abstract void DisplayInfo();
-        public abstract void AddAnimals();
-    }
-
-   abstract class Animale
-   {
-        protected string Name;
-        protected string Gender;
-        protected string Vois;
-
-        public abstract void DisplayInfo();
-    }
-
-    class AviaryBrownBear : Aviary
-    {
-        public AviaryBrownBear()
+        public Aviary(string name, char gender, string vois)
         {
             Random random = new Random();
-            MinAnimals = 1;
-            MaxAnimals = 10;
-            Animals = new List<Animale>();
-            TypeAviary = "Вальер";
-            CountAnimal = random.Next(MinAnimals, MaxAnimals);
+            _minAnimals = 1;
+            _maxAnimals = 10;
+            _countAnimal = random.Next(_minAnimals,_maxAnimals);
+            _name = name;
+            _gender = gender;
+            _vois = vois;
         }
 
-        public override void AddAnimals()
-        {
-            Animals.Add(new BrownBear());
-        }
-
-        public override void DisplayInfo()
+        public void DisplayInfo()
         {
             Console.Clear();
-            Console.WriteLine($"Тип помещения - {TypeAviary},Количество животных - {CountAnimal}");
-            for (int i = 0; i < Animals.Count; i++)
-            {
-                Animals[i].DisplayInfo();
-            }
-        }
-    }
-
-    class BrownBear:Animale
-    {
-        public BrownBear()
-        {
-            Name = "Бурый медведь";
-            Gender = "Самец";
-            Vois = "Рык,рррр";
-        }
-
-        public override void DisplayInfo()
-        {
-            Console.WriteLine($"Тип Животного - {Name} Пол - {Gender}, Звуки - {Vois}");
-        }
-    }
-
-    class Peacock : Animale 
-    {
-        public Peacock()
-        {
-            Name = "Павлин";
-            Gender = "Самка";
-            Vois = "Иу";
-        }
-
-        public override void DisplayInfo()
-        {
-            Console.WriteLine($"Тип Животного - {Name} Пол - {Gender}, Звуки - {Vois}");
-        }
-    }
-
-    class AviaryPeacock : Aviary
-    {
-        public AviaryPeacock()
-        {
-            Random random = new Random();
-            MinAnimals = 1;
-            MaxAnimals = 10;
-            Animals = new List<Animale>();
-            TypeAviary = "Клетка";
-            CountAnimal = random.Next(MinAnimals, MaxAnimals);
-        }
-
-        public override void AddAnimals()
-        {
-            Animals.Add(new Peacock());
-        }
-
-        public override void DisplayInfo()
-        {
-            Console.Clear();
-            Console.WriteLine($"Тип помещения - {TypeAviary},Количество животных - {CountAnimal}");
-            for (int i = 0; i < Animals.Count; i++)
-            {
-                Animals[i].DisplayInfo();
-            }
-        }
-    }
-
-    class Tiger : Animale 
-    {
-        public Tiger()
-        {
-            Name = "Тигр";
-            Gender = "Самец";
-            Vois = "Грррр";
-        }
-
-        public override void DisplayInfo()
-        {
-            Console.WriteLine($"Тип Животного - {Name} Пол - {Gender}, Звуки - {Vois}");
-        }
-    }
-
-    class AviaryTiger : Aviary
-    {
-        public AviaryTiger()
-        {
-            Random random = new Random();
-            MinAnimals = 1;
-            MaxAnimals = 10;
-            Animals = new List<Animale>();
-            TypeAviary = "Декаративный вальер";
-            CountAnimal = random.Next(MinAnimals, MaxAnimals);
-        }
-
-        public override void AddAnimals()
-        {
-            Animals.Add(new Tiger());
-        }
-
-        public override void DisplayInfo()
-        {
-            Console.Clear();
-            Console.WriteLine($"Тип помещения - {TypeAviary},Количество животных - {CountAnimal}");
-            for (int i = 0; i < Animals.Count; i++)
-            {
-                Animals[i].DisplayInfo();
-            }
-        }
-    }
-
-   class Chimpanzee : Animale
-    {
-        public Chimpanzee()
-        {
-            Name = "Шемпанзе";
-            Gender = "Самка";
-            Vois = "У,у,у";
-        }
-
-        public override void DisplayInfo()
-        {
-            Console.WriteLine($"Тип Животного - {Name} Пол - {Gender}, Звуки - {Vois}");
-        }
-    }
-
-    class AviaryChimpanzee : Aviary
-    {
-        public AviaryChimpanzee()
-        {
-            Random random = new Random();
-            MinAnimals = 1;
-            MaxAnimals = 10;
-            Animals = new List<Animale>();
-            TypeAviary = "Декаративный вальер";
-            CountAnimal = random.Next(MinAnimals, MaxAnimals);
-        }
-
-        public override void AddAnimals()
-        {
-            Animals.Add(new Chimpanzee());
-        }
-
-        public override void DisplayInfo()
-        {
-            Console.Clear();
-            Console.WriteLine($"Тип помещения - {TypeAviary},Количество животных - {CountAnimal}");
-            for (int i = 0; i < Animals.Count; i++)
-            {
-                Animals[i].DisplayInfo();
-            }
+            Console.WriteLine($"Тип - {_name}, пол - {_gender} , звуки - {_vois}");
         }
     }
 }
