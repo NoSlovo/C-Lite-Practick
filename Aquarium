@@ -1,0 +1,119 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace GameConsoles1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isWork = true;
+            Aquarium aquarium = new Aquarium();
+            while (isWork)
+            {
+                Console.WriteLine("Добавить рыбку - 1\nУдалить рыбку - 2");
+                Console.WriteLine("Рыбки в аквариуме");
+                aquarium.DisplayFish();
+                string userInpit = Console.ReadLine();
+                switch (userInpit) 
+                {
+                    case "1":
+                        aquarium.AddFish();
+                        break;
+                        case "2":
+                        aquarium.RemoveFish();
+                        break;
+                }
+                aquarium.GrowOldAllFish();
+            }
+        }
+    }
+
+
+    class Aquarium 
+    {
+        private List<Fish> _fishList = new List<Fish>();
+        
+        public void AddFish()
+        {
+            if (_fishList.Count <= 5)
+            {
+                _fishList.Add(new Fish());
+                Console.Clear();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Аквариум переполнен");
+            }
+            
+        }
+
+        public void RemoveFish()
+        {
+            Console.WriteLine("Веберете рыбку которую хотите достать");
+            string userInput = Console.ReadLine();
+
+            if (int.TryParse(userInput,out int userNumber))
+            {
+               for (int i = 0; i < _fishList.Count; i++)
+               {
+                   if (userNumber == _fishList[i].Id)
+                   {
+                       _fishList.Remove(_fishList[i]);
+                   }
+               }
+            }
+            Console.Clear();
+        }
+
+        public void GrowOldAllFish()
+        {
+            for (int i = 0; i < _fishList.Count; i++)
+            {
+                _fishList[i].GrowOld();
+            } 
+        }
+
+        public void DisplayFish()
+        {
+            for (int i = 0; i < _fishList.Count; i++)
+            {
+                _fishList[i].DisplayInfo();
+            }
+        }
+    }
+
+    class Fish 
+    {
+        private static int _ids;
+        private int _id;
+        private int _age;
+        private int _minAge;
+        private int _maxAge;
+        private Random _random = new Random();
+
+        public int Id => _id;
+        public bool IsAlive => _age < _maxAge;
+        
+        public Fish()
+        {
+            _minAge = 1;
+            _maxAge = 11;
+            _age = _random.Next(_minAge, _maxAge);
+            _id = _ids++;
+        }
+       
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Номер рыбки - {_id} Возраст рыбки - {_age} Статус рыбки - {IsAlive}");
+        }
+
+        public void GrowOld()
+        {
+            _age += 1;
+        }
+    }
+}
