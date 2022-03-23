@@ -1,0 +1,205 @@
+using System;
+using System.Collections.Generic;
+
+namespace CharpLite1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isWork = true;
+            CarService carService = new CarService();
+            carService.AddDetail();
+            carService.AddCar();
+
+            while (isWork)
+            {
+                carService.DisplayBalance();
+                carService.DisplayCar();
+                carService.Repair(carService.GetCar(), carService.GetDetail());
+            }
+        }
+    }
+
+    class CarService
+    {
+        private List<Car> _cars = new List<Car>();
+        private List<Detail> _warehouse = new List<Detail>();
+        private int _priceRepair;
+        private int _fine;
+        private int _balance;
+
+        public CarService()
+        {
+            _balance = 20000;
+            _fine = 500;
+            _priceRepair = 2000;
+        }
+
+        public void AddCar()
+        {
+            _cars.Add(new Car("Трешина в тормазных колодках", "Колодки", 3000));
+            _cars.Add(new Car("Неисправность двигателя", "Насос", 5000));
+            _cars.Add(new Car("Проржавел глушитель", "Глушитель", 1000));
+            _cars.Add(new Car("Пробило Калесо", "Колесо", 7000));
+        }
+
+        public void AddDetail()
+        {
+            _warehouse.Add(new Detail(2000, "Колодки"));
+            _warehouse.Add(new Detail(2000, "Глушитель"));
+            _warehouse.Add(new Detail(2000, "Колесо"));
+        }
+
+        public Car GetCar()
+        {
+            Console.WriteLine("Выберете автомобиль");
+            string userInput = Console.ReadLine();
+
+            if (int.TryParse(userInput, out int userNumber))
+            {
+                for (int i = 0; i < _cars.Count; i++)
+                {
+                    if (i  == userNumber)
+                    {
+                        Console.WriteLine("Автомобиль передан");
+                        return _cars[i];
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void DisplayBalance()
+        {
+            Console.WriteLine($"Баланс сервиса - {_balance}");
+        }
+
+        public Detail GetDetail()
+        {
+            
+            for (int i = 0; i < _warehouse.Count;i++)
+            {
+                Console.Write(i +" " + "-");
+                _warehouse[i].DisplayDetail();
+            }
+
+            Console.WriteLine("Выберете деталь для ремонта");
+            string userInput = Console.ReadLine();
+            if (int.TryParse(userInput,out int userNumber))
+            {
+                for (int i = 0; i < _warehouse.Count; i++)
+                {
+                    if (i == userNumber)
+                    {
+                        Console.WriteLine("Деталь получена");
+                        return _warehouse[i];
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void Repair(Car car , Detail detail)
+        {
+            if (detail == null)
+            {
+                Console.WriteLine("Такой детали нет");
+                _balance -= _fine;
+            }
+            else if(car == null)
+            {
+                Console.WriteLine("Такого авто нет");
+            }
+            else
+            {
+                Console.WriteLine("Приступил к работе");
+                car.AddCarDetail(detail);
+                Console.WriteLine("Работа выполнена");
+                
+                if (car.Diagnostics())
+                {
+                    Console.WriteLine("Все хорошо");
+                    _balance += detail.Price + _priceRepair;
+                }
+                else
+                {
+                    Console.WriteLine("Деталь не та вы понесли убыток");
+                    _balance -= detail.Price;
+                }
+            }
+        }
+
+        public void DisplayCar()
+        {
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                Console.Write(i + " " + "-");
+                _cars[i].DisplayInfo();
+            }
+        }
+    }
+
+    class Detail
+    {
+        private int _price;
+        private string _name;
+        public string Name => _name;
+        public int Price => _price;
+        public Detail(int price, string name)
+        {
+            _price = price;
+            _name = name;
+        }
+
+        public void DisplayDetail()
+        {
+            Console.WriteLine($"Деталь - {_name}, цена - {_price}");
+        }
+    }
+
+    class Car
+    {
+        List<Detail> _detailCar = new List<Detail>();
+
+
+        private string _breaking;
+        private string _nameDetail;
+        private int _priceBreaking;
+        private bool _isBreaking;
+
+        public bool IsBreaking => _isBreaking;
+
+        public Car(string breaking, string nameDetail, int priceBreaking)
+        {
+            _breaking = breaking;
+            _nameDetail = nameDetail;
+            _priceBreaking = priceBreaking;
+            _isBreaking = true;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($" Поломка - {_breaking}, Цена поломки - {_priceBreaking},Статус поломки - {_isBreaking}");
+        }
+
+        public void AddCarDetail(Detail detail)
+        {
+            _detailCar.Add(detail);
+        }
+        
+        public bool Diagnostics()
+        {
+            Console.WriteLine("Диагностика");
+            for (int i = 0; i < _detailCar.Count;i++)
+            {
+                if (_detailCar[i].Name == _nameDetail)
+                {
+                    _isBreaking = false;
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+}
