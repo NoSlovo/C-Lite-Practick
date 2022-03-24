@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace CharpLite1
 {
     internal class Program
@@ -41,6 +40,7 @@ namespace CharpLite1
                 _balance = value;
             }
         }
+
         public CarService()
         {
             _balance = 20000;
@@ -48,18 +48,18 @@ namespace CharpLite1
             _priceRepair = 2000;
         }
 
-
         public void AddCars()
         {
-            _cars.Add(new Car("Трешина в тормазных колодках", "Колодки", 3000));
-            _cars.Add(new Car("Неисправность двигателя", "Насос", 5000));
-            _cars.Add(new Car("Проржавел глушитель", "Глушитель", 1000));
-            _cars.Add(new Car("Пробило Калесо", "Колесо", 7000));
+            _cars.Add(new Car("Трешина в тормазных колодках", "Колодки"));
+            _cars.Add(new Car("Неисправность двигателя", "Насос"));
+            _cars.Add(new Car("Проржавел глушитель", "Глушитель"));
+            _cars.Add(new Car("Пробило Калесо", "Колесо"));
         }
 
         public void AddDetail(int prise,string detailName)
         {
-            if (_warehouse.Count < 3)
+            int maxDetail = 3;
+            if (_warehouse.Count < maxDetail)
             {
                 _warehouse.Add(new Detail(prise, detailName));
             }
@@ -67,7 +67,6 @@ namespace CharpLite1
             {
                 Console.WriteLine("Склад переполнен");
             }
-        
         }
 
         private Car GetCar()
@@ -206,28 +205,25 @@ namespace CharpLite1
     class Car
     {
         private List<Detail> _detail = new List<Detail>();
-
         private static int _ids;
         private int _id;
         private string _breaking;
         private string _nameDetail;
-        private int _priceBreaking;
         private bool _isBreaking;
         public int Id => _id;
         public bool IsBreaking => _isBreaking;
 
-        public Car(string breaking, string nameDetail, int priceBreaking)
+        public Car(string breaking, string nameDetail)
         {
             _id = _ids++;
             _breaking = breaking;
             _nameDetail = nameDetail;
-            _priceBreaking = priceBreaking;
             _isBreaking = true;
         }
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"Номер равен - {_id} Поломка - {_breaking}, Цена поломки - {_priceBreaking},Статус поломки - {_isBreaking}");
+            Console.WriteLine($"Номер равен - {_id} Поломка - {_breaking},Статус поломки - {_isBreaking}");
         }
 
         public void AddCarDetail(Detail detail)
