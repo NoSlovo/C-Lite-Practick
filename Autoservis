@@ -28,7 +28,7 @@ namespace CharpLite1
         private int _priceRepair;
         private int _fine;
         private int _balance;
-        
+
         public int Balance
         {
             get
@@ -59,6 +59,7 @@ namespace CharpLite1
         public void AddDetail(int prise,string detailName)
         {
             int maxDetail = 3;
+
             if (_warehouse.Count < maxDetail)
             {
                 _warehouse.Add(new Detail(prise, detailName));
@@ -69,7 +70,7 @@ namespace CharpLite1
             }
         }
 
-        private Car GetCar()
+        public Car GetCar()
         {
             Console.WriteLine("Выберете автомобиль");
             string userInput = Console.ReadLine();
@@ -85,6 +86,7 @@ namespace CharpLite1
                     }
                 }
             }
+
             return null;
         }
 
@@ -104,6 +106,7 @@ namespace CharpLite1
 
             Console.WriteLine("Выберете деталь для ремонта");
             string userInput = Console.ReadLine();
+
             if (int.TryParse(userInput, out int userNumber))
             {
                 for (int i = 0; i < _warehouse.Count; i++)
@@ -115,6 +118,7 @@ namespace CharpLite1
                     }
                 }
             }
+
             return null;
         }
 
@@ -156,7 +160,9 @@ namespace CharpLite1
                     Console.WriteLine("Деталь не та вы понесли убыток");
                     _balance -= detailUser.Price;
                 }
+
             }
+
         }
 
         private Car FindСar()
@@ -164,6 +170,7 @@ namespace CharpLite1
             Console.WriteLine("Выберете автомобиль");
             DisplayAllCars();
             string userInput = Console.ReadLine();
+
             if (int.TryParse(userInput, out int userNumber))
             {
                 for (int i = 0; i < _cars.Count; i++)
@@ -175,6 +182,7 @@ namespace CharpLite1
                     }
                 }
             }
+
             return null;
         }
     }
@@ -234,6 +242,7 @@ namespace CharpLite1
         public bool Diagnose()
         {
             Console.WriteLine("Диагностика");
+
             for (int i = 0; i < _detail.Count; i++)
             {
                 if (_detail[i].Name == _nameDetail)
@@ -242,6 +251,7 @@ namespace CharpLite1
                     return true;
                 }
             }
+
             return false;
         }
     }
