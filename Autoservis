@@ -1,22 +1,23 @@
 using System;
 using System.Collections.Generic;
 
+
 namespace CharpLite1
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            bool isWork = true;
             CarService carService = new CarService();
-            carService.AddDetail();
-            carService.AddCar();
+            carService.AddDetail(2000,"Колодки");
+            carService.AddDetail(5000, "Насос");
+            carService.AddDetail(2000, "Глушитель");
+            carService.AddCars();
 
-            while (isWork)
+            while (carService.Balance > 0)
             {
                 carService.DisplayBalance();
-                carService.DisplayCar();
-                carService.Repair(carService.GetCar(), carService.GetDetail());
+                carService.Repair(); 
             }
         }
     }
@@ -24,11 +25,22 @@ namespace CharpLite1
     class CarService
     {
         private List<Car> _cars = new List<Car>();
-        private List<Detail> _warehouse = new List<Detail>();
+        private List<Detail> _warehouse = new List<Detail>();    
         private int _priceRepair;
         private int _fine;
         private int _balance;
-
+        
+        public int Balance
+        {
+            get
+            {
+                return _balance;
+            }
+            private set
+            {
+                _balance = value;
+            }
+        }
         public CarService()
         {
             _balance = 20000;
@@ -36,7 +48,8 @@ namespace CharpLite1
             _priceRepair = 2000;
         }
 
-        public void AddCar()
+
+        public void AddCars()
         {
             _cars.Add(new Car("Трешина в тормазных колодках", "Колодки", 3000));
             _cars.Add(new Car("Неисправность двигателя", "Насос", 5000));
@@ -44,14 +57,20 @@ namespace CharpLite1
             _cars.Add(new Car("Пробило Калесо", "Колесо", 7000));
         }
 
-        public void AddDetail()
+        public void AddDetail(int prise,string detailName)
         {
-            _warehouse.Add(new Detail(2000, "Колодки"));
-            _warehouse.Add(new Detail(2000, "Глушитель"));
-            _warehouse.Add(new Detail(2000, "Колесо"));
+            if (_warehouse.Count < 3)
+            {
+                _warehouse.Add(new Detail(prise, detailName));
+            }
+            else
+            {
+                Console.WriteLine("Склад переполнен");
+            }
+        
         }
 
-        public Car GetCar()
+        private Car GetCar()
         {
             Console.WriteLine("Выберете автомобиль");
             string userInput = Console.ReadLine();
@@ -60,7 +79,7 @@ namespace CharpLite1
             {
                 for (int i = 0; i < _cars.Count; i++)
                 {
-                    if (i  == userNumber)
+                    if (i == userNumber)
                     {
                         Console.WriteLine("Автомобиль передан");
                         return _cars[i];
@@ -77,16 +96,16 @@ namespace CharpLite1
 
         public Detail GetDetail()
         {
-            
-            for (int i = 0; i < _warehouse.Count;i++)
+
+            for (int i = 0; i < _warehouse.Count; i++)
             {
-                Console.Write(i +" " + "-");
+                Console.Write(i + " " + "-");
                 _warehouse[i].DisplayDetail();
             }
 
             Console.WriteLine("Выберете деталь для ремонта");
             string userInput = Console.ReadLine();
-            if (int.TryParse(userInput,out int userNumber))
+            if (int.TryParse(userInput, out int userNumber))
             {
                 for (int i = 0; i < _warehouse.Count; i++)
                 {
@@ -100,54 +119,80 @@ namespace CharpLite1
             return null;
         }
 
-        public void Repair(Car car , Detail detail)
+        public void DisplayAllCars()
         {
-            if (detail == null)
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                _cars[i].DisplayInfo();
+            }
+        }
+
+        public void Repair()
+        {
+            Car carUser = FindСar();
+            Detail detailUser = GetDetail();
+
+            if (detailUser == null)
             {
                 Console.WriteLine("Такой детали нет");
                 _balance -= _fine;
             }
-            else if(car == null)
+            else if (carUser == null)
             {
                 Console.WriteLine("Такого авто нет");
             }
             else
             {
                 Console.WriteLine("Приступил к работе");
-                car.AddCarDetail(detail);
+                carUser.AddCarDetail(detailUser);
                 Console.WriteLine("Работа выполнена");
-                
-                if (car.Diagnostics())
+
+                if (carUser.Diagnose())
                 {
                     Console.WriteLine("Все хорошо");
-                    _balance += detail.Price + _priceRepair;
+                    _balance += detailUser.Price + _priceRepair;
                 }
                 else
                 {
                     Console.WriteLine("Деталь не та вы понесли убыток");
-                    _balance -= detail.Price;
+                    _balance -= detailUser.Price;
                 }
             }
         }
 
-        public void DisplayCar()
+        private Car FindСar()
         {
-            for (int i = 0; i < _cars.Count; i++)
+            Console.WriteLine("Выберете автомобиль");
+            DisplayAllCars();
+            string userInput = Console.ReadLine();
+            if (int.TryParse(userInput, out int userNumber))
             {
-                Console.Write(i + " " + "-");
-                _cars[i].DisplayInfo();
+                for (int i = 0; i < _cars.Count; i++)
+                {
+                    if (userNumber == _cars[i].Id)
+                    {
+                        Console.WriteLine("Автомобиль найден");
+                        return _cars[i];
+                    }
+                }
             }
+            return null;
         }
     }
 
     class Detail
     {
+        private int _ids;
         private int _price;
         private string _name;
+        private int _id;
+        public int Id => _id;
         public string Name => _name;
         public int Price => _price;
+
         public Detail(int price, string name)
         {
+            _id = _ids++;
             _price = price;
             _name = name;
         }
@@ -160,18 +205,20 @@ namespace CharpLite1
 
     class Car
     {
-        List<Detail> _detailCar = new List<Detail>();
+        private List<Detail> _detail = new List<Detail>();
 
-
+        private static int _ids;
+        private int _id;
         private string _breaking;
         private string _nameDetail;
         private int _priceBreaking;
         private bool _isBreaking;
-
+        public int Id => _id;
         public bool IsBreaking => _isBreaking;
 
         public Car(string breaking, string nameDetail, int priceBreaking)
         {
+            _id = _ids++;
             _breaking = breaking;
             _nameDetail = nameDetail;
             _priceBreaking = priceBreaking;
@@ -180,20 +227,20 @@ namespace CharpLite1
 
         public void DisplayInfo()
         {
-            Console.WriteLine($" Поломка - {_breaking}, Цена поломки - {_priceBreaking},Статус поломки - {_isBreaking}");
+            Console.WriteLine($"Номер равен - {_id} Поломка - {_breaking}, Цена поломки - {_priceBreaking},Статус поломки - {_isBreaking}");
         }
 
         public void AddCarDetail(Detail detail)
         {
-            _detailCar.Add(detail);
+            _detail.Add(detail);
         }
-        
-        public bool Diagnostics()
+
+        public bool Diagnose()
         {
             Console.WriteLine("Диагностика");
-            for (int i = 0; i < _detailCar.Count;i++)
+            for (int i = 0; i < _detail.Count; i++)
             {
-                if (_detailCar[i].Name == _nameDetail)
+                if (_detail[i].Name == _nameDetail)
                 {
                     _isBreaking = false;
                     return true;
