@@ -8,56 +8,97 @@ namespace CharpLite1
     {
         static void Main(string[] args)
         {
-            Country country = new Country();
-            country.DisplayPrisoners();
-            Console.WriteLine("После амнистии");
-            country.Amnesty();
-            country.DisplayPrisoners();
+            bool isWork = true;
+            Hospital hospital = new Hospital();
 
-
-        }
-    }
-
-    class Country
-    {
-        private List<Prisoners> _prisoners;
-
-        public Country()
-        {
-            _prisoners = new List<Prisoners>()
+            while (isWork)
             {
-                new Prisoners("Андрей Чикатило Романович","Убийство"),new Prisoners("Новальный Алексей Юрьивич","Антиправительственное"),new Prisoners("Тет Банди Медведев","Изнасилование"),new Prisoners("Виктор Васильевич Маха","Убийство"),
-            };
-        }
+                Console.WriteLine("Выберете вывод больных");
+                Console.WriteLine("1 - по ФИО\n2 - По годам\n3 - По болезни");
+                string userInput = Console.ReadLine();
 
-        public void DisplayPrisoners()
-        {
-            foreach (Prisoners prisoner in _prisoners)
-            {
-                prisoner.DisplayInfo();
+                switch (userInput)
+                {
+                    case "1":
+                        hospital.ListAlphabeticalOrder();
+                        break;
+
+                   case "2":
+                        hospital.SortAge();
+                        break;
+
+                    case "3":
+                        hospital.SortIllness();
+                        break;
+                }
             }
         }
+    }
 
-        public void Amnesty()
+    class Hospital
+    {
+       private List<Sick> _sickList;
+
+       public Hospital()
+       {
+            _sickList = new List<Sick>()
+            {
+                new Sick ("Прокофьев Анатолий Павлочик",22,"Слабоумие"),new Sick ("Ильин Ярослав Вячеславович",22,"Шизофрения"),new Sick ("Пестов Нисон Донатович",25,"Перелом"),
+                new Sick ("Блинов Кондратий Степанович",16,"Разрыв машц полового органа"),new Sick ("Прокофьев Анатолий Павлочик",22,"Перелом"),new Sick ("Прокофьев Анатолий Павлочик",16,"Старость"),
+                new Sick ("Кириллов Илья Семенович",21,"Выгорание"),new Sick ("Емельянов Всеволод Филиппович",22,"Перелом"),new Sick ("Зимин Вилен Георгиевич",18,"Зависимость от кошачьей мяты"),
+                new Sick ("Дорофеев Виталий Еремеевич",22,"Ожоги пятой степия"),
+            };
+       }
+
+        public void ListAlphabeticalOrder()
         {
-            _prisoners = _prisoners.Where(prisoner => prisoner.Article != "Антиправительственное").ToList();
+            _sickList = _sickList.OrderBy(sick => sick.FullName).ToList();
+
+            for (int i = 0; i < _sickList.Count; i++)
+            {
+                _sickList[i].DisplayInfo();
+            }
+            
+        }
+
+        public void SortAge()
+        {
+            _sickList = _sickList.OrderBy(sick => sick.Age).ToList();
+            foreach (Sick sick in _sickList)
+            {
+                sick.DisplayInfo();
+            }
+        }
+        public void SortIllness()
+        {
+            Console.WriteLine("Введите Название болезни");
+            string userInput = Console.ReadLine();
+
+            _sickList = _sickList.Where(sick => sick.Disease == userInput).ToList();
+
+            foreach (Sick sick in _sickList)
+            {
+                sick.DisplayInfo();
+            }
         }
     }
 
-    class Prisoners
+    class Sick
     {
-        public string FullName { get; private set; }
-        public string Article { get; private set; }
+       public string FullName { get; private set; }
+       public int Age { get; private set;}
+       public string Disease { get; private set;}
 
-        public Prisoners(string fullName, string article)
+        public Sick(string fullName,int age,string disease)
         {
             FullName = fullName;
-            Article = article;
+            Age = age;
+            Disease = disease;
         }
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"ФИО - {FullName},СТАТЬЯ - {Article}");
+            Console.WriteLine($"ФИО - {FullName}, Возраст - {Age}, Диагноз - {Disease}");
         }
     }
 }
