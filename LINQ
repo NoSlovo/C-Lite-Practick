@@ -9,21 +9,16 @@ namespace CharpLite1
         static void Main(string[] args)
         {
             Detective detective = new Detective();
-            detective.SearchCriminal();
+            detective.AddCriminals();
+            detective.SearchCriminals();
         }
     }
 
     class Detective
     {
-        private List<Criminal> _criminals = new List<Criminal>() {
-            new Criminal("Прокофье Виктор Анатольивич",160, 82, true,"Азиат"),
-            new Criminal("Виктор Палыч Рогозин",173,74,false,"Европеец"),
-            new Criminal("Анатолий Басерман Саныч",182,99, false,"Швед"),
-            new Criminal("Барыга Барыговнич Барыгин",182,99,true,"Швед"),
-            new Criminal("Павлухин Виталий Анатольивич",182,99, false,"Швед"),
-        };
+        private List<Criminal> _criminals = new List<Criminal>();
 
-        public void SearchCriminal()
+        public void SearchCriminals()
         {
             Console.WriteLine("Введите данные приступника");
             Console.WriteLine("Рост");
@@ -35,12 +30,21 @@ namespace CharpLite1
             Console.WriteLine("Национальность");
             string userInputFree = Console.ReadLine();
 
-            var searchCriminal = _criminals.Where(criminal => criminal.Growth == userNumber).Where(criminal => criminal.Weight == userNumberTwo).Where(criminal => criminal.Nationality == userInputFree).Where(criminal => criminal.Bersion == false);
+            var searchCriminal = from Criminal criminal in _criminals where criminal.Growth == userNumber && criminal.Weight == userNumberTwo && criminal.Bersion == false select criminal;  
 
-            foreach ( Criminal item in searchCriminal)
+            foreach ( Criminal criminal in searchCriminal)
             {
-                item.DisplayInfo();
+                criminal.DisplayInfo();
             }
+        }
+
+        public void AddCriminals()
+        {
+            _criminals.Add(new Criminal("Прокофье Виктор Анатольивич", 160, 82, true, "Азиат"));
+            _criminals.Add(new Criminal("Виктор Палыч Рогозин", 173, 74, false, "Европеец"));
+            _criminals.Add(new Criminal("Анатолий Басерман Саныч", 182, 99, false, "Швед"));
+            _criminals.Add(new Criminal("Барыга Барыговнич Барыгин", 182, 99, true, "Швед"));
+            _criminals.Add(new Criminal("Павлухин Виталий Анатольивич", 182, 99, false, "Швед"));
         }
     }
 
@@ -48,13 +52,57 @@ namespace CharpLite1
     {
         private string _fullName;
         private int _growth;
-        private bool _beprison;
+        private bool _berison;
         private string _nationality;
         private int _weight;
-        public bool Bersion => _beprison;
-        public int Growth => _growth;
-        public string Nationality => _nationality;
-        public int Weight => _weight;
+
+        public bool Bersion
+        {
+            get 
+            { 
+                return _berison; 
+            }
+            private set
+            {
+                _berison = value;
+            }
+        }
+
+        public int Growth 
+        {
+            get
+            {
+                return _growth;
+            }
+            private set
+            {
+                _growth = value;  
+            }
+        }
+
+        public string Nationality
+        {
+            get
+            {
+                return _nationality;
+            }
+            private set
+            {
+                _nationality = value;
+            }
+        }
+
+        public int Weight
+        {
+            get
+            {
+                return _weight;
+            }
+            private set
+            {
+                _weight = value;
+            }
+        }
 
 
         public Criminal(string fullName,int growth, int weight, bool bersion, string nationality)
@@ -62,13 +110,13 @@ namespace CharpLite1
             _fullName = fullName;
             _growth = growth;
             _weight = weight;
-            _beprison = bersion;
+            _berison = bersion;
             _nationality = nationality;
         }
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"ФИО:{_fullName} Рост: {_growth},Нахождение в месте заключения - {_beprison}, Национальность:{_nationality}");
+            Console.WriteLine($"ФИО:{_fullName} Рост: {Growth},Нахождение в месте заключения - {Bersion}, Национальность:{_nationality}");
         }
     }
 }
