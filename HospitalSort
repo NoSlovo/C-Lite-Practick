@@ -14,7 +14,7 @@ namespace CharpLite1
             while (isWork)
             {
                 Console.WriteLine("Выберете вывод больных");
-                Console.WriteLine("1 - по Алфавиту\n2 - По годам\n3 - По болезни");
+                Console.WriteLine("1 - по ФИО\n2 - По годам\n3 - По болезни");
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
