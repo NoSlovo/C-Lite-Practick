@@ -40,12 +40,7 @@ namespace CharpLite1
 
         public void Amnesty()
         {
-            var amnestyPrisoners = _prisoners.Where(prisoner => prisoner.Article != "Антиправительственное").ToList();
-            _prisoners.Clear();
-            foreach(Prisoners prisoners in amnestyPrisoners)
-            {
-               _prisoners.Add(prisoners);
-            }   
+            _prisoners = _prisoners.Where(prisoner => prisoner.Article != "Антиправительственное").ToList();
         }
     }
 
