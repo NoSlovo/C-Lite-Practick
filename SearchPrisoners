@@ -20,7 +20,7 @@ namespace CharpLite1
                 switch (userInput)
                 {
                     case "1":
-                        hospital.ListAlphabeticalOrder();
+                        hospital.SortAlphabetical();
                         break;
 
                    case "2":
@@ -50,7 +50,7 @@ namespace CharpLite1
             };
        }
 
-        public void ListAlphabeticalOrder()
+        public void SortAlphabetical()
         {
             _sickList = _sickList.OrderBy(sick => sick.FullName).ToList();
 
