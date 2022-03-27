@@ -1,0 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CharpLite1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isWork = true;
+            Hospital hospital = new Hospital();
+
+            while (isWork)
+            {
+                Console.WriteLine("Выберете вывод больных");
+                Console.WriteLine("1 - по Алфавиту\n2 - По годам\n3 - По болезни");
+                string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case "1":
+                        hospital.ListAlphabeticalOrder();
+                        break;
+
+                   case "2":
+                        hospital.SortAge();
+                        break;
+
+                    case "3":
+                        hospital.SortIllness();
+                        break;
+                }
+            }
+        }
+    }
+
+    class Hospital
+    {
+       private List<Sick> _sickList;
+
+       public Hospital()
+       {
+            _sickList = new List<Sick>()
+            {
+                new Sick ("Прокофьев Анатолий Павлочик",22,"Слабоумие"),new Sick ("Ильин Ярослав Вячеславович",22,"Шизофрения"),new Sick ("Пестов Нисон Донатович",25,"Перелом"),
+                new Sick ("Блинов Кондратий Степанович",16,"Разрыв машц полового органа"),new Sick ("Прокофьев Анатолий Павлочик",22,"Перелом"),new Sick ("Прокофьев Анатолий Павлочик",16,"Старость"),
+                new Sick ("Кириллов Илья Семенович",21,"Выгорание"),new Sick ("Емельянов Всеволод Филиппович",22,"Перелом"),new Sick ("Зимин Вилен Георгиевич",18,"Зависимость от кошачьей мяты"),
+                new Sick ("Дорофеев Виталий Еремеевич",22,"Ожоги пятой степия"),
+            };
+       }
+
+        public void ListAlphabeticalOrder()
+        {
+            var alphabetica = from sick in _sickList orderby sick.FullName select sick;
+            foreach (Sick sick in alphabetica)
+            {
+                sick.DisplayInfo();
+            }     
+        }
+
+        public void SortAge()
+        {
+            var alphabetica = from sick in _sickList orderby sick.Age select sick;
+            foreach (Sick sick in alphabetica)
+            {
+                sick.DisplayInfo();
+            }
+        }
+        public void SortIllness()
+        {
+            Console.WriteLine("Введите Название болезни");
+            string userInput = Console.ReadLine();
+
+            var illnessSort = from Sick sick in _sickList where sick.Disease == userInput select sick;
+
+            foreach (Sick sick in illnessSort)
+            {
+                sick.DisplayInfo();
+            }
+        }
+    }
+
+    class Sick
+    {
+       public string FullName { get; private set; }
+       public int Age { get; private set;}
+       public string Disease { get; private set;}
+
+        public Sick(string fullName,int age,string disease)
+        {
+            FullName = fullName;
+            Age = age;
+            Disease = disease;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"ФИО - {FullName}, Возраст - {Age}, Диагноз - {Disease}");
+        }
+    }
+}
