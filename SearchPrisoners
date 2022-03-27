@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CharpLite1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            TheCountry country = new TheCountry();
+            country.DisplayPrisoners();
+            Console.WriteLine("Амнистия");
+            country.Amnesty();
+        }
+    }
+
+    class TheCountry
+    {
+        private List<Prisoners> _prisoners;
+
+        public TheCountry()
+        {
+            _prisoners = new List<Prisoners>()
+            {
+                new Prisoners("Андрей Чикатило Романович","Убийство"),new Prisoners("Новальный Алексей Юрьивич","Антиправительственное"),new Prisoners("Тет Банди Медведев","Изнасилование"),new Prisoners("Виктор Васильевич Маха","Убийство"),
+            };
+        }
+
+        public void DisplayPrisoners()
+        {
+            foreach (Prisoners prisoner in _prisoners)
+            {
+                prisoner.DisplayInfo();
+            }
+        }
+
+        public void Amnesty()
+        {
+            var amnestyPrisoners = _prisoners.Where(prisoner => prisoner.Article != "Антиправительственное");
+
+            foreach (Prisoners prisoner in amnestyPrisoners)
+            {
+                prisoner.DisplayInfo();
+            }
+        }
+    }
+
+    class Prisoners
+    {
+        public string FullName { get; private set; }
+        public string Article { get; private set; }
+
+        public Prisoners(string fullName, string article)
+        {
+            FullName = fullName;
+            Article = article;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"ФИО - {FullName},СТАТЬЯ - {Article}");
+        }
+    }
+}
