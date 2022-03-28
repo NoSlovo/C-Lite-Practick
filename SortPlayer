@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CharpLite1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            DataBase dataBase = new DataBase();
+            Console.WriteLine("Топ по силе");
+            dataBase.SortStrength();
+            Console.WriteLine("Сортировка по уровню");
+            dataBase.SortLevel();
+        }
+    }
+
+    class DataBase
+    {
+        private List<Player> _players;
+
+        public DataBase()
+        {
+            _players = new List<Player>() 
+            {
+                new Player("Aноним",22,30),new Player("Aноним",42,100),new Player("Aноним",10,35),new Player("Aноним",10,340),new Player("Aноним",1,10),
+                new Player("Aноним",52,300),new Player("Aноним",82,1000),new Player("Aноним",32,40),new Player("Aноним",22,30),new Player("Aноним",22,30),
+            };
+        }
+
+        public void SortStrength()
+        {
+            _players = _players.OrderByDescending(p => p.Strength).ToList();
+
+            for (int i = 0; i <= 2; i++)
+            {
+                _players[i].DisplayInfo();
+            }
+        }
+
+        public void SortLevel()
+        {
+            _players = _players.OrderByDescending(p => p.Level).ToList();
+
+            for (int i = 0; i <= 2; i++)
+            {
+                _players[i].DisplayInfo();
+            }
+        }
+    }
+
+    class Player
+    {
+        public string Name { get; private set; }
+        public int Level { get; private set; }
+        public int Strength { get; private set;}
+
+        public Player (string name, int level, int strength)
+        {
+            Name = name;
+            Level = level;
+            Strength = strength;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Ник - {Name} , Уровень - {Level} , Сила - {Strength}");
+        }
+    }
+}
