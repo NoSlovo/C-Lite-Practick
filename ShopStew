@@ -16,11 +16,11 @@ namespace CharpLite1
     class Shop
     {
         private List<Stew> _stews;
-        private int Year;
+        private int _year;
 
         public Shop()
         {
-            Year = 2022;
+            _year = 2022;
             _stews = new List<Stew>()
             {
                 new Stew("Заречинская",2019),new Stew("Купинская",2020),new Stew("Твой выбор",2021),new Stew("Колмагорская",2019),new Stew("Душнилово",2019),
@@ -29,7 +29,7 @@ namespace CharpLite1
 
         public void FindOverdue()
         {
-            _stews = _stews.Where(stew => stew.ProductionYear + stew.BeforeDate < Year).ToList();
+            _stews = _stews.Where(stew => stew.ProductionYear + stew.BeforeDate < _year).ToList();
 
             foreach(Stew stew in _stews)
             {
