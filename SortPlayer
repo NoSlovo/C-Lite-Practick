@@ -31,9 +31,9 @@ namespace CharpLite1
 
         public void SortStrength()
         {
-            _players = _players.OrderByDescending(p => p.Strength).ToList();
+            _players = _players.OrderByDescending(p => p.Strength).Take(3).ToList();
 
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i < _players.Count; i++)
             {
                 _players[i].DisplayInfo();
             }
@@ -41,9 +41,9 @@ namespace CharpLite1
 
         public void SortLevel()
         {
-            _players = _players.OrderByDescending(p => p.Level).ToList();
+            _players = _players.OrderByDescending(p => p.Level).Take(3).ToList();
 
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i < _players.Count; i++)
             {
                 _players[i].DisplayInfo();
             }
