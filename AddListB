@@ -41,9 +41,10 @@ namespace CharpLite1
         public void AddToList()
         {
             var searchSolider = _solidersOne.Where(solider => solider.Name.StartsWith("Б")).ToList();
+            _solidersOne = _solidersOne.Except(searchSolider).ToList();
             _solidersTwo = _solidersTwo.Union(searchSolider).ToList();
             
-            foreach(Solider solider in _solidersTwo)
+            foreach(Solider solider in _solidersOne)
             {
                 Console.WriteLine(solider.Name);
             }
