@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CharpLite1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            DataBase data = new DataBase();
+            data.MakeRequest();
+        }
+
+
+        class DataBase
+        {
+           private List<Soldier> _soldiers;
+
+            public DataBase()
+            {
+                _soldiers = new List<Soldier>()
+                {
+                    new Soldier("Анатолий","Пистолет макарова","рядовой"),
+                    new Soldier("Виталий","АК-47","Ефрейтор"),
+                    new Soldier("Максим","СВД","Младший сержант"),
+                    new Soldier("Кирилл","ППШ","Сержант"),
+                    new Soldier("Виктор","АК - 47","Старший сержант"),
+                };
+            }
+
+
+            public void MakeRequest()
+            {
+                var request = from Soldier soldier in _soldiers select soldier;
+
+                foreach (Soldier soldier in request)
+                {
+                    Console.WriteLine(soldier.Name +  " " + soldier.Rank);
+                }
+            }
+        }
+
+        class Soldier
+        {
+            public string Name { get; private set; }
+            private string _armament;
+            public string Rank { get; private set; }
+            private int _lifeTime;
+
+            public Soldier(string name,string armament, string rank)
+            {
+                int minLifeTime = 1;
+                int maxLifeTime = 13;
+                Random random = new Random();
+                Name = name;
+                _armament = armament;
+                Rank = rank;
+                _lifeTime = random.Next(minLifeTime, maxLifeTime);
+            }
+        }
+    }
+}
