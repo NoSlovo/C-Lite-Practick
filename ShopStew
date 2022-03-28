@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CharpLite1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Shop shop = new Shop();
+            shop.FindOverdue();
+        }
+    }
+
+    class Shop
+    {
+        private List<Stew> _stews;
+        private int Year;
+
+        public Shop()
+        {
+            Year = 2022;
+            _stews = new List<Stew>()
+            {
+                new Stew("Заречинская",2019),new Stew("Купинская",2020),new Stew("Твой выбор",2021),new Stew("Колмагорская",2019),new Stew("Душнилово",2019),
+            };
+        }
+
+        public void FindOverdue()
+        {
+            _stews = _stews.Where(stew => stew.ProductionYear + stew.BeforeDate < Year).ToList();
+
+            foreach(Stew stew in _stews)
+            {
+                stew.DisplayInfo();
+            }
+        }
+    }
+
+    class Stew 
+    {
+        public int BeforeDate { get; private set;}
+        public string Name { get; private set; }
+        public int ProductionYear { get; private set; }
+
+        public Stew(string name, int productionYear)
+        {
+            BeforeDate = 2;
+            Name = name;
+            ProductionYear = productionYear;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Название - {Name}, Год производства - {ProductionYear} - Срок годности - {BeforeDate + ProductionYear}");
+        }
+    }
+}
