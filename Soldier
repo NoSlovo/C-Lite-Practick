@@ -32,11 +32,11 @@ namespace CharpLite1
 
             public void MakeRequest()
             {
-                var request = from Soldier soldier in _soldiers select soldier;
-
-                foreach (Soldier soldier in request)
+                var request = from Soldier soldier in _soldiers select new {Name = soldier.Name,Rank = soldier.Rank};
+                
+                foreach(var soldier in _soldiers)
                 {
-                    Console.WriteLine(soldier.Name +  " " + soldier.Rank);
+                    Console.WriteLine(soldier.Name + " " + soldier.Rank);
                 }
             }
         }
