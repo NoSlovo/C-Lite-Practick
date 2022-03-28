@@ -34,7 +34,7 @@ namespace CharpLite1
             {
                 var request = from Soldier soldier in _soldiers select new {Name = soldier.Name,Rank = soldier.Rank};
                 
-                foreach(var soldier in _soldiers)
+                foreach(Soldier soldier in _soldiers)
                 {
                     Console.WriteLine(soldier.Name + " " + soldier.Rank);
                 }
