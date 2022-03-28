@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CharpLite1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            DataBase data = new DataBase();
+            data.AddToList();
+
+        }
+    }
+
+    class DataBase 
+    {
+       private List<Solider> _solidersOne;
+       private List<Solider> _solidersTwo;
+
+        public DataBase()
+        {
+            _solidersOne = new List<Solider>()
+            {
+                new Solider("Балтынский"),new Solider("Виктор"),
+                new Solider("Кирилов"),new Solider("Бахамут"),
+                new Solider("Блаженный"),new Solider("Вавлов"),
+                new Solider("Дантес"),new Solider("Пушкин"),
+
+            };
+        }
+
+        public void AddToList()
+        {
+            _solidersTwo = _solidersOne.Where(solider => solider.Name.StartsWith("Б")).ToList();
+
+            foreach(Solider solider in _solidersTwo)
+            {
+                Console.WriteLine(solider.Name);
+            }     
+        }
+    }
+
+    class Solider
+    {
+        public string Name { get;private set; }
+
+        public Solider( string name)
+        {
+            Name = name;
+        }
+    }
+}
