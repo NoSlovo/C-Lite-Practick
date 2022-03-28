@@ -44,7 +44,7 @@ namespace CharpLite1
             _solidersOne = _solidersOne.Except(searchSolider).ToList();
             _solidersTwo = _solidersTwo.Union(searchSolider).ToList();
             
-            foreach(Solider solider in _solidersOne)
+            foreach(Solider solider in _solidersTwo)
             {
                 Console.WriteLine(solider.Name);
             }
